@@ -1,5 +1,5 @@
 FROM ubuntu:20.04
-MAINTAINER Jerrico Gamis <jecklgamis@gmail.com>
+MAINTAINER FirstName LastName <user@some-domain>
 
 RUN apt update -y && apt install -y openjdk-8-jre-headless && rm -rf /var/lib/apt/lists/*
 
@@ -10,7 +10,7 @@ RUN mkdir -m 0755 -p ${APP_HOME}/bin
 RUN mkdir -m 0755 -p ${APP_HOME}/config
 RUN mkdir -m 0755 -p ${APP_HOME}/logs/
 
-COPY target/spring-boot-scala-example.jar ${APP_HOME}/bin
+COPY target/tchutchu.jar ${APP_HOME}/bin
 COPY docker-entrypoint.sh /
 
 RUN chown -R app:app ${APP_HOME}

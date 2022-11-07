@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "spring-boot-scala-example.fullname" . }}
+  name: {{ include "tchutchu.fullname" . }}
   labels:
-    {{- include "spring-boot-scala-example.labels" . | nindent 4 }}
+    {{- include "tchutchu.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "spring-boot-scala-example.selectorLabels" . | nindent 6 }}
+      {{- include "tchutchu.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "spring-boot-scala-example.selectorLabels" . | nindent 8 }}
+        {{- include "tchutchu.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "spring-boot-scala-example.serviceAccountName" . }}
+      serviceAccountName: {{ include "tchutchu.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

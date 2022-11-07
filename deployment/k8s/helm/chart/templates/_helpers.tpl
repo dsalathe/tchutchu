@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "spring-boot-scala-example.name" -}}
+{{- define "tchutchu.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "spring-boot-scala-example.fullname" -}}
+{{- define "tchutchu.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "spring-boot-scala-example.chart" -}}
+{{- define "tchutchu.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "spring-boot-scala-example.labels" -}}
-helm.sh/chart: {{ include "spring-boot-scala-example.chart" . }}
-{{ include "spring-boot-scala-example.selectorLabels" . }}
+{{- define "tchutchu.labels" -}}
+helm.sh/chart: {{ include "tchutchu.chart" . }}
+{{ include "tchutchu.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "spring-boot-scala-example.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "spring-boot-scala-example.name" . }}
+{{- define "tchutchu.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "tchutchu.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "spring-boot-scala-example.serviceAccountName" -}}
+{{- define "tchutchu.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "spring-boot-scala-example.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "tchutchu.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

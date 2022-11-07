@@ -1,4 +1,4 @@
-APP_NAME:=spring-boot-scala-example
+APP_NAME:=tchutchu
 VERSION:=$(shell cat chart/Chart.yaml | yq .appVersion)
 HELM_CHART=$(APP_NAME)-$(VERSION).tgz
 

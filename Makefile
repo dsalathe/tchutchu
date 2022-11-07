@@ -1,4 +1,4 @@
-IMAGE_NAME:=jecklgamis/spring-boot-scala-example
+IMAGE_NAME:=dsalathe/tchutchu
 IMAGE_TAG:=latest
 
 default:

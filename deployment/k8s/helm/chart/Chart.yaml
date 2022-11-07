@@ -1,5 +1,5 @@
 apiVersion: v2
-name: spring-boot-scala-example
+name: tchutchu
 description: An example Spring Boot app using Scala
 
 # A chart can be either an 'application' or a 'library' chart.

@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "spring-boot-scala-example.fullname" . }}
+  name: {{ include "tchutchu.fullname" . }}
   labels:
-    {{- include "spring-boot-scala-example.labels" . | nindent 4 }}
+    {{- include "tchutchu.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "spring-boot-scala-example.fullname" . }}
+    name: {{ include "tchutchu.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

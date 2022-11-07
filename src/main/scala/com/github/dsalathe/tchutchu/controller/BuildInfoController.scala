@@ -1,4 +1,4 @@
-package spring.boot.scala.example.controller
+package com.github.dsalathe.tchutchu.controller
 
 import io.micrometer.core.annotation.Timed
 import org.springframework.beans.factory.annotation.Value

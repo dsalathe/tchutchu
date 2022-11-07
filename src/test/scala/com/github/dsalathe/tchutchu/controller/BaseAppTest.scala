@@ -1,4 +1,4 @@
-package spring.boot.scala.example.controller
+package com.github.dsalathe.tchutchu.controller
 
 import org.junit.jupiter.api.Assertions.{assertEquals, assertTrue}
 import org.junit.jupiter.api.Test
@@ -10,21 +10,17 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.*
 import org.springframework.test.context.ActiveProfiles
-import spring.boot.scala.example.controller.RootController
+import com.github.dsalathe.tchutchu.controller.RootController
 
 import java.util.{Collections, UUID}
 
 
-class ProbeControllerTest extends BaseAppTest :
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@ActiveProfiles(Array("dev"))
+class BaseAppTest:
   @Autowired
-  val probeController: ProbeController = null
+  val restTemplate: TestRestTemplate = null
+  @LocalServerPort
+  val port = 0
 
-  @Test
-  def testLivenessProbe(): Unit =
-    val response = restTemplate.getForObject(s"http://localhost:$port/probe/live", classOf[Map[String, Any]])
-    assertEquals("I'm alive!", response("message"))
 
-  @Test
-  def testReadinessProbe(): Unit =
-    val response = restTemplate.getForObject(s"http://localhost:$port/probe/ready", classOf[Map[String, Any]])
-    assertEquals("I'm ready!", response("message"))

@@ -6,11 +6,11 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 lazy val root = project
   .in(file("."))
   .settings(
-    name := "spring-boot-scala-example",
+    name := "tchutchu",
     version := "1.0.0-SNAPSHOT",
     scalaVersion := "3.1.2",
-    assembly / mainClass := Some("spring.boot.scala.example.ExampleApp"),
-    assembly / assemblyJarName := "spring-boot-scala-example.jar",
+    assembly / mainClass := Some("com.github.dsalathe.tchutchu.ExampleApp"),
+    assembly / assemblyJarName := "tchutchu.jar",
     libraryDependencies += "org.springframework.boot" % "spring-boot-starter-web" % springBootVersion
       exclude("org.springframework.boot", "spring-boot-starter-tomcat"),
     libraryDependencies += "org.springframework.boot" % "spring-boot-starter-jetty" % springBootVersion,

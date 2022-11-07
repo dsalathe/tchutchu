@@ -1,5 +1,5 @@
 application:
-  name: "spring-boot-scala-example"
+  name: "tchutchu"
   description: "An example Spring Boot app using Scala"
 
 server:
@@ -20,4 +20,4 @@ management:
 
 logging:
   file:
-    name: logs/spring-boot-scala-example.log
+    name: logs/tchutchu.log
