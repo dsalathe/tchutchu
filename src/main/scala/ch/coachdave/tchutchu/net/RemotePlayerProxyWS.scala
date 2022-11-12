@@ -3,7 +3,7 @@ package ch.coachdave.tchutchu.net
 import ch.coachdave.tchutchu.SortedBag
 import ch.coachdave.tchutchu.game.{Card, Player, PlayerId, PlayerState, PublicGameState, Ticket}
 import ch.coachdave.tchutchu.gui.Info
-import ch.coachdave.tchutchu.model.Greeting
+import ch.coachdave.tchutchu.model.ClientNotification
 import ch.coachdave.tchutchu.net.Serdes.{bagOfTicket, listOfBagOfCard, listOfString, playerIdNoNull, playerState, publicGameState, string}
 import org.springframework.messaging.simp.SimpMessagingTemplate
 
@@ -13,7 +13,7 @@ object RemotePlayerProxyWS:
 case class RemotePlayerProxyWS(messagingTemplate : SimpMessagingTemplate, username: String, info: Info) extends Player:
 
   private def sendMessage(id: MessageId, args: String*): Unit =
-    messagingTemplate.convertAndSendToUser(username, "/queue/greetings", Greeting(id.toString + " " + args.mkString(" ")))
+    messagingTemplate.convertAndSendToUser(username, "/queue/tchu-events", ClientNotification(id.toString, args.mkString(" ")))
 
 
   override def initPlayers(ownId: PlayerId, playerNames: Map[PlayerId, String]): Unit =
@@ -26,7 +26,7 @@ case class RemotePlayerProxyWS(messagingTemplate : SimpMessagingTemplate, userna
 
   override def setInitialTicketChoice(tickets: SortedBag[Ticket]): Unit = sendMessage(MessageId.SET_INITIAL_TICKETS, bagOfTicket.serialize(tickets))
 
-  override def chooseInitialTickets: Unit =
+  override def chooseInitialTickets: Unit = //TODO challenge: still useful?
     sendMessage(MessageId.CHOOSE_INITIAL_TICKETS)
 
   override def nextTurn: Unit =

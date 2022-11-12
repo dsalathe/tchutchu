@@ -1,3 +1,5 @@
 package ch.coachdave.tchutchu.model
 
-case class TchuMessage(metaAction: String, playAction: String, data: String)
+import ch.coachdave.tchutchu.game.UserAction
+
+case class TchuMessage(metaAction: MetaAction, playAction: UserAction, data: String)

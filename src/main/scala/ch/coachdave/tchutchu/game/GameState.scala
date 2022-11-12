@@ -2,13 +2,14 @@ package ch.coachdave.tchutchu.game
 
 import ch.coachdave.tchutchu.game.GameState.MAX_PLAYERS
 import ch.coachdave.tchutchu.{SortedBag, game}
+import ch.coachdave.tchutchu.game.UserAction._
 
 import collection.JavaConverters.*
 import scala.util.Random.{nextInt, shuffle}
 
 class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlayerId: PlayerId, players: Map[PlayerId, Player],
                         playerStates: Map[PlayerId, PlayerState], lastPlayer: Option[PlayerId], 
-                        nextExpectedAction: String, claimedRoute: Option[Route] = None, initialClaimCards: Option[SortedBag[Card]] = None)
+                        nextExpectedAction: UserAction, claimedRoute: Option[Route] = None, initialClaimCards: Option[SortedBag[Card]] = None)
   extends PublicGameState(tickets.size, cardState, currentPlayerId,  playerStates, lastPlayer):
 
   val totalCurrentSize: Int = cardState.deckSize + playerStates.map(_._2.cardCount).sum + 5 + cardState.discardsSize
@@ -21,7 +22,7 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
   def currentPlayer: Player = players(currentPlayerId)
   def playerMap: Map[PlayerId, Player] = players
   def allPlayer: Iterable[Player] = players.values
-  def getNextExpectedAction: String = nextExpectedAction
+  def getNextExpectedAction: UserAction = nextExpectedAction
 
   // Group 1: Ticket or Card related
 
@@ -37,9 +38,9 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
     if cardState.isDeckEmpty then new GameState(tickets, cardState.withDeckRecreatedFromDiscards, currentPlayerId, players, playerStates, lastPlayer, nextExpectedAction) else this
 
   def distributeTickets(nHeap: Int, sizeHeap: Int): (List[SortedBag[Ticket]], GameState) =
-    require(nextExpectedAction == "DISTRIBUTING_INITIAL_TICKETS") //TODO bug first ticket sent to 2 players
+    require(nextExpectedAction == DISTRIBUTING_INITIAL_TICKETS) //TODO bug first ticket sent to 2 players
     val (ditributed, remaining) = tickets.distribute(nHeap, sizeHeap)
-    (ditributed, new GameState(remaining, cardState, currentPlayerId, players, playerStates, lastPlayer, "INITIAL_TICKETS_CHOSEN"))
+    (ditributed, new GameState(remaining, cardState, currentPlayerId, players, playerStates, lastPlayer, INITIAL_TICKETS_CHOSEN))
 
   // Group 2: re-actions
 
@@ -52,30 +53,30 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
 
   def withInitiallyChosenTickets(playerId: PlayerId, chosenTickets: SortedBag[Ticket]): GameState =
     require(playerStates(playerId).tickets.size == 0, s"size of $playerId is ${playerStates(playerId).tickets.size}")
-    require(nextExpectedAction == "INITIAL_TICKETS_CHOSEN")
+    require(nextExpectedAction == INITIAL_TICKETS_CHOSEN)
     require(chosenTickets.size() >= 3)
     def isLastToChooseInitialTickets(id: PlayerId) = playerStates forall {case (pId, pState) => pId == id || pState.tickets.size > 0}
-    val nextAction = if isLastToChooseInitialTickets(playerId) then "PLAY_TURN" else "INITIAL_TICKETS_CHOSEN"
+    val nextAction = if isLastToChooseInitialTickets(playerId) then PLAY_TURN else INITIAL_TICKETS_CHOSEN
     new GameState(tickets, cardState, playerId, players, withAction(p => p.withAddedTickets(chosenTickets), playerId), lastPlayer, nextAction)
 
   def withChosenAdditionalTickets(drawnTickets: SortedBag[Ticket], chosenTickets: SortedBag[Ticket]): GameState =
     require(drawnTickets.contains(chosenTickets))
-    require(nextExpectedAction == "ADDITIONAL_TICKETS_CHOSEN")
+    require(nextExpectedAction == ADDITIONAL_TICKETS_CHOSEN)
     new GameState(tickets.withoutTopCards(drawnTickets.size), cardState, 
-      currentPlayerId, players, withAction(p => p.withAddedTickets(chosenTickets)), lastPlayer, "PLAY_TURN").forNextTurn
+      currentPlayerId, players, withAction(p => p.withAddedTickets(chosenTickets)), lastPlayer, PLAY_TURN).forNextTurn
 
   def withDrawnFaceUpCard(slot: Int, nthCard: Integer): GameState =
-    require((nthCard == 1 && nextExpectedAction == "PLAY_TURN") || (nthCard == 2 && nextExpectedAction == "DRAW_SECOND"))
-    val nextAction = if nthCard == 1 then "DRAW_SECOND" else "PLAY_TURN"
+    require((nthCard == 1 && nextExpectedAction == PLAY_TURN) || (nthCard == 2 && nextExpectedAction == DRAW_SECOND))
+    val nextAction = if nthCard == 1 then DRAW_SECOND else PLAY_TURN
     new GameState(tickets, cardState.withDrawnFaceUpCard(slot), currentPlayerId, players, withAction(p => p.withAddedCard(cardState.faceUpCards(slot))), lastPlayer, nextAction).forNextTurn
 
   def withBlindlyDrawnCard(nthCard: Integer): GameState =
-    require((nthCard == 1 && nextExpectedAction == "PLAY_TURN") || (nthCard == 2 && nextExpectedAction == "DRAW_SECOND"))
-    val nextAction = if nthCard == 1 then "DRAW_SECOND" else "PLAY_TURN"
+    require((nthCard == 1 && nextExpectedAction == PLAY_TURN) || (nthCard == 2 && nextExpectedAction == DRAW_SECOND))
+    val nextAction = if nthCard == 1 then DRAW_SECOND else PLAY_TURN
     new GameState(tickets, cardState.withoutTopDeckCard, currentPlayerId, players, withAction(p => p.withAddedCard(cardState.topDeckCard)), lastPlayer, nextAction).forNextTurn
 
   def withClaimedRoute(route: Route, cards: SortedBag[Card]): GameState =
-    require(nextExpectedAction == "PLAY_TURN" || nextExpectedAction == "ADDITIONAL_CARDS_CHOSEN")
+    require(nextExpectedAction == PLAY_TURN || nextExpectedAction == ADDITIONAL_CARDS_CHOSEN)
     new GameState(tickets, cardState.withMoreDiscardedCards(cards), currentPlayerId, players,
       withAction(p => p.withClaimedRoute(route, cards)), lastPlayer, nextExpectedAction).forNextTurn
   
@@ -88,11 +89,11 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
   
   def waitingForAdditionalCards(claimedRoute: Route, initialClaimCards: SortedBag[Card]): GameState =
     new GameState(tickets, cardState, currentPlayerId, players, playerStates, lastPlayer,
-      "ADDITIONAL_CARDS_CHOSEN", claimedRoute = Some(claimedRoute), initialClaimCards = Some(initialClaimCards))
+      ADDITIONAL_CARDS_CHOSEN, claimedRoute = Some(claimedRoute), initialClaimCards = Some(initialClaimCards))
     
   def waitingForChosenTickets: GameState = //TODO mettre des check pour choisir des tickets présentés seulement
     new GameState(tickets, cardState, currentPlayerId, players, playerStates, lastPlayer,
-      "ADDITIONAL_TICKETS_CHOSEN")  
+      ADDITIONAL_TICKETS_CHOSEN)
     
     
   def getClaimedRoute: Option[Route] = claimedRoute
@@ -106,12 +107,12 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
 
   def withNewPlayer(playerId: PlayerId, player: Player): GameState =
     require(!isGameFull)
-    require(nextExpectedAction == "JOINING_GAME")
-    val nextAction = if isGameFullIfOneAdded then "DISTRIBUTING_INITIAL_TICKETS" else "JOINING_GAME"
+    require(nextExpectedAction == JOINING_GAME)
+    val nextAction = if isGameFullIfOneAdded then DISTRIBUTING_INITIAL_TICKETS else JOINING_GAME
     new GameState(tickets, cardState, currentPlayerId, players + (playerId -> player), playerStates, lastPlayer, nextAction)
 
   def forNextTurn: GameState =
-    if nextExpectedAction == "PLAY_TURN" then
+    if nextExpectedAction == PLAY_TURN then
       new GameState(tickets, cardState, currentPlayerId.next, players, playerStates, if lastTurnBegins then Some(currentPlayerId) else lastPlayer, nextExpectedAction)
     else
       this
@@ -125,4 +126,4 @@ object GameState:
     val shuffledCards: Deck[Card] = Deck.of(Constants.ALL_CARDS)
     val (distributed, remaining) = shuffledCards.distribute(PlayerId.COUNT, Constants.INITIAL_CARDS_COUNT)
     val playerState: Map[PlayerId, PlayerState] = PlayerId.ALL.zip(distributed).map { case (pId, cards) => pId -> PlayerState.initial(cards)}.toMap
-    new GameState(Deck.of(tickets), CardState.of(remaining), PlayerId.ALL(nextInt(PlayerId.COUNT)), Map(playerId -> player), playerState, None, "JOINING_GAME")
+    new GameState(Deck.of(tickets), CardState.of(remaining), PlayerId.ALL(nextInt(PlayerId.COUNT)), Map(playerId -> player), playerState, None, JOINING_GAME)
