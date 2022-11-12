@@ -2,4 +2,4 @@ server:
   port: 8443
   ssl:
     key-store: classpath:keystore.pfx
-    key-store-password: changeit
+    key-store-password: idontknowyet

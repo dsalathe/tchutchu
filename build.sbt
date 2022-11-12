@@ -9,7 +9,7 @@ lazy val root = project
     name := "tchutchu",
     version := "1.0.0-SNAPSHOT",
     scalaVersion := "3.1.2",
-    assembly / mainClass := Some("com.github.dsalathe.tchutchu.ExampleApp"),
+    assembly / mainClass := Some("com.github.dsalathe.tchutchu.TchuTchuApp"),
     assembly / assemblyJarName := "tchutchu.jar",
     libraryDependencies += "org.springframework.boot" % "spring-boot-starter-web" % springBootVersion
       exclude("org.springframework.boot", "spring-boot-starter-tomcat"),
@@ -21,6 +21,7 @@ lazy val root = project
     libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala_2.13" % jacksonVersion,
     libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.10",
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % Test,
+    libraryDependencies += "org.scalatestplus" %% "mockito-3-4" % "3.2.10.0" % Test,
     libraryDependencies += "org.junit.jupiter" % "junit-jupiter-engine" % "5.8.1" % Test,
     libraryDependencies += "net.aichler" % "jupiter-interface" % "0.9.1" % Test
   )

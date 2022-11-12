@@ -1,2 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
+logs
+src/main/resources/build-info.json
+src/main/resources/keystore.pfx
+src/main/resources/server.crt

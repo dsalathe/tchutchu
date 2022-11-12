@@ -1,6 +1,6 @@
 application:
   name: "tchutchu"
-  description: "An example Spring Boot app using Scala"
+  description: "An implementation of the game Tickets to ride in scala 3, with WebSockets"
 
 server:
   port: 8080
