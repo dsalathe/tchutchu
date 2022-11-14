@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-Description: Jakarta Annotations API
+Automatic-Module-Name: java.annotation
+Bundle-License: http://www.eclipse.org/legal/epl-2.0, https://www.gnu.
+ org/software/classpath/license.html
+Bundle-SymbolicName: jakarta.annotation-api
+Implementation-Version: 1.3.5
+Built-By: default
+Bnd-LastModified: 1564744140223
+Bundle-ManifestVersion: 2
+Specification-Vendor: Eclipse Foundation
+Implementation-Vendor-Id: org.glassfish
+Bundle-DocURL: https://www.eclipse.org
+Bundle-Vendor: Eclipse Foundation
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Tool: Bnd-4.2.0.201903051501
+Implementation-Vendor: Eclipse Foundation
+Export-Package: javax.annotation.security;version="1.3.5",javax.annota
+ tion.sql;version="1.3.5",javax.annotation;version="1.3.5"
+Bundle-Name: Jakarta Annotations API
+Bundle-Version: 1.3.5
+Extension-Name: jakarta.annotation
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_202
+Specification-Version: 1.3
+

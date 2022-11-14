@@ -61,7 +61,7 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
     require(chosenTickets.size() >= 3)
     def isLastToChooseInitialTickets(id: PlayerId) = playerStates forall {case (pId, pState) => pId == id || pState.tickets.size > 0}
     val nextAction = if isLastToChooseInitialTickets(playerId) then PLAY_TURN else INITIAL_TICKETS_CHOSEN
-    new GameState(tickets, cardState, playerId, players, withAction(p => p.withAddedTickets(chosenTickets), playerId), lastPlayer, nextAction, suggestedTickets=suggestedTickets)
+    new GameState(tickets, cardState, currentPlayerId, players, withAction(p => p.withAddedTickets(chosenTickets), playerId), lastPlayer, nextAction, suggestedTickets=suggestedTickets)
 
   def withChosenAdditionalTickets(chosenTickets: SortedBag[Ticket]): GameState =
     require(nextExpectedAction == ADDITIONAL_TICKETS_CHOSEN)

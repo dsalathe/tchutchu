@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: Starter for logging using Logback. Default loggi
+ ng starter
+Automatic-Module-Name: spring.boot.starter.logging
+Implementation-Version: 2.6.7
+Built-By: Spring
+Spring-Boot-Jar-Type: dependencies-starter
+Build-Jdk-Spec: 1.8
+

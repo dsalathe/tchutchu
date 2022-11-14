@@ -1,0 +1,49 @@
+Manifest-Version: 1.0
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: com.fasterxml.jackson.datatype.jackson-datatype-j
+ dk8
+Bnd-LastModified: 1646601812694
+Implementation-Vendor-Id: com.fasterxml.jackson.datatype
+Specification-Title: Jackson datatype: jdk8
+Bundle-DocURL: https://github.com/FasterXML/jackson-modules-java8/jack
+ son-datatype-jdk8
+Import-Package: com.fasterxml.jackson.core;version="[2.13,3)",com.fast
+ erxml.jackson.core.io;version="[2.13,3)",com.fasterxml.jackson.core.u
+ til;version="[2.13,3)",com.fasterxml.jackson.databind;version="[2.13,
+ 3)",com.fasterxml.jackson.databind.cfg;version="[2.13,3)",com.fasterx
+ ml.jackson.databind.deser;version="[2.13,3)",com.fasterxml.jackson.da
+ tabind.deser.std;version="[2.13,3)",com.fasterxml.jackson.databind.js
+ onFormatVisitors;version="[2.13,3)",com.fasterxml.jackson.databind.js
+ ontype;version="[2.13,3)",com.fasterxml.jackson.databind.ser;version=
+ "[2.13,3)",com.fasterxml.jackson.databind.ser.impl;version="[2.13,3)"
+ ,com.fasterxml.jackson.databind.ser.std;version="[2.13,3)",com.faster
+ xml.jackson.databind.type;version="[2.13,3)",com.fasterxml.jackson.da
+ tabind.util;version="[2.13,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Implementation-Build-Date: 2022-03-06 21:23:22+0000
+Export-Package: com.fasterxml.jackson.datatype.jdk8;uses:="com.fasterx
+ ml.jackson.core,com.fasterxml.jackson.core.io,com.fasterxml.jackson.d
+ atabind,com.fasterxml.jackson.databind.deser,com.fasterxml.jackson.da
+ tabind.deser.std,com.fasterxml.jackson.databind.jsonFormatVisitors,co
+ m.fasterxml.jackson.databind.jsontype,com.fasterxml.jackson.databind.
+ ser,com.fasterxml.jackson.databind.ser.impl,com.fasterxml.jackson.dat
+ abind.ser.std,com.fasterxml.jackson.databind.type,com.fasterxml.jacks
+ on.databind.util";version="2.13.2"
+Bundle-Name: Jackson datatype: jdk8
+Multi-Release: true
+Build-Jdk-Spec: 1.8
+Bundle-Description: Add-on module for Jackson (http://jackson.codehaus
+ .org) to supportJDK 8 data types.
+Implementation-Title: Jackson datatype: jdk8
+Implementation-Version: 2.13.2
+Bundle-ManifestVersion: 2
+Specification-Vendor: FasterXML
+Bundle-Vendor: FasterXML
+Tool: Bnd-5.1.1.202006162103
+Implementation-Vendor: FasterXML
+Bundle-Version: 2.13.2
+X-Compile-Target-JDK: 1.8
+X-Compile-Source-JDK: 1.8
+Created-By: Apache Maven Bundle Plugin
+Specification-Version: 2.13.2
+

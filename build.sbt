@@ -13,8 +13,9 @@ lazy val root = project
     assembly / assemblyJarName := "tchutchu.jar",
     libraryDependencies += "org.springframework.boot" % "spring-boot-starter-web" % springBootVersion
       exclude("org.springframework.boot", "spring-boot-starter-tomcat"),
-    libraryDependencies += "org.springframework.boot" % "spring-boot-starter-jetty" % springBootVersion,
-    libraryDependencies += "org.springframework.boot" % "spring-boot-starter-actuator" % springBootVersion,
+    libraryDependencies += "org.springframework.boot" % "spring-boot-starter-jetty" % springBootVersion % "provided",
+    libraryDependencies += "org.springframework.boot" % "spring-boot-starter-actuator" % springBootVersion % "provided",
+    libraryDependencies += "org.springframework.boot" % "spring-boot-starter-websocket" % springBootVersion % "provided",
     libraryDependencies += "org.springframework.boot" % "spring-boot-starter-test" % springBootVersion % Test,
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion,
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion,

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: Core starter, including auto-configuration suppo
+ rt, logging and YAML
+Automatic-Module-Name: spring.boot.starter
+Implementation-Version: 2.6.7
+Built-By: Spring
+Spring-Boot-Jar-Type: dependencies-starter
+Build-Jdk-Spec: 1.8
+

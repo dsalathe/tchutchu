@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Implementation-Title: Starter for reading and writing json
+Automatic-Module-Name: spring.boot.starter.json
+Implementation-Version: 2.6.7
+Built-By: Spring
+Spring-Boot-Jar-Type: dependencies-starter
+Build-Jdk-Spec: 1.8
+

@@ -4,4 +4,10 @@
 
 This project was generated from [spring-boot-scala-example](https://github.com/jecklgamis/spring-boot-scala-example).
 
+Use `make all` to build everything.
+
+Use `java -jar target/tchutchu.jar` to run the server. Then go to localhost:8080
+
+Use `sbt test` to launch tests
+
 

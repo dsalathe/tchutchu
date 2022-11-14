@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: scala3-library-bootstrapped
+Automatic-Module-Name: org.scala.lang.scala3.library
+Implementation-Version: 3.1.2
+Specification-Vendor: LAMP/EPFL
+Specification-Title: scala3-library-bootstrapped
+Implementation-Vendor-Id: org.scala-lang
+Specification-Version: 3.1.2
+Implementation-URL: https://github.com/lampepfl/dotty
+Implementation-Vendor: LAMP/EPFL
+

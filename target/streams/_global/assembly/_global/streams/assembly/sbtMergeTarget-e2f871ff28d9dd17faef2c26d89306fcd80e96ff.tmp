@@ -1,0 +1,6 @@
+com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+com.fasterxml.jackson.module.paramnames.ParameterNamesModule
+# Let's hope this works as expected
+
+com.fasterxml.jackson.module.scala.DefaultScalaModule

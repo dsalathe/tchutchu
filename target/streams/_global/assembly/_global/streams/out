@@ -1,0 +1,83 @@
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: jul-to-slf4j-1.7.36.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: log4j-to-slf4j-2.17.2.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-boot-starter-logging-2.6.7.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-boot-starter-web-2.6.7.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-boot-starter-2.6.7.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-boot-starter-json-2.6.7.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: slf4j-api-1.7.36.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-jcl-5.3.19.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: jackson-annotations-2.13.2.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-aop-5.3.19.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: jackson-core-2.13.2.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: logback-core-1.2.11.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-webmvc-5.3.19.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: jakarta.annotation-api-1.3.5.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-context-5.3.19.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-core-5.3.19.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-beans-5.3.19.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: paranamer-2.8.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: snakeyaml-1.29.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: jackson-databind-2.13.2.1.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: log4j-api-2.17.2.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-web-5.3.19.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: jackson-datatype-jdk8-2.13.2.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: jackson-datatype-jsr310-2.13.2.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: jackson-module-parameter-names-2.13.2.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-boot-2.6.7.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: logback-classic-1.2.11.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-expression-5.3.19.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: spring-boot-autoconfigure-2.6.7.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: scala3-library_3-3.1.2.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: jackson-module-scala_2.13-2.13.2.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: scalactic_3-3.2.10.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding from cache: scala-library-2.13.8.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mCalculate mappings...[0m
+[0m[[0m[0mdebug[0m] [0m[0mChecking every *.class/*.jar file's SHA-1.[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging files...[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/DEPENDENCIES' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/MANIFEST.MF' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/additional-spring-configuration-metadata.json' with strategy 'concat'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/ch.qos.logback/logback-classic/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/ch.qos.logback/logback-classic/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/ch.qos.logback/logback-core/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/ch.qos.logback/logback-core/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.core/jackson-annotations/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.core/jackson-annotations/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.core/jackson-core/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.core/jackson-core/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.core/jackson-databind/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.core/jackson-databind/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.datatype/jackson-datatype-jdk8/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.datatype/jackson-datatype-jdk8/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.module/jackson-module-parameter-names/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.fasterxml.jackson.module/jackson-module-parameter-names/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.thoughtworks.paranamer/paranamer/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/com.thoughtworks.paranamer/paranamer/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/jakarta.annotation/jakarta.annotation-api/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/jakarta.annotation/jakarta.annotation-api/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.apache.logging.log4j/log4j-api/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.apache.logging.log4j/log4j-api/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.apache.logging.log4j/log4j-to-slf4j/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.apache.logging.log4j/log4j-to-slf4j/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.slf4j/jul-to-slf4j/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.slf4j/jul-to-slf4j/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.slf4j/slf4j-api/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.slf4j/slf4j-api/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.yaml/snakeyaml/pom.properties' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.yaml/snakeyaml/pom.xml' with strategy 'discard'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/services/com.fasterxml.jackson.databind.Module' with strategy 'filterDistinctLines'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/services/javax.servlet.ServletContainerInitializer' with strategy 'filterDistinctLines'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/services/org.apache.logging.log4j.util.PropertySource' with strategy 'filterDistinctLines'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/services/reactor.blockhound.integration.BlockHoundIntegration' with strategy 'filterDistinctLines'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/spring-configuration-metadata.json' with strategy 'concat'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/spring.factories' with strategy 'concat'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/spring.handlers' with strategy 'concat'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/spring.schemas' with strategy 'concat'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/spring.tooling' with strategy 'filterDistinctLines'[0m
+[0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/versions/9/module-info.class' with strategy 'concat'[0m
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'concat' was applied to 6 files (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to 32 files (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mStrategy 'filterDistinctLines' was applied to 5 files (Run the task at debug level to see details)[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly up to date: /home/coach/hobby/scala/tchutchu/target/scala-3.1.2/tchutchu.jar[0m

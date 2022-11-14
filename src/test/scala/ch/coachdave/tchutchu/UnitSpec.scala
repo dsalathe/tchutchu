@@ -1,6 +1,7 @@
 package ch.coachdave.tchutchu
 
-//import org.scalatest.*
-//import org.scalatest.matchers.should.Matchers
+import org.scalatest._
+import flatspec._
+import matchers._
 
-abstract class UnitSpec// extends AnyFlatSpec with Matcher
+abstract class UnitSpec extends AnyFlatSpec with should.Matchers

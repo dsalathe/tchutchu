@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: Starter for building web, including RESTful, app
+ lications using Spring MVC. Uses Tomcat as the default embedded conta
+ iner
+Automatic-Module-Name: spring.boot.starter.web
+Implementation-Version: 2.6.7
+Built-By: Spring
+Spring-Boot-Jar-Type: dependencies-starter
+Build-Jdk-Spec: 1.8
+
