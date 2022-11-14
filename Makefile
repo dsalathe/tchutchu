@@ -1,4 +1,4 @@
-IMAGE_NAME:=dsalathe/tchutchu
+IMAGE_NAME:=coachdave/tchutchu
 IMAGE_TAG:=latest
 
 default:

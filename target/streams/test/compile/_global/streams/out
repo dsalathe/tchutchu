@@ -1,13 +1,2 @@
-[0m[[0m[31merror[0m] [0m[0m[31m-- [E006] Not Found Error: /home/coach/hobby/scala/tchutchu/src/test/scala/ch/coachdave/tchutchu/game/GameTest.scala:83:41 [0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m83 |[0m    [33mval[0m [36minitialGameState[0m = Game.initGame(stubPlayer1, PlayerId.PLAYER_1, tickets)[0m
-[0m[[0m[31merror[0m] [0m[0m   |                                         [31m^^^^^^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m   |                                         Not found: stubPlayer1[0m
-[0m[[0m[31merror[0m] [0m[0m[31m-- [E006] Not Found Error: /home/coach/hobby/scala/tchutchu/src/test/scala/ch/coachdave/tchutchu/game/GameTest.scala:84:64 [0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m84 |[0m    [33mval[0m [36mcompletedGameState[0m = Game.joiningGame(initialGameState, stubPlayer2, PlayerId.PLAYER_2)[0m
-[0m[[0m[31merror[0m] [0m[0m   |                                                                [31m^^^^^^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m   |                                                  Not found: stubPlayer2[0m
-[0m[[0m[31merror[0m] [0m[0m[31m-- [E006] Not Found Error: /home/coach/hobby/scala/tchutchu/src/test/scala/ch/coachdave/tchutchu/game/GameTest.scala:90:11 [0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m90 |[0m    verify(stubPlayer2).initPlayers(ArgumentMatchers.eq(PlayerId.PLAYER_2), any())[0m
-[0m[[0m[31merror[0m] [0m[0m   |           [31m^^^^^^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m   |           Not found: stubPlayer2[0m
-[0m[[0m[31merror[0m] [0m[0mthree errors found[0m
+[0m[[0m[0mdebug[0m] [0m[0mAcquiring lock on file /home/coach/hobby/scala/tchutchu/project/target/.sbt-compilation-infos/root-test/.sbt-idea-lock ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mReleasing lock on file /home/coach/hobby/scala/tchutchu/project/target/.sbt-compilation-infos/root-test/.sbt-idea-lock.[0m

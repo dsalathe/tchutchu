@@ -29,7 +29,7 @@ class TchuTchuController {
   private val messagingTemplate : SimpMessagingTemplate = null
 
 
-  private val userIdToGameId = mutable.Map[String, String]()
+  private val userIdToGameId = mutable.Map[String, String]() //TODO for memory mgmt: easy first solution might be using guava cache with timeout
   private val userIdToPlayerId = mutable.Map[String, PlayerId]()
   private val gameIdToGameState = mutable.Map[String, GameState]()
 

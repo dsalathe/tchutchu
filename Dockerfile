@@ -1,5 +1,5 @@
 FROM ubuntu:20.04
-MAINTAINER FirstName LastName <user@some-domain>
+MAINTAINER David Salathe <salathe.david@gmail.com>
 
 RUN apt update -y && apt install -y openjdk-8-jre-headless && rm -rf /var/lib/apt/lists/*
 

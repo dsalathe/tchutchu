@@ -1,22 +1,19 @@
 #Successful Tests
-#Mon Nov 14 18:09:56 CET 2022
-ch.coachdave.tchutchu.game.RouteTest=1668445793437
-ch.coachdave.tchutchu.game.StationTest=1668445793305
-ch.coachdave.tchutchu.game.ColorTest=1668445793320
-ch.coachdave.tchutchu.game.PublicPlayerStateTest=1668445793434
-ch.coachdave.tchutchu.net.SerdesTest=1668445793305
-ch.coachdave.tchutchu.game.DeckTest=1668445793459
-ch.coachdave.tchutchu.game.TicketTest=1668445793306
-ch.coachdave.tchutchu.controller.ProbeControllerTest=1668445796031
-ch.coachdave.tchutchu.controller.RootControllerTest=1668445796026
-ch.coachdave.tchutchu.game.PlayerIdTest=1668445793318
-ch.coachdave.tchutchu.controller.BuildInfoControllerTest=1668445796033
-ch.coachdave.tchutchu.game.PublicCardStateTest=1668445793305
-ch.coachdave.tchutchu.game.CardTest=1668445793306
-ch.coachdave.tchutchu.game.TripTest=1668445793363
-ch.coachdave.tchutchu.game.StationPartitionTest=1668445793395
-ch.coachdave.tchutchu.game.TrailTest=1668445793378
-ch.coachdave.tchutchu.game.PlayerStateTest=1668445793306
-ch.coachdave.tchutchu.net.SerdeTest=1668445793305
-ch.coachdave.tchutchu.PreconditionsTest=1668445793324
-ch.coachdave.tchutchu.game.GameTest=1668445793705
+#Mon Nov 14 19:32:47 CET 2022
+ch.coachdave.tchutchu.game.RouteTest=1668450765023
+ch.coachdave.tchutchu.game.StationTest=1668450764950
+ch.coachdave.tchutchu.game.ColorTest=1668450764952
+ch.coachdave.tchutchu.game.PublicPlayerStateTest=1668450765019
+ch.coachdave.tchutchu.net.SerdesTest=1668450764958
+ch.coachdave.tchutchu.game.DeckTest=1668450765034
+ch.coachdave.tchutchu.game.TicketTest=1668450764984
+ch.coachdave.tchutchu.game.PlayerIdTest=1668450764950
+ch.coachdave.tchutchu.game.PublicCardStateTest=1668450764955
+ch.coachdave.tchutchu.game.CardTest=1668450764952
+ch.coachdave.tchutchu.game.TripTest=1668450764959
+ch.coachdave.tchutchu.game.StationPartitionTest=1668450765024
+ch.coachdave.tchutchu.game.TrailTest=1668450764986
+ch.coachdave.tchutchu.game.PlayerStateTest=1668450764952
+ch.coachdave.tchutchu.net.SerdeTest=1668450764960
+ch.coachdave.tchutchu.PreconditionsTest=1668450764953
+ch.coachdave.tchutchu.game.GameTest=1668450765316

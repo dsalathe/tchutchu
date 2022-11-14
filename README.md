@@ -4,10 +4,13 @@
 
 This project was generated from [spring-boot-scala-example](https://github.com/jecklgamis/spring-boot-scala-example).
 
-Use `make all` to build everything.
+You can run the project locally using docker directly: `docker run -p 8080:8080 coachdave/tchutchu:latest`
 
-Use `java -jar target/tchutchu.jar` to run the server. Then go to localhost:8080
+Otherwise clone the repo and:
 
-Use `sbt test` to launch tests
++ `make all` to build everything.
++ `java -jar target/tchutchu.jar` to run the server.
++ Go to [localhost:8080](http://localhost:8080)
++ `sbt test` to launch tests
 
 
