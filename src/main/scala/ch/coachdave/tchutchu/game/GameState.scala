@@ -8,8 +8,9 @@ import collection.JavaConverters.*
 import scala.util.Random.{nextInt, shuffle}
 
 class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlayerId: PlayerId, players: Map[PlayerId, Player],
-                        playerStates: Map[PlayerId, PlayerState], lastPlayer: Option[PlayerId], 
-                        nextExpectedAction: UserAction, claimedRoute: Option[Route] = None, initialClaimCards: Option[SortedBag[Card]] = None)
+                        playerStates: Map[PlayerId, PlayerState], lastPlayer: Option[PlayerId], nextExpectedAction: UserAction,
+                        claimedRoute: Option[Route] = None, initialClaimCards: Option[SortedBag[Card]] = None,
+                        suggestedTickets: Option[Map[PlayerId, SortedBag[Ticket]]] = None)
   extends PublicGameState(tickets.size, cardState, currentPlayerId,  playerStates, lastPlayer):
 
   val totalCurrentSize: Int = cardState.deckSize + playerStates.map(_._2.cardCount).sum + 5 + cardState.discardsSize
@@ -38,13 +39,15 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
     if cardState.isDeckEmpty then new GameState(tickets, cardState.withDeckRecreatedFromDiscards, currentPlayerId, players, playerStates, lastPlayer, nextExpectedAction) else this
 
   def distributeTickets(nHeap: Int, sizeHeap: Int): (List[SortedBag[Ticket]], GameState) =
-    require(nextExpectedAction == DISTRIBUTING_INITIAL_TICKETS) //TODO bug first ticket sent to 2 players
-    val (ditributed, remaining) = tickets.distribute(nHeap, sizeHeap)
-    (ditributed, new GameState(remaining, cardState, currentPlayerId, players, playerStates, lastPlayer, INITIAL_TICKETS_CHOSEN))
+    require(nextExpectedAction == DISTRIBUTING_INITIAL_TICKETS)
+    val (distributed, remaining): (List[SortedBag[Ticket]], Deck[Ticket]) = tickets.distribute(nHeap, sizeHeap)
+    val suggestedTickets: Map[PlayerId, SortedBag[Ticket]] = (PlayerId.ALL zip distributed).toMap
+    (distributed, new GameState(remaining, cardState, currentPlayerId, players,
+      playerStates, lastPlayer, INITIAL_TICKETS_CHOSEN, suggestedTickets = Some(suggestedTickets)))
 
   // Group 2: re-actions
 
-  private def withAction(f: PlayerState => PlayerState): Map[PlayerId, PlayerState] = // Using for currentPlayerId?
+  private def withAction(f: PlayerState => PlayerState): Map[PlayerId, PlayerState] =
     withAction(f, currentPlayerId)
 
   private def withAction(f: PlayerState => PlayerState, playerId: PlayerId): Map[PlayerId, PlayerState] =
@@ -53,15 +56,17 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
 
   def withInitiallyChosenTickets(playerId: PlayerId, chosenTickets: SortedBag[Ticket]): GameState =
     require(playerStates(playerId).tickets.size == 0, s"size of $playerId is ${playerStates(playerId).tickets.size}")
+    require((suggestedTickets.get)(playerId).contains(chosenTickets), "I'm pretty sure I didn't give you those tickets!" )
     require(nextExpectedAction == INITIAL_TICKETS_CHOSEN)
     require(chosenTickets.size() >= 3)
     def isLastToChooseInitialTickets(id: PlayerId) = playerStates forall {case (pId, pState) => pId == id || pState.tickets.size > 0}
     val nextAction = if isLastToChooseInitialTickets(playerId) then PLAY_TURN else INITIAL_TICKETS_CHOSEN
-    new GameState(tickets, cardState, playerId, players, withAction(p => p.withAddedTickets(chosenTickets), playerId), lastPlayer, nextAction)
+    new GameState(tickets, cardState, playerId, players, withAction(p => p.withAddedTickets(chosenTickets), playerId), lastPlayer, nextAction, suggestedTickets=suggestedTickets)
 
-  def withChosenAdditionalTickets(drawnTickets: SortedBag[Ticket], chosenTickets: SortedBag[Ticket]): GameState =
-    require(drawnTickets.contains(chosenTickets))
+  def withChosenAdditionalTickets(chosenTickets: SortedBag[Ticket]): GameState =
     require(nextExpectedAction == ADDITIONAL_TICKETS_CHOSEN)
+    val drawnTickets: SortedBag[Ticket] = (suggestedTickets.get)(currentPlayerId)
+    require(drawnTickets.contains(chosenTickets), "I'm pretty sure I didn't give you those tickets!")
     new GameState(tickets.withoutTopCards(drawnTickets.size), cardState, 
       currentPlayerId, players, withAction(p => p.withAddedTickets(chosenTickets)), lastPlayer, PLAY_TURN).forNextTurn
 
@@ -76,6 +81,7 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
     new GameState(tickets, cardState.withoutTopDeckCard, currentPlayerId, players, withAction(p => p.withAddedCard(cardState.topDeckCard)), lastPlayer, nextAction).forNextTurn
 
   def withClaimedRoute(route: Route, cards: SortedBag[Card]): GameState =
+    require(playerStates(currentPlayerId).canClaimRoute(route), s"$currentPlayerId is not authorized to claim route $route")
     require(nextExpectedAction == PLAY_TURN || nextExpectedAction == ADDITIONAL_CARDS_CHOSEN)
     new GameState(tickets, cardState.withMoreDiscardedCards(cards), currentPlayerId, players,
       withAction(p => p.withClaimedRoute(route, cards)), lastPlayer, nextExpectedAction).forNextTurn
@@ -85,15 +91,15 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
 
   def lastTurnBegins: Boolean = lastPlayer.isEmpty && playerStates(currentPlayerId).carCount <= 2
 
-  def isOver: Boolean = lastPlayer.isDefined //TODO test
+  def isOver: Boolean = lastPlayer.isDefined
   
   def waitingForAdditionalCards(claimedRoute: Route, initialClaimCards: SortedBag[Card]): GameState =
     new GameState(tickets, cardState, currentPlayerId, players, playerStates, lastPlayer,
       ADDITIONAL_CARDS_CHOSEN, claimedRoute = Some(claimedRoute), initialClaimCards = Some(initialClaimCards))
     
-  def waitingForChosenTickets: GameState = //TODO mettre des check pour choisir des tickets présentés seulement
+  def waitingForChosenTickets(drawnTickets: SortedBag[Ticket]): GameState =
     new GameState(tickets, cardState, currentPlayerId, players, playerStates, lastPlayer,
-      ADDITIONAL_TICKETS_CHOSEN)
+      ADDITIONAL_TICKETS_CHOSEN, suggestedTickets=Some(Map(currentPlayerId->drawnTickets)))
     
     
   def getClaimedRoute: Option[Route] = claimedRoute

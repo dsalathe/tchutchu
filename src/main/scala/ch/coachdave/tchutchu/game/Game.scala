@@ -22,7 +22,7 @@ object Game:
     val players = gs.playerMap
     players.foreach{ case (pId, p) => p.initPlayers(pId, players map{ case (pId, p) => pId -> p.getInfo.getPlayerName}) }
     broadcastInfo(players, players(gs.currentPlayerId).getInfo.willPlayFirst())
-    val (distributed, initialTicketsDistributedState) = gs.distributeTickets(players.size, Constants.INITIAL_TICKETS_COUNT)
+    val (distributed, initialTicketsDistributedState): (List[SortedBag[Ticket]], GameState) = gs.distributeTickets(players.size, Constants.INITIAL_TICKETS_COUNT)
     players.values.zip(distributed).foreach{ case (p, t) => p.setInitialTicketChoice(t)}
     players.values.foreach(p => {p.chooseInitialTickets})
     broadcastNewStates(players, initialTicketsDistributedState)
@@ -60,8 +60,8 @@ object Game:
 
   private def playingPhase(gs: GameState, currentPlayerId: PlayerId, action: UserAction, data: String): GameState =
     val players = gs.playerMap
-    val updatedGameState = action match //TODO currentPlayerId needed?
-      case INITIAL_TICKETS_CHOSEN => //TODO currently no check on chosen tickets! might fix it in same time as in ADDITIONAL_TICKETS_CHOSEN
+    val updatedGameState = action match
+      case INITIAL_TICKETS_CHOSEN =>
         val updatedGs = gs.withInitiallyChosenTickets(currentPlayerId, bagOfTicket.deserialize(data))
         broadcastInfo(players, players(currentPlayerId).getInfo.keptTickets(updatedGs.playerState(currentPlayerId).get.ticketCount))
         if updatedGs.getNextExpectedAction == PLAY_TURN then broadcastInfo(players, players(currentPlayerId).getInfo.canPlay)
@@ -73,7 +73,7 @@ object Game:
           case FIRST_CARD =>
             handleDrawCardAction(gs, nthCard = 1, integer.deserialize(remaining.head))
 
-          case CLAIMING_ROUTE => //TODO No check on data integrity!
+          case CLAIMING_ROUTE =>
             val claimedRoute::initialClaimCards::_: List[String] = remaining
             handleClaimRouteAction(gs, route.deserialize(claimedRoute), bagOfCard.deserialize(initialClaimCards))
 
@@ -101,9 +101,8 @@ object Game:
 
       case ADDITIONAL_TICKETS_CHOSEN =>
         val chosenTickets: SortedBag[Ticket] = bagOfTicket.deserialize(data)
-        val drawnTickets = chosenTickets// gs.getDrawnTickets.get
-        broadcastInfo(players, gs.currentPlayer.getInfo.keptTickets(chosenTickets.size))
-        gs.withChosenAdditionalTickets(drawnTickets, chosenTickets)
+        broadcastInfo(players, gs.currentPlayer.getInfo.keptTickets(chosenTickets.size))//TODO broadcast only when success no?
+        gs.withChosenAdditionalTickets(chosenTickets)
 
       case _ =>
         println(s"invalid user action: $action")
@@ -170,7 +169,7 @@ object Game:
     val drawnTickets: SortedBag[Ticket] = gs.topTickets(Constants.IN_GAME_TICKETS_COUNT)
     broadcastInfo(players, player.getInfo.drewTickets(Constants.IN_GAME_TICKETS_COUNT))
     player.chooseTickets(drawnTickets)
-    gs.waitingForChosenTickets
+    gs.waitingForChosenTickets(drawnTickets)
 
 
 

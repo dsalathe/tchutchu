@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: ch.coachdave.tchutchu.controller.RootControllerTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.341 s - in ch.coachdave.tchutchu.controller.RootControllerTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.49 s - in ch.coachdave.tchutchu.controller.RootControllerTest
