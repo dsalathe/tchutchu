@@ -14,7 +14,7 @@ class WebSocketConfig extends WebSocketMessageBrokerConfigurer {
     //registry.setUserDestinationPrefix("/user")
 
   override def registerStompEndpoints(registry: StompEndpointRegistry): Unit =
-    registry.addEndpoint("/game-ws")
+    registry.addEndpoint("/game-ws").setAllowedOriginPatterns("*")
       .setHandshakeHandler(new UserHandshakeHandler)
       .withSockJS()
 }

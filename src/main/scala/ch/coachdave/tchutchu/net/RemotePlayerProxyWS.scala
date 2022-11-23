@@ -49,4 +49,6 @@ case class RemotePlayerProxyWS(messagingTemplate : SimpMessagingTemplate, userna
 
   override def getInfo: Info = info
 
+  override def sendChatMessage(msg: String): Unit = sendMessage(MessageId.CHAT,  msg)
+
 

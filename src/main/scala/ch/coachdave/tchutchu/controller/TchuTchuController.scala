@@ -81,7 +81,14 @@ class TchuTchuController {
 
       case CHAT =>
         println("CHAT case")
-        messagingTemplate.convertAndSend("/topic/tchu-events", ClientNotification(MessageId.CHAT.toString, message.data))
+        val gameId = userIdToGameId.get(userId)
+        gameId match
+          case Some(gId) =>
+            val playerName = gameIdToGameState(gId).playerMap(userIdToPlayerId(userId)).getInfo.getPlayerName
+            gameIdToGameState(gId).playerMap foreach ( _._2.sendChatMessage(s"$playerName ${message.data}"))
+          case None =>
+            messagingTemplate.convertAndSend("/topic/tchu-events",
+              ClientNotification(MessageId.CHAT.toString,  s"User-${userId.substring(userId.length - 3)} ${message.data}"))
 
       case SAVE =>
         ???

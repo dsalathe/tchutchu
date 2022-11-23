@@ -29,6 +29,8 @@ trait Player:
   def chooseAdditionalCards(options: List[SortedBag[Card]]): Unit //SortedBag[Card]
   
   def getInfo: Info
+  
+  def sendChatMessage(msg: String): Unit
 
 
 
