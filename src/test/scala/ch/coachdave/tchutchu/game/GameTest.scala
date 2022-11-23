@@ -1,5 +1,7 @@
 package ch.coachdave.tchutchu.game
 
+import ch.coachdave.tchutchu.TestRandomizer.SEED
+
 import collection.JavaConverters.*
 import ch.coachdave.tchutchu.{SortedBag, TestRandomizer, UnitSpec, game}
 import ch.coachdave.tchutchu.game.{ChMap, Player, PlayerId, Ticket, UserAction}
@@ -14,6 +16,7 @@ class GameTest extends UnitSpec:
 
   private val tickets: SortedBag[Ticket] = SortedBag.of(ChMap.tickets.asJava)
   val playerInfo: Info = new Info("Anonymous")
+  scala.util.Random.setSeed(SEED) // Ensure seed is set
 
   private def getStubPlayer() =
     val stubPlayer: Player = mock[Player]
