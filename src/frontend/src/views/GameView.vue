@@ -8,7 +8,7 @@
         <div id="chat"><Chat :displayedMessages="displayedMessages" :sendChatMessage="sendChatMessage" :isInGame="inGame" /></div>
       </div>
       <div v-if="inGame" id="board">
-        <Board />
+        <Board :displayedTickets="possibleTickets" :onTicketsSelected="onTicketsChosen" :dataMap="dataMap" />
       </div>
       <div v-else id="game-setup">
         <GameSetup :sendSetupGame="sendSetupGame" :state="setupState" :chosenGameName="setupGameName" />
@@ -27,6 +27,7 @@ import Chat from '@/components/Chat.vue'
 import Board from '@/components/BoardGame.vue'
 import StateInfo from '@/components/StateInfo.vue'
 import GameSetup from '@/components/GameSetup.vue'
+import chMap from '@/chMap.json'
 
 export default {
   name: 'GameView',
@@ -40,7 +41,8 @@ export default {
     return {
       metaAction: '',
       playAction: 'NOTHING',
-      dataMsg: ''
+      dataMsg: '',
+      dataMap: chMap
     }
   },
   computed: {
@@ -74,10 +76,10 @@ export default {
       return { style: 'chatMsg', author, content: content.join(' ') }
     },
     buildInfoMessage ({ data }) {
-      return { style: 'infoMsg', author: 'GAME', content: decodeURIComponent(escape(atob(data))) }
+      return { style: 'infoMsg', author: '[GAME]', content: decodeURIComponent(escape(atob(data))) }
     },
     sendChatMessage (msg) {
-      this.sendRequest('CHAT', 'NOTHING', msg)
+      this.sendRequest('CHAT', 'NOTHING', msg) // TODO encode and decode both player names and messages in chat
     },
     sendSetupGame (setupMode, msg) {
       this.sendRequest(setupMode, 'NOTHING', msg)
@@ -85,7 +87,7 @@ export default {
   },
   props: ['sendRequest', 'inGame', 'messages', 'ownId', 'player1Name', 'player2Name', 'ticketsCount', 'currentPlayerId', 'lastPlayerId', 'faceUpCards',
     'deckSize', 'discardSize', 'ticketsCountP1', 'cardsCountP1', 'routesP1', 'ticketsCountP2', 'cardsCountP2', 'routesP2', 'ownTickets', 'ownCards',
-    'ownRoutes', 'setupState', 'setupGameName']
+    'ownRoutes', 'setupState', 'setupGameName', 'possibleTickets', 'onTicketsChosen']
 }
 </script>
 

@@ -190,7 +190,7 @@ object ChMap:
     Ticket(BER, ZUR, 6),
     Ticket(FRI, LUC, 5),
     Ticket(GEN, BAL, 13),
-    Ticket(GEN, BER, 8),
+    Ticket(GEN, BER, 8), // 10
     Ticket(GEN, SIO, 10),
     Ticket(GEN, ZUR, 14),
     Ticket(INT, WIN, 7),
@@ -200,7 +200,7 @@ object ChMap:
     Ticket(LAU, STG, 13),
     Ticket(LCF, BER, 3),
     Ticket(LCF, LUC, 7),
-    Ticket(LCF, ZUR, 8),
+    Ticket(LCF, ZUR, 8), // 20
     Ticket(LUC, VAD, 6),
     Ticket(LUC, ZUR, 2),
     Ticket(LUG, COI, 10),
@@ -210,7 +210,7 @@ object ChMap:
     Ticket(SCE, STG, 4),
     Ticket(SCE, ZOU, 3),
     Ticket(STG, BRU, 9),
-    Ticket(WIN, SCZ, 3),
+    Ticket(WIN, SCZ, 3), // 30
     Ticket(ZUR, BAL, 4),
     Ticket(ZUR, BRU, 11),
     Ticket(ZUR, LUG, 9),

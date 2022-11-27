@@ -26,7 +26,9 @@
     :ownCards="ownCards"
     :ownRoutes="ownRoutes"
     :setupState="setupState"
-    :setupGameName="setupGameName" />
+    :setupGameName="setupGameName"
+    :possibleTickets="possibleTickets"
+    :onTicketsChosen="onTicketsChosen" />
   <Debug
   v-if="isDev()"
   :connected="connected"
@@ -57,7 +59,7 @@ export default {
       playAction: 'NOTHING',
       dataMsg: '',
       connected: true,
-      // GAME DATA
+      // GAME STATE DATA
       inGame: false,
       ownId: -1,
       player1Name: 'Player 1',
@@ -79,7 +81,9 @@ export default {
       ownRoutes: [],
       // SETUP GAME DATA
       setupState: '',
-      setupGameName: ''
+      setupGameName: '',
+      // Choosing initial or in-game tickets
+      possibleTickets: []
     }
   },
   methods: {
@@ -143,6 +147,8 @@ export default {
             const [state, gameName] = msg.data.split(' ')
             this.setupState = state
             this.setupGameName = gameName
+          } else if (msg.messageId === 'SET_INITIAL_TICKETS') {
+            this.possibleTickets = msg.data.split(',').map(e => parseInt(e))
           }
         })
       })
@@ -164,6 +170,10 @@ export default {
     },
     isDev () {
       return process.env.NODE_ENV === 'development'
+    },
+    onTicketsChosen (tickets) {
+      this.possibleTickets = []
+      this.sendRequest('PLAY', 'INITIAL_TICKETS_CHOSEN', tickets + '')
     }
   },
   mounted () {

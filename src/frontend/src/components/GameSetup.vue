@@ -4,14 +4,14 @@
       <h1>Setup</h1>
     <div class="form-group">
         <label for="nameInput">
-          <input v-model.trim="name" type="text" id="nameInput"
+          <input v-model.trim="name" type="text" id="nameInput" autocomplete="off"
          class="form-control" placeholder="Player Name" maxlength="25" required />
           <span>Player Name</span>
         </label>
     </div>
     <div v-if="isShortNameRequired" class="form-group">
         <label for="shortNameInput">
-          <input v-model.trim="gameName" type="text" id="shortNameInput" class="form-control"
+          <input v-model.trim="gameName" type="text" id="shortNameInput" class="form-control" autocomplete="off"
          placeholder="Game Name" maxlength="15" required />
          <span>Game Name</span>
         </label>

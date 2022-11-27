@@ -1,0 +1,700 @@
+{
+    "tickets" : [
+        {
+            "id": 0,
+            "from": [{
+                "id": 1,
+                "name": "Bâle"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Berne"
+            }],
+            "points": [5]
+        },
+        {
+            "id": 1,
+            "from": [{
+                "id": 1,
+                "name": "Bâle"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Brigue"
+            }],
+            "points": [10]
+        },
+        {
+            "id": 2,
+            "from": [{
+                "id": 1,
+                "name": "Bâle"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Saint-Gall"
+            }],
+            "points": [8]
+        },
+        {
+            "id": 3,
+            "from": [{
+                "id": 1,
+                "name": "Berne"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Coire"
+            }],
+            "points": [10]
+        },
+        {
+            "id": 4,
+            "from": [{
+                "id": 1,
+                "name": "Berne"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Lugano"
+            }],
+            "points": [12]
+        },
+        {
+            "id": 5,
+            "from": [{
+                "id": 1,
+                "name": "Berne"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Schwyz"
+            }],
+            "points": [5]
+        },
+        {
+            "id": 6,
+            "from": [{
+                "id": 1,
+                "name": "Berne"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Zürich"
+            }],
+            "points": [6]
+        },
+        {
+            "id": 7,
+            "from": [{
+                "id": 1,
+                "name": "Fribourg"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Lucerne"
+            }],
+            "points": [5]
+        },
+        {
+            "id": 8,
+            "from": [{
+                "id": 1,
+                "name": "Genève"
+            }],
+            "to":[ {
+                "id": 3,
+                "name": "Bâle"
+            }],
+            "points": [13]
+        },
+        {
+            "id": 9,
+            "from": [{
+                "id": 1,
+                "name": "Genève"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Berne"
+            }],
+            "points": [8]
+        },
+        {
+            "id": 10,
+            "from": [{
+                "id": 1,
+                "name": "Genève"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Sion"
+            }],
+            "points": [10]
+        },
+        {
+            "id": 11,
+            "from": [{
+                "id": 1,
+                "name": "Genève"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Zürich"
+            }],
+            "points": [14]
+        },
+        {
+            "id": 12,
+            "from": [{
+                "id": 1,
+                "name": "Interlaken"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Winterthour"
+            }],
+            "points": [7]
+        },
+        {
+            "id": 13,
+            "from": [{
+                "id": 1,
+                "name": "Kreuzlingen"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Zürich"
+            }],
+            "points": [3]
+        },
+        {
+            "id": 14,
+            "from": [{
+                "id": 1,
+                "name": "Lausanne"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Interlaken"
+            }],
+            "points": [7]
+        },
+        {
+            "id": 15,
+            "from": [{
+                "id": 1,
+                "name": "Lausanne"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Lucerne"
+            }],
+            "points": [8]
+        },
+        {
+            "id": 16,
+            "from": [{
+                "id": 1,
+                "name": "Lausanne"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Saint-Gall"
+            }],
+            "points": [13]
+        },
+        {
+            "id": 17,
+            "from": [{
+                "id": 1,
+                "name": "La Chaux-de-Fonds"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Berne"
+            }],
+            "points": [3]
+        },
+        {
+            "id": 18,
+            "from": [{
+                "id": 1,
+                "name": "La Chaux-de-Fonds"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Lucerne"
+            }],
+            "points": [7]
+        },
+        {
+            "id": 19,
+            "from": [{
+                "id": 1,
+                "name": "La Chaux-de-Fonds"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Zürich"
+            }],
+            "points": [8]
+        },
+        {
+            "id": 20,
+            "from": [{
+                "id": 1,
+                "name": "Lucerne"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Vaduz"
+            }],
+            "points": [6]
+        },
+        {
+            "id": 21,
+            "from": [{
+                "id": 1,
+                "name": "Lucerne"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Zürich"
+            }],
+            "points": [2]
+        },
+        {
+            "id": 22,
+            "from": [{
+                "id": 1,
+                "name": "Lugano"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Coire"
+            }],
+            "points": [10]
+        },
+        {
+            "id": 23,
+            "from": [{
+                "id": 1,
+                "name": "Neuchâtel"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Winterthour"
+            }],
+            "points": [9]
+        },
+        {
+            "id": 24,
+            "from": [{
+                "id": 1,
+                "name": "Olten"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Schaffhouse"
+            }],
+            "points": [5]
+        },
+        {
+            "id": 25,
+            "from": [{
+                "id": 1,
+                "name": "Schaffhouse"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Martigny"
+            }],
+            "points": [15]
+        },
+        {
+            "id": 26,
+            "from": [{
+                "id": 1,
+                "name": "Schaffhouse"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Saint-Gall"
+            }],
+            "points": [4]
+        },
+        {
+            "id": 27,
+            "from": [{
+                "id": 1,
+                "name": "Schaffhouse"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Zoug"
+            }],
+            "points": [3]
+        },
+        {
+            "id": 28,
+            "from": [{
+                "id": 1,
+                "name": "Saint-Gall"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Brusio"
+            }],
+            "points": [9]
+        },
+        {
+            "id": 29,
+            "from": [{
+                "id": 1,
+                "name": "Winterthour"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Schwyz"
+            }],
+            "points": [3]
+        },
+        {
+            "id": 30,
+            "from": [{
+                "id": 1,
+                "name": "Zürich"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Bâle"
+            }],
+            "points": [4]
+        },
+        {
+            "id": 31,
+            "from": [{
+                "id": 1,
+                "name": "Zürich"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Brusio"
+            }],
+            "points": [11]
+        },
+        {
+            "id": 32,
+            "from": [{
+                "id": 1,
+                "name": "Zürich"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Lugano"
+            }],
+            "points": [9]
+        },
+        {
+            "id": 33,
+            "from": [{
+                "id": 1,
+                "name": "Zürich"
+            }],
+            "to": [{
+                "id": 3,
+                "name": "Vaduz"
+            }],
+            "points": [6]
+        },
+        {
+            "id": 34,
+            "from": [{
+                "id": 1,
+                "name": "Berne"
+            }],
+            "to": [
+                {
+                    "id": 34,
+                    "name": "Allemagne"
+                },
+                {
+                    "id": 39,
+                    "name": "Autriche"
+                },
+                {
+                    "id": 42,
+                    "name": "Italie"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [6, 11, 8, 5]
+        },
+        {
+            "id": 35,
+            "from": [{
+                "id": 1,
+                "name": "Coire"
+            }],
+            "to": [
+                {
+                    "id": 34,
+                    "name": "Allemagne"
+                },
+                {
+                    "id": 39,
+                    "name": "Autriche"
+                },
+                {
+                    "id": 42,
+                    "name": "Italie"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [6, 3, 5, 12]
+        },
+        {
+            "id": 36,
+            "from": [{
+                "id": 1,
+                "name": "Lugano"
+            }],
+            "to": [
+                {
+                    "id": 34,
+                    "name": "Allemagne"
+                },
+                {
+                    "id": 39,
+                    "name": "Autriche"
+                },
+                {
+                    "id": 42,
+                    "name": "Italie"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [12, 13, 2, 14]
+        },
+        {
+            "id": 37,
+            "from": [{
+                "id": 1,
+                "name": "Zürich"
+            }],
+            "to": [
+                {
+                    "id": 34,
+                    "name": "Allemagne"
+                },
+                {
+                    "id": 39,
+                    "name": "Autriche"
+                },
+                {
+                    "id": 42,
+                    "name": "Italie"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [3, 7, 11, 7]
+        },
+        {
+            "id": 38,
+            "from": [{
+                "id": 34,
+                "name": "Allemagne"
+            }],
+            "to": [
+                {
+                    "id": 39,
+                    "name": "Autriche"
+                },
+                {
+                    "id": 42,
+                    "name": "Italie"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [5, 13, 5]
+        },
+        {
+            "id": 39,
+            "from": [{
+                "id": 34,
+                "name": "Allemagne"
+            }],
+            "to": [
+                {
+                    "id": 39,
+                    "name": "Autriche"
+                },
+                {
+                    "id": 42,
+                    "name": "Italie"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [5, 13, 5]
+        },
+        {
+            "id": 40,
+            "from": [{
+                "id": 39,
+                "name": "Autriche"
+            }],
+            "to": [
+                {
+                    "id": 34,
+                    "name": "Allemagne"
+                },
+                {
+                    "id": 42,
+                    "name": "Italie"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [5, 6, 13]
+        },
+        {
+            "id": 41,
+            "from": [{
+                "id": 39,
+                "name": "Autriche"
+            }],
+            "to": [
+                {
+                    "id": 34,
+                    "name": "Allemagne"
+                },
+                {
+                    "id": 42,
+                    "name": "Italie"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [5, 6, 13]
+        },
+        {
+            "id": 42,
+            "from": [{
+                "id": 42,
+                "name": "Italie"
+            }],
+            "to": [
+                {
+                    "id": 34,
+                    "name": "Allemagne"
+                },
+                {
+                    "id": 39,
+                    "name": "Autriche"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [13, 6, 11]
+        },
+        {
+            "id": 43,
+            "from": [{
+                "id": 42,
+                "name": "Italie"
+            }],
+            "to": [
+                {
+                    "id": 34,
+                    "name": "Allemagne"
+                },
+                {
+                    "id": 39,
+                    "name": "Autriche"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [13, 6, 11]
+        },
+        {
+            "id": 44,
+            "from": [{
+                "id": 47,
+                "name": "France"
+            }],
+            "to": [
+                {
+                    "id": 34,
+                    "name": "Allemagne"
+                },
+                {
+                    "id": 39,
+                    "name": "Autriche"
+                },
+                {
+                    "id": 42,
+                    "name": "Italie"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [5, 14, 11]
+        },
+        {
+            "id": 45,
+            "from": [{
+                "id": 47,
+                "name": "France"
+            }],
+            "to": [
+                {
+                    "id": 34,
+                    "name": "Allemagne"
+                },
+                {
+                    "id": 39,
+                    "name": "Autriche"
+                },
+                {
+                    "id": 42,
+                    "name": "Italie"
+                },
+                {
+                    "id": 47,
+                    "name": "France"
+                }
+            ],
+            "points": [5, 14, 11]
+        }
+    ]
+}

@@ -12,19 +12,19 @@
 
     <div class="tab__content">
       <div v-for="(msg, i) in generalMessages" :key="i">
-        <tr><td :class="msg.style"> <i>{{msg.author}}</i> : {{ msg.content }}</td></tr>
+        <tr><td :class="msg.style"> <span :class="msg.style">{{msg.author}}</span> : {{ msg.content }}</td></tr>
       </div>
     </div>
 
     <div class="tab__content">
       <div v-for="(msg, i) in gameMessage" :key="i">
-        <tr><td :class="msg.style"> <i>{{msg.author}}</i> : {{ msg.content }}</td></tr>
+        <tr><td :class="msg.style"> <span :class="msg.style">{{msg.author}}</span> : {{ msg.content }}</td></tr>
       </div>
     </div>
 
     <div class="tab__content">
       <div v-for="(msg, i) in displayedMessages" :key="i">
-        <tr><td :class="msg.style"> <i>{{msg.author}}</i> : {{ msg.content }}</td></tr>
+        <tr><td :class="msg.style"> <span :class="msg.style">{{msg.author}}</span> : {{ msg.content }}</td></tr>
       </div>
     </div>
     <form class="form-inline">
@@ -74,11 +74,20 @@ export default {
 <style scoped>
 
 .infoMsg {
-  color: green;
+  color: #444;
+}
+
+span.infoMsg {
+  font-weight: bold;
 }
 
 .chatMsg {
-  color: red;
+  color: #999;
+}
+
+span.chatMsg {
+  font-weight: bold;
+  font-style: italic;
 }
 
 .tab-wrap {
@@ -178,6 +187,8 @@ export default {
   z-index: -1;
   opacity: 0;
   left: 0;
+  font-size: 20px;
+  font-family: Helvetica, Arial, sans-serif;
   transform: translateY(-3px);
   border-radius: 6px;
 }
