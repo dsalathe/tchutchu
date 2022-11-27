@@ -28,8 +28,8 @@
       </div>
     </div>
     <form class="form-inline">
-      <input v-model="sendingMsg" type="text" class="form-control" placeholder="message...">
-      <button @click.prevent="send">Send</button>
+      <input class="text-message" v-model="sendingMsg" type="text" placeholder="message...">
+      <button class="send-button" @click.prevent="send">Send</button>
     </form>
   </div>
 </template>
@@ -84,13 +84,14 @@ export default {
 .tab-wrap {
   transition: 0.3s box-shadow ease;
   border-radius: 6px;
-  max-width: 30%;
+  max-width: 100%;
   display: flex;
+  height: 100%;
   flex-wrap: wrap;
   position: relative;
   list-style: none;
   background-color: #fff;
-  margin: 40px 0;
+  /* margin: 40px 0; */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
  .tab-wrap:hover {
@@ -171,7 +172,7 @@ export default {
   padding: 10px 25px;
   background-color: transparent;
   overflow-y: scroll;
-  height: 200px;
+  height: calc(100% - 94px);
   position: absolute;
   width: 100%;
   z-index: -1;
@@ -179,6 +180,20 @@ export default {
   left: 0;
   transform: translateY(-3px);
   border-radius: 6px;
+}
+
+.form-inline {
+  align-self: flex-end;
+  display: flex;
+  width: 100%;
+}
+
+.text-message {
+  flex: 1 0 150px;
+}
+
+.send-button {
+  flex: 0 0 50px;
 }
 /* boring stuff */
  body {

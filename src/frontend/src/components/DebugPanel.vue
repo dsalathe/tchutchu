@@ -18,7 +18,8 @@
                     <select v-model="metaAction" id="meta-action" class="form-control">
                         <option value="">--Please choose a meta option--</option>
                         <option value="INIT_GAME">INIT_GAME</option>
-                        <option value="JOIN_GAME">JOIN_GAME</option>
+                        <option value="JOIN_SPECIFIC_GAME">JOIN_GAME</option>
+                        <option value="JOIN_ANY_GAME">JOIN_ANY_GAME</option>
                         <option value="CHAT">CHAT</option>
                         <option value="PLAY">PLAY</option>
                     </select>
