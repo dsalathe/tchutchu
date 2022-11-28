@@ -147,7 +147,7 @@ export default {
             const [state, gameName] = msg.data.split(' ')
             this.setupState = state
             this.setupGameName = gameName
-          } else if (msg.messageId === 'SET_INITIAL_TICKETS') {
+          } else if (msg.messageId === 'SET_INITIAL_TICKETS' || msg.messageId === 'CHOOSE_TICKETS') {
             this.possibleTickets = msg.data.split(',').map(e => parseInt(e))
           }
         })
@@ -172,8 +172,9 @@ export default {
       return process.env.NODE_ENV === 'development'
     },
     onTicketsChosen (tickets) {
+      const playAction = this.possibleTickets.length === 5 ? 'INITIAL_TICKETS_CHOSEN' : 'ADDITIONAL_TICKETS_CHOSEN'
       this.possibleTickets = []
-      this.sendRequest('PLAY', 'INITIAL_TICKETS_CHOSEN', tickets + '')
+      this.sendRequest('PLAY', playAction, tickets + '')
     }
   },
   mounted () {
@@ -193,7 +194,7 @@ export default {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  max-width: 1920px;
+  max-width: 1720px;
 }
 
 nav {

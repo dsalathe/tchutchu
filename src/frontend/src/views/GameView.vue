@@ -8,15 +8,18 @@
         <div id="chat"><Chat :displayedMessages="displayedMessages" :sendChatMessage="sendChatMessage" :isInGame="inGame" /></div>
       </div>
       <div v-if="inGame" id="board">
-        <Board :displayedTickets="possibleTickets" :onTicketsSelected="onTicketsChosen" :dataMap="dataMap" />
+        <Board :displayedTickets="displayedTickets" :onTicketsSelected="onTicketsChosen" :dataMap="dataMap"
+        :isDisabled="isDisabled" :cards="ownCardsColor" :seizeRoute="seizeRoute" :isDrawing="isFirstCardDrawn" />
       </div>
       <div v-else id="game-setup">
         <GameSetup :sendSetupGame="sendSetupGame" :state="setupState" :chosenGameName="setupGameName" />
       </div>
-      <div v-if="inGame" id="deck">Deck</div>
+      <div v-if="inGame" id="deck"><Deck :cards="faceUpCardsColor" :deckTicketsSize="ticketsCount"
+        :deckCardsSize="deckSize" :deckDiscardSize="discardSize" :isDisabled="isDisabled"
+        :drawFirst="drawFirstCard" :drawSecond="drawSecondCard" :drawTickets="drawTickets" /></div>
     </div>
-    <div class="bottom">
-      <div id="player-state">Player State</div>
+    <div v-if="inGame" class="bottom">
+      <div id="player-state"><PlayerState :tickets="ownDisplayedTickets" :cards="ownCardsColor" /></div>
     </div>
   </div>
 </template>
@@ -27,6 +30,8 @@ import Chat from '@/components/Chat.vue'
 import Board from '@/components/BoardGame.vue'
 import StateInfo from '@/components/StateInfo.vue'
 import GameSetup from '@/components/GameSetup.vue'
+import Deck from '@/components/DeckHandler.vue'
+import PlayerState from '@/components/PlayerState.vue'
 import chMap from '@/chMap.json'
 
 export default {
@@ -35,14 +40,17 @@ export default {
     Chat,
     Board,
     StateInfo,
-    GameSetup
+    GameSetup,
+    Deck,
+    PlayerState
   },
   data () {
     return {
       metaAction: '',
       playAction: 'NOTHING',
       dataMsg: '',
-      dataMap: chMap
+      dataMap: chMap,
+      isFirstCardDrawn: false
     }
   },
   computed: {
@@ -68,6 +76,21 @@ export default {
         wagons: 40, // TO BE COMPUTED
         points: 0 // TO BE COMPUTED
       }
+    },
+    faceUpCardsColor () {
+      return this.faceUpCards.map(i => this.toCardColor(i))
+    },
+    ownCardsColor () {
+      return this.ownCards.map(this.toCardColor)
+    },
+    isDisabled () {
+      return this.possibleTickets.length || this.ownId !== this.currentPlayerId
+    },
+    ownDisplayedTickets () {
+      return this.ownTickets.map(t => ({ id: t, display: this.displayTicket(t) }))
+    },
+    displayedTickets () {
+      return this.possibleTickets.map(t => ({ id: t, display: this.displayTicket(t) }))
     }
   },
   methods: {
@@ -83,6 +106,30 @@ export default {
     },
     sendSetupGame (setupMode, msg) {
       this.sendRequest(setupMode, 'NOTHING', msg)
+    },
+    toCardColor (index) {
+      return ['BLACK', 'VIOLET', 'BLUE', 'GREEN', 'YELLOW', 'ORANGE', 'RED', 'WHITE', 'LOCOMOTIVE'][index]
+    },
+    drawFirstCard (index) {
+      this.isFirstCardDrawn = true
+      this.sendRequest('PLAY', 'PLAY_TURN', 'FIRST_CARD ' + index)
+    },
+    drawSecondCard (index) {
+      this.isFirstCardDrawn = false
+      this.sendRequest('PLAY', 'DRAW_SECOND', index)
+    },
+    drawTickets () {
+      this.sendRequest('PLAY', 'PLAY_TURN', 'ASK_MORE_TICKETS')
+    },
+    displayTicket (ticket) {
+      const ticketData = this.dataMap.tickets[ticket]
+      if (ticketData.to.length > 1) {
+        return ticketData.from[0].name + ' - {' + ticketData.to.map((to, i) => to.name + ' (' + ticketData.points[i] + ')').join(', ') + '}'
+      }
+      return ticketData.from[0].name + ' - ' + ticketData.to[0].name + ' (' + ticketData.points[0] + ')'
+    },
+    seizeRoute (index) {
+      this.sendRequest('PLAY', 'PLAY_TURN', 'CLAIMING_ROUTE ' + index + ' 4')
     }
   },
   props: ['sendRequest', 'inGame', 'messages', 'ownId', 'player1Name', 'player2Name', 'ticketsCount', 'currentPlayerId', 'lastPlayerId', 'faceUpCards',
@@ -113,7 +160,7 @@ export default {
 }
 
 .bottom {
-  flex: 1 0 150px;
+  flex: 0 0 110px;
   width: 100%;
   display: flex;
 }
@@ -139,12 +186,10 @@ export default {
 
 #deck {
   flex: 1 0 50px;
-  background-color: darkgoldenrod;
 }
 
 #player-state {
   width: 100%;
-  background-color: chartreuse;
 }
 
 </style>

@@ -1,4 +1,541 @@
 {
+    "routes" : [
+        {
+            "id": "AT1_STG_1",
+            "length": 4,
+            "level": "UNDERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "AT2_VAD_1",
+            "length": 1,
+            "level": "UNDERGROUND",
+            "color": "RED"
+        },
+        {
+            "id": "BAD_BAL_1",
+            "length": 3,
+            "level": "UNDERGROUND",
+            "color": "RED"
+        },
+        {
+            "id": "BAD_OLT_1",
+            "length": 2,
+            "level": "OVERGROUND",
+            "color": "VIOLET"
+        },
+        {
+            "id": "BAD_ZUR_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "YELLOW"
+        },
+        {
+            "id": "BAL_DE1_1",
+            "length": 1,
+            "level": "UNDERGROUND",
+            "color": "BLUE"
+        },
+        {
+            "id": "BAL_DEL_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "YELLOW"
+        },
+        {
+            "id": "BAL_OLT_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "ORANGE"
+        },
+        {
+            "id": "BEL_LOC_1",
+            "length": 1,
+            "level": "UNDERGROUND",
+            "color": "BLACK"
+        },
+        {
+            "id": "BEL_LUG_1",
+            "length": 1,
+            "level": "UNDERGROUND",
+            "color": "RED"
+        },
+        {
+            "id": "BEL_LUG_2",
+            "length": 1,
+            "level": "UNDERGROUND",
+            "color": "YELLOW"
+        },
+        {
+            "id": "BEL_WAS_1",
+            "length": 4,
+            "level": "UNDERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "BEL_WAS_2",
+            "length": 4,
+            "level": "UNDERGROUND",
+            "color": "NEUTRAL"
+        },
+
+
+
+
+
+
+        
+        {
+            "id": "BER_FRI_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "ORANGE"
+        },
+        {
+            "id": "BER_FRI_2",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "YELLOW"
+        },
+        {
+            "id": "BER_INT_1",
+            "length": 3,
+            "level": "OVERGROUND",
+            "color": "BLUE"
+        },
+        {
+            "id": "BER_LUC_1",
+            "length": 4,
+            "level": "OVERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "BER_LUC_2",
+            "length": 4,
+            "level": "OVERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "BER_NEU_1",
+            "length": 2,
+            "level": "OVERGROUND",
+            "color": "RED"
+        },
+        {
+            "id": "BER_SOL_1",
+            "length": 2,
+            "level": "OVERGROUND",
+            "color": "BLACK"
+        },
+        {
+            "id": "BRI_INT_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "WHITE"
+        },
+        {
+            "id": "BRI_IT5_1",
+            "length": 3,
+            "level": "UNDERGROUND",
+            "color": "GREEN"
+        },
+        {
+            "id": "BRI_LOC_1",
+            "length": 6,
+            "level": "UNDERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "BRI_SIO_1",
+            "length": 3,
+            "level": "UNDERGROUND",
+            "color": "BLACK"
+        },
+        {
+            "id": "BRI_WAS_1",
+            "length": 4,
+            "level": "UNDERGROUND",
+            "color": "RED"
+        },
+        {
+            "id": "BRU_COI_1",
+            "length": 5,
+            "level": "UNDERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "BRU_DAV_1",
+            "length": 4,
+            "level": "UNDERGROUND",
+            "color": "BLUE"
+        },
+        {
+            "id": "BRU_IT2_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "GREEN"
+        },
+        {
+            "id": "COI_DAV_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "VIOLET"
+        },
+        {
+            "id": "COI_SAR_1",
+            "length": 1,
+            "level": "UNDERGROUND",
+            "color": "WHITE"
+        },
+        {
+            "id": "COI_WAS_1",
+            "length": 5,
+            "level": "UNDERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "DAV_AT3_1",
+            "length": 3,
+            "level": "UNDERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "DAV_IT1_1",
+            "length": 3,
+            "level": "UNDERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "DAV_SAR_1",
+            "length": 3,
+            "level": "UNDERGROUND",
+            "color": "BLACK"
+        },
+        {
+            "id": "DE2_SCE_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "YELLOW"
+        },
+        {
+            "id": "DE3_KRE_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "ORANGE"
+        },
+        {
+            "id": "DE4_KRE_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "WHITE"
+        },
+        {
+            "id": "DE5_STG_1",
+            "length": 2,
+            "level": "OVERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "DEL_FR4_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "BLACK"
+        },
+        {
+            "id": "DEL_LCF_1",
+            "length": 3,
+            "level": "UNDERGROUND",
+            "color": "WHITE"
+        },
+        {
+            "id": "DEL_SOL_1",
+            "length": 1,
+            "level": "UNDERGROUND",
+            "color": "VIOLET"
+        },
+        {
+            "id": "FR1_MAR_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "FR2_GEN_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "YELLOW"
+        },
+        {
+            "id": "FR3_LCF_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "GREEN"
+        },
+        {
+            "id": "FRI_LAU_1",
+            "length": 3,
+            "level": "OVERGROUND",
+            "color": "RED"
+        },
+        {
+            "id": "FRI_LAU_2",
+            "length": 3,
+            "level": "OVERGROUND",
+            "color": "VIOLET"
+        },
+        {
+            "id": "GEN_LAU_1",
+            "length": 4,
+            "level": "OVERGROUND",
+            "color": "BLUE"
+        },
+        {
+            "id": "GEN_LAU_2",
+            "length": 4,
+            "level": "OVERGROUND",
+            "color": "WHITE"
+        },
+        {
+            "id": "GEN_YVE_1",
+            "length": 6,
+            "level": "OVERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "INT_LUC_1",
+            "length": 4,
+            "level": "OVERGROUND",
+            "color": "VIOLET"
+        },
+        {
+            "id": "IT3_LUG_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "WHITE"
+        },
+        {
+            "id": "IT4_LOC_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "ORANGE"
+        },
+        {
+            "id": "KRE_SCE_1",
+            "length": 3,
+            "level": "OVERGROUND",
+            "color": "VIOLET"
+        },
+        {
+            "id": "KRE_STG_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "GREEN"
+        },
+        {
+            "id": "KRE_WIN_1",
+            "length": 2,
+            "level": "OVERGROUND",
+            "color": "YELLOW"
+        },
+        {
+            "id": "LAU_MAR_1",
+            "length": 4,
+            "level": "UNDERGROUND",
+            "color": "ORANGE"
+        },
+        {
+            "id": "LAU_NEU_1",
+            "length": 4,
+            "level": "OVERGROUND",
+            "color": "NEUTRAL"
+        },
+        {
+            "id": "LCF_NEU_1",
+            "length": 1,
+            "level": "UNDERGROUND",
+            "color": "ORANGE"
+        },
+        {
+            "id": "LCF_YVE_1",
+            "length": 3,
+            "level": "UNDERGROUND",
+            "color": "YELLOW"
+        },
+        {
+            "id": "LOC_LUG_1",
+            "length": 1,
+            "level": "UNDERGROUND",
+            "color": "VIOLET"
+        },
+        {
+            "id": "LUC_OLT_1",
+            "length": 3,
+            "level": "OVERGROUND",
+            "color": "GREEN"
+        },
+        {
+            "id": "LUC_SCZ_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "BLUE"
+        },
+        {
+            "id": "LUC_ZOU_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "ORANGE"
+        },
+        {
+            "id": "LUC_ZOU_2",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "YELLOW"
+        },
+        {
+            "id": "MAR_SIO_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "GREEN"
+        },
+        {
+            "id": "NEU_SOL_1",
+            "length": 4,
+            "level": "OVERGROUND",
+            "color": "GREEN"
+        },
+        {
+            "id": "NEU_YVE_1",
+            "length": 2,
+            "level": "OVERGROUND",
+            "color": "BLACK"
+        },
+        {
+            "id": "OLT_SOL_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "BLUE"
+        },
+        {
+            "id": "OLT_ZUR_1",
+            "length": 3,
+            "level": "OVERGROUND",
+            "color": "WHITE"
+        },
+        {
+            "id": "PFA_SAR_1",
+            "length": 3,
+            "level": "UNDERGROUND",
+            "color": "YELLOW"
+        },
+        {
+            "id": "PFA_SCZ_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "VIOLET"
+        },
+        {
+            "id": "PFA_STG_1",
+            "length": 3,
+            "level": "OVERGROUND",
+            "color": "ORANGE"
+        },
+        {
+            "id": "PFA_ZUR_1",
+            "length": 2,
+            "level": "OVERGROUND",
+            "color": "BLUE"
+        },
+        {
+            "id": "SAR_VAD_1",
+            "length": 1,
+            "level": "UNDERGROUND",
+            "color": "ORANGE"
+        },
+        {
+            "id": "SCE_WIN_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "BLACK"
+        },
+        {
+            "id": "SCE_WIN_2",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "WHITE"
+        },
+        {
+            "id": "SCE_ZUR_1",
+            "length": 3,
+            "level": "OVERGROUND",
+            "color": "ORANGE"
+        },
+        {
+            "id": "SCZ_WAS_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "GREEN"
+        },
+        {
+            "id": "SCZ_WAS_2",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "YELLOW"
+        },
+        {
+            "id": "SCZ_ZOU_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "BLACK"
+        },
+        {
+            "id": "SCZ_ZOU_2",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "WHITE"
+        },
+        {
+            "id": "STG_VAD_1",
+            "length": 2,
+            "level": "UNDERGROUND",
+            "color": "BLUE"
+        },
+        {
+            "id": "STG_WIN_1",
+            "length": 3,
+            "level": "OVERGROUND",
+            "color": "RED"
+        },
+        {
+            "id": "STG_ZUR_1",
+            "length": 4,
+            "level": "OVERGROUND",
+            "color": "BLACK"
+        },
+        {
+            "id": "WIN_ZUR_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "BLUE"
+        },
+        {
+            "id": "WIN_ZUR_2",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "VIOLET"
+        },
+        {
+            "id": "ZOU_ZUR_1",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "GREEN"
+        },
+        {
+            "id": "ZOU_ZUR_2",
+            "length": 1,
+            "level": "OVERGROUND",
+            "color": "RED"
+        }
+    ],
     "tickets" : [
         {
             "id": 0,
@@ -662,10 +1199,6 @@
                 {
                     "id": 42,
                     "name": "Italie"
-                },
-                {
-                    "id": 47,
-                    "name": "France"
                 }
             ],
             "points": [5, 14, 11]
@@ -688,10 +1221,6 @@
                 {
                     "id": 42,
                     "name": "Italie"
-                },
-                {
-                    "id": 47,
-                    "name": "France"
                 }
             ],
             "points": [5, 14, 11]

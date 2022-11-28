@@ -115,6 +115,7 @@ object Game:
     val players = gs.playerMap
     require(slot == Constants.DECK_SLOT || Constants.FACE_UP_CARD_SLOTS.contains(slot))
     val recreatedState: GameState = gs.withCardsDeckRecreatedIfNeeded
+    require(recreatedState.cardState.deckSize >= 2)
     if slot == Constants.DECK_SLOT then
       val withDrawnState: GameState = recreatedState.withBlindlyDrawnCard(nthCard)
       broadcastInfo(players, gs.currentPlayer.getInfo.drewBlindCard)

@@ -187,7 +187,6 @@ span.chatMsg {
   z-index: -1;
   opacity: 0;
   left: 0;
-  font-size: 20px;
   font-family: Helvetica, Arial, sans-serif;
   transform: translateY(-3px);
   border-radius: 6px;

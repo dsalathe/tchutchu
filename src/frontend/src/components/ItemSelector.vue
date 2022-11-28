@@ -2,7 +2,7 @@
   <div class="selector">
     <h3><slot>Select items</slot></h3>
     <button v-for="(item, i) in items" :key="i" :class="{itemChoice: true, selected: isSelected(item.id)}" @click="triggerItem(item.id)">{{item.display}}</button>
-    <button class="confirmer" @click="onConfirm">Confirm choice </button>
+    <button class="confirmer" @click="onConfirm" :disabled="!isThereEnoughTickets">Confirm choice </button>
   </div>
 </template>
 
@@ -24,12 +24,17 @@ export default {
       }
     },
     onConfirm () {
-      if (this.selectedItems.size >= parseInt(this.minItems)) {
+      if (this.isThereEnoughTickets) {
         this.confirmChoice([...this.selectedItems])
       }
     },
     isSelected (item) {
       return this.selectedItems.has(item)
+    }
+  },
+  computed: {
+    isThereEnoughTickets () {
+      return this.selectedItems.size >= parseInt(this.minItems)
     }
   }
 }
@@ -97,5 +102,11 @@ button:hover {
   outline: var(--outline);
   outline-width: 8px;
   outline-offset: -8px;
+}
+
+.confirmer:disabled,
+.confirmer[disabled]:hover {
+  background-color: #ccc;
+  outline-width: 0px;
 }
 </style>
