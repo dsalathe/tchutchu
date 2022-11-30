@@ -78,13 +78,6 @@
             "level": "UNDERGROUND",
             "color": "NEUTRAL"
         },
-
-
-
-
-
-
-        
         {
             "id": "BER_FRI_1",
             "length": 1,
@@ -211,6 +204,11 @@
             "level": "UNDERGROUND",
             "color": "BLACK"
         },
+
+
+
+
+
         {
             "id": "DE2_SCE_1",
             "length": 1,
