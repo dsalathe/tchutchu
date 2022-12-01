@@ -28,7 +28,9 @@
     :setupState="setupState"
     :setupGameName="setupGameName"
     :possibleTickets="possibleTickets"
-    :onTicketsChosen="onTicketsChosen" />
+    :onTicketsChosen="onTicketsChosen"
+    :additionalCardsOptions="additionalCardsOptions"
+    :onCardsForTunnelChosen="onCardsForTunnelChosen" />
   <Debug
   v-if="isDev()"
   :connected="connected"
@@ -43,6 +45,7 @@
 
 import SockJS from 'sockjs-client'
 import Stomp from 'webstomp-client'
+import JSConfetti from 'js-confetti'
 
 import Debug from '@/components/DebugPanel.vue'
 
@@ -83,7 +86,9 @@ export default {
       setupState: '',
       setupGameName: '',
       // Choosing initial or in-game tickets
-      possibleTickets: []
+      possibleTickets: [],
+      // TUNNEL CLAIMING CARDS
+      additionalCardsOptions: []
     }
   },
   methods: {
@@ -142,13 +147,24 @@ export default {
             const [ownTickets, ownCards, ownRoutes] = ownState.split(';')
             this.ownTickets = ownTickets === '' ? this.ownTickets : ownTickets.split(',').map(e => parseInt(e))
             this.ownCards = ownCards === '' ? this.ownCards : ownCards.split(',').map(e => parseInt(e))
-            this.ownRoutes = ownRoutes === '' ? this.ownRoutes : ownRoutes.splt(',').map(e => parseInt(e))
+            this.ownRoutes = ownRoutes === '' ? this.ownRoutes : ownRoutes.split(',').map(e => parseInt(e))
           } else if (msg.messageId === 'GAME_ID') {
             const [state, gameName] = msg.data.split(' ')
             this.setupState = state
             this.setupGameName = gameName
           } else if (msg.messageId === 'SET_INITIAL_TICKETS' || msg.messageId === 'CHOOSE_TICKETS') {
             this.possibleTickets = msg.data.split(',').map(e => parseInt(e))
+          } else if (msg.messageId === 'CHOOSE_ADDITIONAL_CARDS') {
+            console.log(msg.data)
+            console.log(msg.data.split(';'))
+            console.log(msg.data.split(';').map(l => l.split(',').map(e => parseInt(e))))
+            const additionalCardsOptions = msg.data.split(';').map(l => l.split(',').map(e => parseInt(e)))
+            this.additionalCardsOptions = additionalCardsOptions
+          } else if (msg.messageId === 'CONGRATULATE') {
+            const confetti = new JSConfetti()
+            confetti.addConfetti()
+            setInterval(() => confetti.addConfetti(), 2000)
+            setInterval(() => confetti.addConfetti(), 3000)
           }
         })
       })
@@ -175,6 +191,10 @@ export default {
       const playAction = this.possibleTickets.length === 5 ? 'INITIAL_TICKETS_CHOSEN' : 'ADDITIONAL_TICKETS_CHOSEN'
       this.possibleTickets = []
       this.sendRequest('PLAY', playAction, tickets + '')
+    },
+    onCardsForTunnelChosen (cards) {
+      this.additionalCardsOptions = []
+      this.sendRequest('PLAY', 'ADDITIONAL_CARDS_CHOSEN', cards)
     }
   },
   mounted () {

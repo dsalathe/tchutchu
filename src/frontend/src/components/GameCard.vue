@@ -28,7 +28,7 @@ img {
   background-color: violet;
 }
 .BLUE {
-  background-color: blue;
+  background-color:deepskyblue;
 }
 .GREEN {
   background-color: green;

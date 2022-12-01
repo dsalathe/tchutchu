@@ -2,12 +2,18 @@
   <div id="board-game">
     <div v-for="(r, i) in dataMap.routes" :key="r.id" class="route">
       <div v-for="chunk in r.length" :key="r.id+'_'+chunk+i" :id="r.id+'_'+chunk" @mouseover="increaseRoute(i)" @mouseleave="decreaseRoute(i)"
-      :style="{ backgroundColor: getStyle(r), border: getBorder(r), scale: getTransform(r, i)}" @click="seize(r, i)"
-      class="chunk" :underground="isUnderground(r)">
+      :style="{ backgroundColor: getStyle(r, i), border: getBorder(r, i), scale: getTransform(r, i)}" @click="seize(r, i)"
+      class="chunk">{{ getContent(i) }}
       </div>
     </div>
     <ItemSelector v-if="displayedTickets.length" :items="displayedTickets" :confirmChoice="onTicketsSelected" :minItems="minItems"
-    class="selector" >Please select at least {{ minItems }} ticket{{minItems > 1 ? 's' : ''}}</ItemSelector>
+    maxItems="5" :areCards="false" class="selector" >Please select at least {{ minItems }} ticket{{minItems > 1 ? 's' : ''}}</ItemSelector>
+    <ItemSelector v-if="possibleCardsForSeizingDisplayed.length" :items="possibleCardsForSeizingDisplayed"
+    :confirmChoice="OnCardsForSeizing" :minItems="1" :areCards="true"
+    :maxItems="1" class="selector" >Select how you want to seize the route</ItemSelector>
+    <ItemSelector v-if="tunnelAdditonalCards.length" :items="tunnelAddtionalCardsDisplayed"
+    :confirmChoice="OnCardsForSeizingTunnel" :minItems="0" :areCards="true"
+    :maxItems="1" class="selector" >Only select an option if you want to pursue</ItemSelector>
     <img src="/img/game/map.png" alt="Board Game"/>
   </div>
 </template>
@@ -21,26 +27,48 @@ export default {
   components: {
     ItemSelector
   },
-  props: ['displayedTickets', 'onTicketsSelected', 'dataMap', 'isDisabled', 'cards', 'seizeRoute', 'isDrawing'],
+  props: ['displayedTickets', 'onTicketsSelected', 'dataMap', 'isDisabled', 'cards',
+    'seizeRoute', 'isDrawing', 'takenRoutesP1', 'takenRoutesP2', 'tunnelAdditonalCards', 'seizeTunnel'],
   data () {
     return {
-      routesSize: Array.from({ length: 100 }, _ => false)
+      routesSize: Array.from({ length: 100 }, _ => false),
+      colorNames: ['BLACK', 'VIOLET', 'BLUE', 'GREEN', 'YELLOW', 'ORANGE', 'RED', 'WHITE'],
+      routeToBeTaken: -1,
+      possibleCardsForSeizing: []
     }
   },
   computed: {
     minItems () {
       return this.displayedTickets.length === 5 ? 3 : 1
+    },
+    possibleCardsForSeizingDisplayed () {
+      return this.possibleCardsForSeizing.map(a => ({ id: a.join(','), display: this.countsToFlattenCards(a).join('|') }))
+    },
+    tunnelAddtionalCardsDisplayed () {
+      return this.tunnelAdditonalCards.map(a => ({ id: a.join(','), display: a.map(i => i === 8 ? 'LOCOMOTIVE' : this.colorNames[i]).join('|') }))
+    },
+    takenRoutes () {
+      return this.takenRoutesP1.concat(this.takenRoutesP2)
     }
   },
   methods: {
+    countsToFlattenCards (counts) {
+      const [count1, color1, count2, color2] = counts
+      return Array(count1).fill(this.colorNames[color1]).concat(Array(count2).fill(color2 === 8 ? 'LOCOMOTIVE' : this.colorNames[color2]))
+    },
     isUnderground (route) {
       return route.level === 'UNDERGROUND'
     },
-    getStyle (route) {
+    getStyle (route, index) {
+      if (this.takenRoutesP1.includes(index)) {
+        return 'lightpink'
+      } else if (this.takenRoutesP2.includes(index)) {
+        return 'lightblue'
+      }
       return {
         BLACK: 'rgb(70,70,70)',
         VIOLET: 'violet',
-        BLUE: 'blue',
+        BLUE: 'deepskyblue',
         GREEN: 'green',
         YELLOW: 'yellow',
         ORANGE: 'orange',
@@ -49,7 +77,10 @@ export default {
         NEUTRAL: 'lightgray'
       }[route.color]
     },
-    getBorder (route) {
+    getBorder (route, index) {
+      if (this.takenRoutes.includes(index)) {
+        return '1px dotted black'
+      }
       return route.level === 'UNDERGROUND' ? '2px dashed black' : '2px solid black'
     },
     increaseRoute (index) {
@@ -59,20 +90,57 @@ export default {
       this.routesSize[index] = false
     },
     getTransform (route, index) {
-      return this.routesSize[index] && !this.isDisabled && this.canClaim(route) && !this.isDrawing ? 1.1 : 1
+      return this.routesSize[index] && !this.isDisabled && this.canClaim(route) && !this.isDrawing && !(this.takenRoutes.includes(index)) ? 1.1 : 1
     },
     canClaim (route) {
-      const nLoco = this.cards.filter(c => c === 'LOCOMOTIVE').length
+      const nLoco = route.level === 'OVERGROUND' ? 0 : this.cards.filter(c => c === 'LOCOMOTIVE').length
       if (route.color !== 'NEUTRAL') {
         return this.cards.filter(c => c === route.color).length + nLoco >= route.length
       }
-      return ['BLACK', 'VIOLET', 'BLUE', 'GREEN', 'YELLOW', 'ORANGE', 'RED', 'WHITE']
-        .some(color => this.cards.filter(card => card === color).length >= (route.length - nLoco))
+      return this.colorNames.some(color => this.cards.filter(card => card === color).length >= (route.length - nLoco))
     },
     seize (route, index) {
-      if (this.canClaim(route) && !this.isDisabled && !this.isDrawing) {
-        this.seizeRoute(index)
+      if (this.canClaim(route) && !this.isDisabled && !this.isDrawing && !(this.takenRoutes.includes(index))) {
+        const possibleCards = []
+        const route = this.dataMap.routes[index]
+        const maxLoco = route.level === 'OVERGROUND' ? 0 : this.cards.filter(c => c === 'LOCOMOTIVE').length
+        for (let i = 0; i <= Math.min(maxLoco, route.length); i++) {
+          let j = -1
+          for (const color of this.colorNames) {
+            j++
+            if ((route.color === 'NEUTRAL' || route.color === color) &&
+              this.cards.filter(c => c === color).length >= route.length - i) {
+              possibleCards.push([route.length - i, j, i, 8])
+              if (route.length - i === 0) {
+                break
+              }
+            }
+          }
+        }
+        console.log(possibleCards)
+        if (possibleCards.length === 1) {
+          this.sendRouteSeized(index, possibleCards[0])
+        } else {
+          this.routeToBeTaken = index
+          this.possibleCardsForSeizing = possibleCards
+        }
       }
+    },
+    sendRouteSeized (index, counts) {
+      const [count1, color1, count2, color2] = counts
+      const arrayCards = Array(count1).fill(color1).concat(Array(count2).fill(color2))
+      this.seizeRoute(index, arrayCards)
+    },
+    OnCardsForSeizing (item) {
+      this.sendRouteSeized(this.routeToBeTaken, item[0].split(',').map(c => parseInt(c)))
+      this.routeToBeTaken = -1
+      this.possibleCardsForSeizing = []
+    },
+    OnCardsForSeizingTunnel (item) {
+      this.seizeTunnel(item)
+    },
+    getContent (index) {
+      return this.takenRoutes.includes(index) ? 'X' : ''
     }
   }
 }

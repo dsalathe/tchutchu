@@ -122,6 +122,8 @@ class RandomPlayer extends Player:
 
   override def sendChatMessage(msg: String): Unit = ???
 
+  override def congratulate(): Unit = ???
+
   override def chooseAdditionalCards(options: List[SortedBag[Card]]): Unit =//SortedBag[Card] =
     registerCall(PlayerMethod.CHOOSE_ADDITIONAL_CARDS)
     //if nextInt(ABANDON_TUNNEL_ODDS) == 0 then SortedBag.of() else options(nextInt(options.size))

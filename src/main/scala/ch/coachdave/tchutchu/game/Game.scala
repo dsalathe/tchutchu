@@ -32,9 +32,9 @@ object Game:
     require(action == gs.getNextExpectedAction, s"received action was $action but ${gs.getNextExpectedAction} was expected")
     require(currentPlayerId == gs.currentPlayerId || action == INITIAL_TICKETS_CHOSEN, s"with $action, received action from $currentPlayerId but expected ${gs.currentPlayerId}")
     require(!gs.isOver)
-    if gs.lastTurnBegins then endPhase(gs) else playingPhase(gs, currentPlayerId, action, data)
+    if gs.isOver then endPhase(gs) else playingPhase(gs, currentPlayerId, action, data) //TODO useful to check isOver here?
 
-  private def endPhase(gs: GameState): GameState =
+  def endPhase(gs: GameState): GameState =
     val players: Map[PlayerId, Player] = gs.playerMap
     val trails: Map[PlayerId, Trail] = PlayerId.ALL.map(pId => pId -> Trail.longest(gs.playerState(pId).get.routes)).toMap
     val maximum: Int = trails.values.maxBy(_.length).length
@@ -46,9 +46,11 @@ object Game:
     //2 players only. Need to readjust infos for more players
     if points.head > points.tail.head then
       broadcastInfo(players, players(PlayerId.PLAYER_1).getInfo.won(points.head, points.tail.head))
+      players(PlayerId.PLAYER_1).congratulate()
 
     else if points(1) > points.head then
       broadcastInfo(players, players(PlayerId.PLAYER_2).getInfo.won(points(1), points.head))
+      players(PlayerId.PLAYER_2).congratulate()
 
     else
       val playerNames: List[String] = players.values.toList.map(_.getInfo.getPlayerName)
@@ -93,7 +95,7 @@ object Game:
         val chosenAdditionalCards: SortedBag[Card] = bagOfCard.deserialize(data)
         if chosenAdditionalCards.isEmpty then
           broadcastInfo(players, gs.currentPlayer.getInfo.didNotClaimRoute(claimedRoute))
-          gs.forNextTurn
+          gs.passTurn
 
         else
           broadcastInfo(gs.playerMap, gs.currentPlayer.getInfo.claimedRoute(claimedRoute, initialClaimCards))
@@ -115,7 +117,7 @@ object Game:
     val players = gs.playerMap
     require(slot == Constants.DECK_SLOT || Constants.FACE_UP_CARD_SLOTS.contains(slot))
     val recreatedState: GameState = gs.withCardsDeckRecreatedIfNeeded
-    require(recreatedState.cardState.deckSize >= 2)
+    require(recreatedState.cardState.deckSize >= 1)
     if slot == Constants.DECK_SLOT then
       val withDrawnState: GameState = recreatedState.withBlindlyDrawnCard(nthCard)
       broadcastInfo(players, gs.currentPlayer.getInfo.drewBlindCard)
@@ -155,7 +157,7 @@ object Game:
         val options: List[SortedBag[Card]] = backToDiscardState.currentPlayerState.possibleAdditionalCards(additionalCardCount, initialClaimCards, drawnCards)
         if options.isEmpty then
           broadcastInfo(players, player.getInfo.didNotClaimRoute(claimedRoute))
-          backToDiscardState.forNextTurn
+          backToDiscardState.passTurn
         else
           player.chooseAdditionalCards(options)
           backToDiscardState.waitingForAdditionalCards(claimedRoute, initialClaimCards)

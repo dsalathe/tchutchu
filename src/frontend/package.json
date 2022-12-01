@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "js-confetti": "^0.11.0",
     "register-service-worker": "^1.7.2",
     "sockjs-client": "^1.6.1",
     "vue": "^3.2.13",

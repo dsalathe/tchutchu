@@ -81,17 +81,19 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
     new GameState(tickets, cardState.withoutTopDeckCard, currentPlayerId, players, withAction(p => p.withAddedCard(cardState.topDeckCard)), lastPlayer, nextAction).forNextTurn
 
   def withClaimedRoute(route: Route, cards: SortedBag[Card]): GameState =
+    require(playerStates.values.forall(p => !(p.routes contains route)), s"$route is already taken!")
     require(playerStates(currentPlayerId).canClaimRoute(route), s"$currentPlayerId is not authorized to claim route $route")
     require(nextExpectedAction == PLAY_TURN || nextExpectedAction == ADDITIONAL_CARDS_CHOSEN)
+    require(route.possibleClaimCards.exists(cards.contains), s"Given cards $cards are not valid to take route $route")
     new GameState(tickets, cardState.withMoreDiscardedCards(cards), currentPlayerId, players,
-      withAction(p => p.withClaimedRoute(route, cards)), lastPlayer, nextExpectedAction).forNextTurn
+      withAction(p => p.withClaimedRoute(route, cards)), lastPlayer, PLAY_TURN).forNextTurn
   
 
   // Group 3: Handling last turn
 
   def lastTurnBegins: Boolean = lastPlayer.isEmpty && playerStates(currentPlayerId).carCount <= 2
 
-  def isOver: Boolean = lastPlayer.isDefined
+  def isOver: Boolean = lastPlayer.isDefined && lastPlayer.get == currentPlayerId
   
   def waitingForAdditionalCards(claimedRoute: Route, initialClaimCards: SortedBag[Card]): GameState =
     new GameState(tickets, cardState, currentPlayerId, players, playerStates, lastPlayer,
@@ -118,10 +120,13 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
     new GameState(tickets, cardState, currentPlayerId, players + (playerId -> player), playerStates, lastPlayer, nextAction)
 
   def forNextTurn: GameState =
-    if nextExpectedAction == PLAY_TURN then
+    if nextExpectedAction == PLAY_TURN || nextExpectedAction == ADDITIONAL_CARDS_CHOSEN then
       new GameState(tickets, cardState, currentPlayerId.next, players, playerStates, if lastTurnBegins then Some(currentPlayerId) else lastPlayer, nextExpectedAction)
     else
       this
+
+  def passTurn: GameState =
+    new GameState(tickets, cardState, currentPlayerId.next, players, playerStates, if lastTurnBegins then Some(currentPlayerId) else lastPlayer, PLAY_TURN)
 
 
 object GameState:

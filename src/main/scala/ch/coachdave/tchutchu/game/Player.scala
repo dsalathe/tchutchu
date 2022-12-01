@@ -14,23 +14,25 @@ trait Player:
 
   def setInitialTicketChoice(tickets: SortedBag[Ticket]): Unit
 
-  def chooseInitialTickets: Unit // SortedBag[Ticket]
+  def chooseInitialTickets: Unit
 
-  def nextTurn: Unit //TurnKind
+  def nextTurn: Unit
 
-  def chooseTickets(options: SortedBag[Ticket]): Unit // SortedBag[Ticket]
+  def chooseTickets(options: SortedBag[Ticket]): Unit
 
-  def drawSlot: Unit //Int
+  def drawSlot: Unit
 
-  def claimedRoute: Unit //Route
+  def claimedRoute: Unit
 
-  def initialClaimCards: Unit //SortedBag[Card]
+  def initialClaimCards: Unit
 
-  def chooseAdditionalCards(options: List[SortedBag[Card]]): Unit //SortedBag[Card]
+  def chooseAdditionalCards(options: List[SortedBag[Card]]): Unit
   
   def getInfo: Info
   
   def sendChatMessage(msg: String): Unit
+
+  def congratulate(): Unit
 
 
 

@@ -7,6 +7,10 @@
     position: absolute;
     width: 1%;
     height: 4%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: slategray;
   }
   
   #AT1_STG_1_1 {

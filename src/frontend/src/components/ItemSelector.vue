@@ -1,15 +1,23 @@
 <template>
   <div class="selector">
     <h3><slot>Select items</slot></h3>
-    <button v-for="(item, i) in items" :key="i" :class="{itemChoice: true, selected: isSelected(item.id)}" @click="triggerItem(item.id)">{{item.display}}</button>
-    <button class="confirmer" @click="onConfirm" :disabled="!isThereEnoughTickets">Confirm choice </button>
+    <button v-for="(item, i) in items" :key="i"
+    :class="{itemChoice: true, selected: isSelected(item.id)}"
+    @click="triggerItem(item.id)">{{displayItem(item.display)}}
+    <span v-for="card in listOfCards(i)" :key="card"> <GameCard :color="card" class="smallCard" /> </span></button>
+    <button class="confirmer" @click="onConfirm" :disabled="!isThereEnoughItems">Confirm choice </button>
   </div>
 </template>
 
 <script>
 
+import GameCard from '@/components/GameCard.vue'
+
 export default {
-  props: ['items', 'confirmChoice', 'minItems'],
+  props: ['items', 'confirmChoice', 'minItems', 'maxItems', 'areCards'],
+  components: {
+    GameCard
+  },
   data () {
     return {
       selectedItems: new Set()
@@ -24,17 +32,28 @@ export default {
       }
     },
     onConfirm () {
-      if (this.isThereEnoughTickets) {
+      if (this.isThereEnoughItems) {
         this.confirmChoice([...this.selectedItems])
       }
     },
     isSelected (item) {
       return this.selectedItems.has(item)
+    },
+    displayItem (item) { // TODO find a better way to display cards than special logic here
+      if (this.areCards) {
+        return ''
+      }
+      return item
+    },
+    listOfCards (i) {
+      return this.areCards ? this.items[i].display.split('|') : []
     }
   },
   computed: {
-    isThereEnoughTickets () {
-      return this.selectedItems.size >= parseInt(this.minItems)
+    isThereEnoughItems () {
+      const min = parseInt(this.minItems)
+      const max = parseInt(this.maxItems)
+      return (min === -1 || this.selectedItems.size >= min) && (max === -1 || this.selectedItems.size <= max)
     }
   }
 }
@@ -72,6 +91,8 @@ button:hover {
   border-radius: 10px;
   background-color: rgb(189, 190, 115);
   opacity: 0.25;
+  max-height: 600px;
+  overflow-y: scroll;
 }
 
 .selector:hover {
@@ -108,5 +129,13 @@ button:hover {
 .confirmer[disabled]:hover {
   background-color: #ccc;
   outline-width: 0px;
+}
+
+.smallCard {
+  height: 70px;
+  width: 40px;
+  rotate: 90deg;
+  margin: -10px 20px -10px 20px;
+
 }
 </style>

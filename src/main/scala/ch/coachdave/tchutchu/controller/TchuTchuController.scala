@@ -74,6 +74,7 @@ class TchuTchuController {
         val newGameState = Game.updateGame(gameIdToGameState(gameId), userIdToPlayerId(userId), message.playAction, message.data)
 
         if newGameState.isOver then {
+          Game.endPhase(newGameState)
           gameIdToGameState -= gameId
           newGameState.allPlayer foreach {
             case p : RemotePlayerProxyWS =>

@@ -9,7 +9,8 @@
       </div>
       <div v-if="inGame" id="board">
         <Board :displayedTickets="displayedTickets" :onTicketsSelected="onTicketsChosen" :dataMap="dataMap"
-        :isDisabled="isDisabled" :cards="ownCardsColor" :seizeRoute="seizeRoute" :isDrawing="isFirstCardDrawn" />
+        :isDisabled="isDisabled" :cards="ownCardsColor" :seizeRoute="seizeRoute" :isDrawing="isFirstCardDrawn"
+        :takenRoutesP1="routesP1" :takenRoutesP2="routesP2" :tunnelAdditonalCards="additionalCardsOptions" :seizeTunnel="seizeTunnel" />
       </div>
       <div v-else id="game-setup">
         <GameSetup :sendSetupGame="sendSetupGame" :state="setupState" :chosenGameName="setupGameName" />
@@ -64,8 +65,8 @@ export default {
         name: this.player1Name,
         tickets: this.ticketsCountP1,
         cards: this.cardsCountP1,
-        wagons: 40, // TO BE COMPUTED
-        points: 0 // TO BE COMPUTED
+        wagons: 40 - this.player1Wagons,
+        points: this.player1Points
       }
     },
     player2 () {
@@ -73,9 +74,21 @@ export default {
         name: this.player2Name,
         tickets: this.ticketsCountP2,
         cards: this.cardsCountP2,
-        wagons: 40, // TO BE COMPUTED
-        points: 0 // TO BE COMPUTED
+        wagons: 40 - this.player2Wagons,
+        points: this.player2Points
       }
+    },
+    player1Wagons () {
+      return this.routesP1.map(index => this.dataMap.routes[index].length).reduce((a, b) => a + b, 0)
+    },
+    player2Wagons () {
+      return this.routesP2.map(index => this.dataMap.routes[index].length).reduce((a, b) => a + b, 0)
+    },
+    player1Points () {
+      return this.routesP1.map(index => this.routePoint(this.dataMap.routes[index].length)).reduce((a, b) => a + b, 0)
+    },
+    player2Points () {
+      return this.routesP2.map(index => this.routePoint(this.dataMap.routes[index].length)).reduce((a, b) => a + b, 0)
     },
     faceUpCardsColor () {
       return this.faceUpCards.map(i => this.toCardColor(i))
@@ -128,13 +141,19 @@ export default {
       }
       return ticketData.from[0].name + ' - ' + ticketData.to[0].name + ' (' + ticketData.points[0] + ')'
     },
-    seizeRoute (index) {
-      this.sendRequest('PLAY', 'PLAY_TURN', 'CLAIMING_ROUTE ' + index + ' 4')
+    seizeRoute (index, arrayCards) {
+      this.sendRequest('PLAY', 'PLAY_TURN', 'CLAIMING_ROUTE ' + index + ' ' + arrayCards.join(','))
+    },
+    seizeTunnel (item) {
+      this.onCardsForTunnelChosen(item.join(','))
+    },
+    routePoint (length) {
+      return [0, 1, 2, 4, 7, 10, 15][length]
     }
   },
   props: ['sendRequest', 'inGame', 'messages', 'ownId', 'player1Name', 'player2Name', 'ticketsCount', 'currentPlayerId', 'lastPlayerId', 'faceUpCards',
     'deckSize', 'discardSize', 'ticketsCountP1', 'cardsCountP1', 'routesP1', 'ticketsCountP2', 'cardsCountP2', 'routesP2', 'ownTickets', 'ownCards',
-    'ownRoutes', 'setupState', 'setupGameName', 'possibleTickets', 'onTicketsChosen']
+    'ownRoutes', 'setupState', 'setupGameName', 'possibleTickets', 'onTicketsChosen', 'additionalCardsOptions', 'onCardsForTunnelChosen']
 }
 </script>
 
