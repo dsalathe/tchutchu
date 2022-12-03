@@ -12,19 +12,31 @@
 
     <div class="tab__content">
       <div v-for="(msg, i) in generalMessages" :key="i">
-        <tr><td :class="msg.style"> <span :class="msg.style">{{msg.author}}</span> : {{ msg.content }}</td></tr>
+        <tr><td :class="msg.style"> <span :class="msg.style">{{msg.author}}</span> :
+          <span v-for="(chunk,i) in splitContent(msg.content)" :key="i">&nbsp;
+            <Card v-if="isColor(chunk)" :color="getColor(chunk)" class="smallCard" />
+            <span v-else>{{ chunk }}</span>
+          </span> </td></tr>
       </div>
     </div>
 
     <div class="tab__content">
       <div v-for="(msg, i) in gameMessage" :key="i">
-        <tr><td :class="msg.style"> <span :class="msg.style">{{msg.author}}</span> : {{ msg.content }}</td></tr>
+        <tr><td :class="msg.style"> <span :class="msg.style">{{msg.author}}</span> :
+          <span v-for="(chunk,i) in splitContent(msg.content)" :key="i">&nbsp;
+            <Card v-if="isColor(chunk)" :color="getColor(chunk)" class="smallCard" />
+            <span v-else>{{ chunk }}</span>
+          </span> </td></tr>
       </div>
     </div>
 
     <div class="tab__content">
       <div v-for="(msg, i) in displayedMessages" :key="i">
-        <tr><td :class="msg.style"> <span :class="msg.style">{{msg.author}}</span> : {{ msg.content }}</td></tr>
+        <tr><td :class="msg.style"> <span :class="msg.style">{{msg.author}}</span> :
+          <span v-for="(chunk,i) in splitContent(msg.content)" :key="i">&nbsp;
+            <Card v-if="isColor(chunk)" :color="getColor(chunk)" class="smallCard" />
+            <span v-else>{{ chunk }}</span>
+          </span> </td></tr>
       </div>
     </div>
     <form class="form-inline">
@@ -35,8 +47,13 @@
 </template>
 
 <script>
+import Card from '@/components/GameCard.vue'
+
 export default {
   name: 'ChatPanel',
+  components: {
+    Card
+  },
   data () {
     return {
       sendingMsg: ''
@@ -63,6 +80,35 @@ export default {
       for (let i = 0; i < elements.length; i++) {
         elements.item(i).scrollTop = elements.item(i).scrollHeight
       }
+    },
+    splitContent (s) {
+      return s.split(' ')
+    },
+    getColor (chunk) {
+      if (chunk === ':BLACK') {
+        return 'BLACK'
+      } else if (chunk === ':VIOLET') {
+        return 'VIOLET'
+      } else if (chunk === ':BLUE') {
+        return 'BLUE'
+      } else if (chunk === ':GREEN') {
+        return 'GREEN'
+      } else if (chunk === ':YELLOW') {
+        return 'YELLOW'
+      } else if (chunk === ':ORANGE') {
+        return 'ORANGE'
+      } else if (chunk === ':RED') {
+        return 'RED'
+      } else if (chunk === ':WHITE') {
+        return 'WHITE'
+      } else if (chunk === ':LOCOMOTIVE') {
+        return 'LOCOMOTIVE'
+      } else {
+        return 'normal'
+      }
+    },
+    isColor (chunk) {
+      return this.getColor(chunk) !== 'normal'
     }
   },
   updated () {
@@ -237,5 +283,31 @@ span.chatMsg {
  p {
   line-height: 1.6;
   margin-bottom: 20px;
+}
+
+.smallCard {
+  height: 35px;
+  width: 20px;
+  rotate: 90deg;
+  margin: -7px 5px -14px 5px;
+  border: 1px solid black;
+}
+
+@media (max-width: 1200px) {
+  body {
+    font-size: 10px;
+  }
+
+  .tab__content {
+    font-size: 10px;
+  }
+
+  .smallCard {
+    height: 17px;
+    width: 10px;
+    rotate: 90deg;
+    margin: -3px 2px -7px 2px;
+    border: 1px solid black;
+  }
 }
 </style>

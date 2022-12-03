@@ -58,4 +58,22 @@ button {
   flex-grow: 0;
 }
 
+@media (max-width: 1200px) {
+  .deck-view {
+    gap: 3px;
+    padding-top: 2px;
+    max-height: 42vw;
+  }
+
+  button {
+    font-size: 5px;
+    width: 50px;
+    padding: 1px;
+  }
+
+  progress {
+    width: 45px;
+  }
+}
+
 </style>

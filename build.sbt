@@ -20,6 +20,7 @@ lazy val root = project
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion,
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion,
     libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala_2.13" % jacksonVersion,
+    libraryDependencies += "com.google.guava" % "guava" % "31.1-jre",
     libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.10",
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % Test,
     libraryDependencies += "org.scalatestplus" %% "mockito-3-4" % "3.2.10.0" % Test,

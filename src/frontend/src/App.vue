@@ -30,7 +30,9 @@
     :possibleTickets="possibleTickets"
     :onTicketsChosen="onTicketsChosen"
     :additionalCardsOptions="additionalCardsOptions"
-    :onCardsForTunnelChosen="onCardsForTunnelChosen" />
+    :onCardsForTunnelChosen="onCardsForTunnelChosen"
+    :updatedStateCount="updatedState"
+    :isGameOver="isGameOver" />
   <Debug
   v-if="isDev()"
   :connected="connected"
@@ -88,7 +90,10 @@ export default {
       // Choosing initial or in-game tickets
       possibleTickets: [],
       // TUNNEL CLAIMING CARDS
-      additionalCardsOptions: []
+      additionalCardsOptions: [],
+      // turn tracking
+      updatedState: 0,
+      isGameOver: false
     }
   },
   methods: {
@@ -96,7 +101,7 @@ export default {
       this.messages.push(msg)
     },
     connect () {
-      const socket = new SockJS(this.isDev ? 'http://localhost:8080/game-ws' : '/game-ws')
+      const socket = new SockJS(this.isDev() ? 'http://localhost:8080/game-ws' : '/game-ws')
       this.stompClient = Stomp.over(socket)
       this.stompClient.connect({}, frame => {
         this.connected = true
@@ -116,6 +121,7 @@ export default {
             this.player1Name = decodeURIComponent(escape(atob(player1Name64)))
             this.player2Name = decodeURIComponent(escape(atob(player2Name64)))
           } else if (msg.messageId === 'UPDATE_STATE') {
+            this.updatedState++
             const [publicGS, ownState] = msg.data.split(' ')
             const [ticketsCountStr, publicCardState, currentPlayerIdStr, publicPS1, publicPS2, lastPlayerStr] = publicGS.split(':')
             this.ticketsCount = parseInt(ticketsCountStr)
@@ -155,16 +161,19 @@ export default {
           } else if (msg.messageId === 'SET_INITIAL_TICKETS' || msg.messageId === 'CHOOSE_TICKETS') {
             this.possibleTickets = msg.data.split(',').map(e => parseInt(e))
           } else if (msg.messageId === 'CHOOSE_ADDITIONAL_CARDS') {
-            console.log(msg.data)
-            console.log(msg.data.split(';'))
-            console.log(msg.data.split(';').map(l => l.split(',').map(e => parseInt(e))))
             const additionalCardsOptions = msg.data.split(';').map(l => l.split(',').map(e => parseInt(e)))
             this.additionalCardsOptions = additionalCardsOptions
           } else if (msg.messageId === 'CONGRATULATE') {
-            const confetti = new JSConfetti()
-            confetti.addConfetti()
-            setInterval(() => confetti.addConfetti(), 2000)
-            setInterval(() => confetti.addConfetti(), 3000)
+            this.isGameOver = true
+            if (parseInt(msg.data) === this.ownId) {
+              const confetti = new JSConfetti()
+              confetti.addConfetti()
+              setTimeout(() => confetti.addConfetti(), 100)
+              setTimeout(() => confetti.addConfetti(), 200)
+              setTimeout(() => confetti.addConfetti(), 300)
+              setInterval(() => confetti.addConfetti(), 2000)
+              setInterval(() => confetti.addConfetti(), 3000)
+            }
           }
         })
       })
@@ -228,5 +237,11 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+@media (max-width: 1200px) {
+  nav {
+    display: none;
+  }
 }
 </style>

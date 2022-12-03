@@ -6,7 +6,7 @@ import ch.coachdave.tchutchu.game.Route;
 import ch.coachdave.tchutchu.game.Station;
 import ch.coachdave.tchutchu.game.Trail;
 
-import static ch.coachdave.tchutchu.gui.StringsFr.*;
+import static ch.coachdave.tchutchu.gui.StringsEn.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public final class Info {
         List<String> cardNames = new ArrayList<>();
         for (Card c : cards.toSet()) {
             int count = cards.countOf(c);
-            cardNames.add(count + " " + ALL_CARDS.get(c.ordinal()) + plural(count));
+            cardNames.add( ((count > 1 ? count : "") + " " + ALL_CARDS.get(c.ordinal())).trim() );
         }
         if (cardNames.size() == 0) {
             return "";
@@ -40,7 +40,7 @@ public final class Info {
         if (cardNames.size() == 1) {
             return cardNames.get(0);
         }
-        return String.join(", ", cardNames.subList(0, cardNames.size() - 1)) + AND_SEPARATOR +
+        return String.join(" ", cardNames.subList(0, cardNames.size() - 1)) + AND_SEPARATOR +
                 cardNames.get(cardNames.size() - 1);
     }
 
@@ -90,7 +90,7 @@ public final class Info {
     }
 
     public String drewAdditionalCards(SortedBag<Card> drawnCards, int additionalCost) {
-        return String.format(ADDITIONAL_CARDS_ARE, getCardsName(drawnCards)) +
+        return String.format(ADDITIONAL_CARDS_ARE, drawnCards.stream().map(c -> ALL_CARDS.get(c.ordinal())).collect(Collectors.joining(" "))) +
                 (additionalCost == 0 ? NO_ADDITIONAL_COST :
                         String.format(SOME_ADDITIONAL_COST, additionalCost, plural(additionalCost)));
     }

@@ -123,4 +123,19 @@ export default {
   color: #eee;
   text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
 }
+
+@media (max-width: 1200px) {
+  .cards-container {
+    padding-left: 10px;
+    gap: 10px;
+  }
+
+  .number {
+  position: absolute;
+  margin-top: 5px;
+  font-size: 30px;
+  color: #eee;
+  text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
+}
+}
 </style>

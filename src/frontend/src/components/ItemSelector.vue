@@ -89,14 +89,14 @@ button:hover {
   width: 420px;
   padding-bottom: 50px;
   border-radius: 10px;
-  background-color: rgb(189, 190, 115);
-  opacity: 0.25;
+  background-color: rgb(200, 200, 135);
+  opacity: 0.35;
   max-height: 600px;
   overflow-y: scroll;
 }
 
 .selector:hover {
-  opacity: 1;
+  opacity: 0.97;
 }
 
 .selected {

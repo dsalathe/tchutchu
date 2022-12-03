@@ -4,7 +4,7 @@ import ch.coachdave.tchutchu.SortedBag
 import ch.coachdave.tchutchu.game.{Card, Player, PlayerId, PlayerState, PublicGameState, Ticket}
 import ch.coachdave.tchutchu.gui.Info
 import ch.coachdave.tchutchu.model.ClientNotification
-import ch.coachdave.tchutchu.net.Serdes.{bagOfTicket, listOfBagOfCard, listOfString, playerIdNoNull, playerState, publicGameState, string}
+import ch.coachdave.tchutchu.net.Serdes.{bagOfCard, bagOfTicket, listOfBagOfCard, listOfString, playerId, playerIdNoNull, playerState, publicGameState, string}
 import org.springframework.messaging.simp.SimpMessagingTemplate
 
 object RemotePlayerProxyWS:
@@ -51,6 +51,6 @@ case class RemotePlayerProxyWS(messagingTemplate : SimpMessagingTemplate, userna
 
   override def sendChatMessage(msg: String): Unit = sendMessage(MessageId.CHAT,  msg)
 
-  override def congratulate(): Unit = sendMessage(MessageId.CONGRATULATE)
+  override def congratulate(winner: Option[PlayerId]): Unit = sendMessage(MessageId.CONGRATULATE, playerId.serialize(winner))
 
 

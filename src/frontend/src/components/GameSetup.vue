@@ -111,7 +111,7 @@ export default {
     },
     sendForm () {
       if (!this.chosenMode !== '' && this.name !== '' && (this.chosenMode === 'JOIN_ANY_GAME' || this.gameName !== '')) {
-        this.sendSetupGame(this.chosenMode, (this.name + ' ' + this.gameName).trim())
+        this.sendSetupGame(this.chosenMode, (btoa(unescape(encodeURIComponent(this.name))) + ' ' + this.gameName).trim())
         this.dataSent = true
       }
     }
@@ -534,6 +534,16 @@ form input[type="submit"]:hover {
 
 .coach-button:hover {
   background-color: #422;
+}
+
+@media (max-width: 1200px) {
+  .login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 0px;
+  animation: leave 1s linear forwards reverse;
+}
 }
 
 </style>

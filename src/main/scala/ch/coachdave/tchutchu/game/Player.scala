@@ -32,7 +32,7 @@ trait Player:
   
   def sendChatMessage(msg: String): Unit
 
-  def congratulate(): Unit
+  def congratulate(winner: Option[PlayerId]): Unit
 
 
 

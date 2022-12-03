@@ -58,7 +58,6 @@ export default {
     displayedMessages () {
       return this.messages.filter(m => m.messageId === 'CHAT' || m.messageId === 'RECEIVE_INFO')
         .map(m => m.messageId === 'CHAT' ? this.buildChatMessage(m) : this.buildInfoMessage(m))
-        // For encoding: btoa(unescape(encodeURIComponent( str )))
     },
     player1 () {
       return {
@@ -97,7 +96,7 @@ export default {
       return this.ownCards.map(this.toCardColor)
     },
     isDisabled () {
-      return this.possibleTickets.length || this.ownId !== this.currentPlayerId
+      return this.possibleTickets.length || this.ownId !== this.currentPlayerId || this.updatedStateCount < 3 || this.isGameOver
     },
     ownDisplayedTickets () {
       return this.ownTickets.map(t => ({ id: t, display: this.displayTicket(t) }))
@@ -108,14 +107,14 @@ export default {
   },
   methods: {
     buildChatMessage ({ data }) {
-      const [author, ...content] = data.split(' ')
-      return { style: 'chatMsg', author, content: content.join(' ') }
+      const [author, content] = data.split(' ')
+      return { style: 'chatMsg', author: decodeURIComponent(escape(atob(author))), content: decodeURIComponent(escape(atob(content))) }
     },
     buildInfoMessage ({ data }) {
       return { style: 'infoMsg', author: '[GAME]', content: decodeURIComponent(escape(atob(data))) }
     },
     sendChatMessage (msg) {
-      this.sendRequest('CHAT', 'NOTHING', msg) // TODO encode and decode both player names and messages in chat
+      this.sendRequest('CHAT', 'NOTHING', btoa(unescape(encodeURIComponent(msg))))
     },
     sendSetupGame (setupMode, msg) {
       this.sendRequest(setupMode, 'NOTHING', msg)
@@ -153,7 +152,8 @@ export default {
   },
   props: ['sendRequest', 'inGame', 'messages', 'ownId', 'player1Name', 'player2Name', 'ticketsCount', 'currentPlayerId', 'lastPlayerId', 'faceUpCards',
     'deckSize', 'discardSize', 'ticketsCountP1', 'cardsCountP1', 'routesP1', 'ticketsCountP2', 'cardsCountP2', 'routesP2', 'ownTickets', 'ownCards',
-    'ownRoutes', 'setupState', 'setupGameName', 'possibleTickets', 'onTicketsChosen', 'additionalCardsOptions', 'onCardsForTunnelChosen']
+    'ownRoutes', 'setupState', 'setupGameName', 'possibleTickets', 'onTicketsChosen', 'additionalCardsOptions', 'onCardsForTunnelChosen', 'updatedStateCount',
+    'isGameOver']
 }
 </script>
 

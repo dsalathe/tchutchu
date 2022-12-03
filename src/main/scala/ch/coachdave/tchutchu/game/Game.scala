@@ -32,41 +32,13 @@ object Game:
     require(action == gs.getNextExpectedAction, s"received action was $action but ${gs.getNextExpectedAction} was expected")
     require(currentPlayerId == gs.currentPlayerId || action == INITIAL_TICKETS_CHOSEN, s"with $action, received action from $currentPlayerId but expected ${gs.currentPlayerId}")
     require(!gs.isOver)
-    if gs.isOver then endPhase(gs) else playingPhase(gs, currentPlayerId, action, data) //TODO useful to check isOver here?
 
-  def endPhase(gs: GameState): GameState =
-    val players: Map[PlayerId, Player] = gs.playerMap
-    val trails: Map[PlayerId, Trail] = PlayerId.ALL.map(pId => pId -> Trail.longest(gs.playerState(pId).get.routes)).toMap
-    val maximum: Int = trails.values.maxBy(_.length).length
-    val playersWithBonus : Map[PlayerId, Trail] = trails.filter { case (_, trail) => trail.length == maximum}
-    playersWithBonus.foreach { case (pId, trail) => players(pId).getInfo.getsLongestTrailBonus(trail)}
-    val points: List[Int] = PlayerId.ALL.map(pId => gs.playerState(pId).get.finalPoints + (if playersWithBonus.contains(pId) then
-    {broadcastInfo(players, players(pId).getInfo.getsLongestTrailBonus(trails(pId)));Constants.LONGEST_TRAIL_BONUS_POINTS} else 0)).toList
-    broadcastNewStates(players, gs)
-    //2 players only. Need to readjust infos for more players
-    if points.head > points.tail.head then
-      broadcastInfo(players, players(PlayerId.PLAYER_1).getInfo.won(points.head, points.tail.head))
-      players(PlayerId.PLAYER_1).congratulate()
-
-    else if points(1) > points.head then
-      broadcastInfo(players, players(PlayerId.PLAYER_2).getInfo.won(points(1), points.head))
-      players(PlayerId.PLAYER_2).congratulate()
-
-    else
-      val playerNames: List[String] = players.values.toList.map(_.getInfo.getPlayerName)
-      broadcastInfo(players, Info.draw(playerNames.asJava, points.head))
-
-    gs
-
-
-
-  private def playingPhase(gs: GameState, currentPlayerId: PlayerId, action: UserAction, data: String): GameState =
     val players = gs.playerMap
     val updatedGameState = action match
       case INITIAL_TICKETS_CHOSEN =>
         val updatedGs = gs.withInitiallyChosenTickets(currentPlayerId, bagOfTicket.deserialize(data))
         broadcastInfo(players, players(currentPlayerId).getInfo.keptTickets(updatedGs.playerState(currentPlayerId).get.ticketCount))
-        if updatedGs.getNextExpectedAction == PLAY_TURN then broadcastInfo(players, players(currentPlayerId).getInfo.canPlay)
+        if updatedGs.getNextExpectedAction == PLAY_TURN then broadcastInfo(players, players(updatedGs.currentPlayerId).getInfo.canPlay)
         updatedGs
 
       case PLAY_TURN =>
@@ -98,8 +70,9 @@ object Game:
           gs.passTurn
 
         else
-          broadcastInfo(gs.playerMap, gs.currentPlayer.getInfo.claimedRoute(claimedRoute, initialClaimCards))
-          gs.withClaimedRoute(claimedRoute, initialClaimCards.union(chosenAdditionalCards))
+          val totalChosenCards = initialClaimCards.union(chosenAdditionalCards)
+          broadcastInfo(gs.playerMap, gs.currentPlayer.getInfo.claimedRoute(claimedRoute, totalChosenCards))
+          gs.withClaimedRoute(claimedRoute, totalChosenCards)
 
       case ADDITIONAL_TICKETS_CHOSEN =>
         val chosenTickets: SortedBag[Ticket] = bagOfTicket.deserialize(data)
@@ -111,7 +84,33 @@ object Game:
         gs
 
     broadcastNewStates(players, updatedGameState)
+    if (updatedGameState.lastTurnBegins) then broadcastInfo(players, gs.currentPlayer.getInfo.lastTurnBegins(gs.currentPlayerState.carCount))
     updatedGameState
+
+  def endPhase(gs: GameState): GameState =
+    val players: Map[PlayerId, Player] = gs.playerMap
+    val trails: Map[PlayerId, Trail] = PlayerId.ALL.map(pId => pId -> Trail.longest(gs.playerState(pId).get.routes)).toMap
+    val maximum: Int = trails.values.maxBy(_.length).length
+    val playersWithBonus : Map[PlayerId, Trail] = trails.filter { case (_, trail) => trail.length == maximum}
+    playersWithBonus.foreach { case (pId, trail) => players(pId).getInfo.getsLongestTrailBonus(trail)}
+    val points: List[Int] = PlayerId.ALL.map(pId => gs.playerState(pId).get.finalPoints + (if playersWithBonus.contains(pId) then
+    {broadcastInfo(players, players(pId).getInfo.getsLongestTrailBonus(trails(pId)));Constants.LONGEST_TRAIL_BONUS_POINTS} else 0)).toList
+    broadcastNewStates(players, gs)
+    //2 players only. Need to readjust infos for more players
+    if points.head > points.tail.head then
+      broadcastInfo(players, players(PlayerId.PLAYER_1).getInfo.won(points.head, points.tail.head))
+      players.values.foreach(_.congratulate(Some(PlayerId.PLAYER_1)))
+
+    else if points(1) > points.head then
+      broadcastInfo(players, players(PlayerId.PLAYER_2).getInfo.won(points(1), points.head))
+      players.values.foreach(_.congratulate(Some(PlayerId.PLAYER_2)))
+
+    else
+      val playerNames: List[String] = players.values.toList.map(_.getInfo.getPlayerName)
+      broadcastInfo(players, Info.draw(playerNames.asJava, points.head))
+      players.values.foreach(_.congratulate(None))
+
+    gs
 
   private def handleDrawCardAction(gs: GameState, nthCard: Integer, slot: Integer): GameState =
     val players = gs.playerMap
@@ -150,6 +149,8 @@ object Game:
       val (drawnCards, drawnState) = drawNCards(state, Nil, Constants.ADDITIONAL_TUNNEL_CARDS)
       val backToDiscardState = drawnState.withMoreDiscardedCards(drawnCards)
       val additionalCardCount: Int = claimedRoute.additionalClaimCardsCount(initialClaimCards, drawnCards)
+
+      broadcastInfo(players, player.getInfo.drewAdditionalCards(drawnCards, additionalCardCount))
       if additionalCardCount == 0 then
         claimRoute(backToDiscardState)
 

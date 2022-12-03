@@ -21,6 +21,14 @@ img {
   border-radius: 5px;
   height: 90px;
 }
+
+@media (max-width: 1200px) {
+  img {
+    margin: 2px;
+    border-radius: 2px;
+    height: 52px;
+  }
+}
 .BLACK {
   background-color: #444;
 }
