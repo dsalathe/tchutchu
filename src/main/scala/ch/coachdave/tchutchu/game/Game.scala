@@ -84,7 +84,7 @@ object Game:
         gs
 
     broadcastNewStates(players, updatedGameState)
-    if (updatedGameState.lastTurnBegins) then broadcastInfo(players, gs.currentPlayer.getInfo.lastTurnBegins(gs.currentPlayerState.carCount))
+    if updatedGameState.lastPlayer.exists(_.next == updatedGameState.currentPlayerId) then broadcastInfo(players, gs.currentPlayer.getInfo.lastTurnBegins(gs.currentPlayerState.carCount))
     updatedGameState
 
   def endPhase(gs: GameState): GameState =

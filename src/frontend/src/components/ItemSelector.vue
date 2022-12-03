@@ -1,11 +1,17 @@
 <template>
-  <div class="selector">
-    <h3><slot>Select items</slot></h3>
-    <button v-for="(item, i) in items" :key="i"
-    :class="{itemChoice: true, selected: isSelected(item.id)}"
-    @click="triggerItem(item.id)">{{displayItem(item.display)}}
-    <span v-for="card in listOfCards(i)" :key="card"> <GameCard :color="card" class="smallCard" /> </span></button>
-    <button class="confirmer" @click="onConfirm" :disabled="!isThereEnoughItems">Confirm choice </button>
+  <div class="selector" id="selector">
+    <div class="item-head" @mousedown="dragMouseDown">
+      <h3><slot>Select items</slot></h3>
+    </div>
+    <div class="item-body">
+      <button v-for="(item, i) in items" :key="i"
+      :class="{itemChoice: true, selected: isSelected(item.id)}"
+      @click="triggerItem(item.id)">{{displayItem(item.display)}}
+      <span v-for="card in listOfCards(i)" :key="card"> <GameCard :color="card" class="smallCard" /> </span></button>
+    </div>
+    <div class="item-footer">
+      <button class="confirmer" @click="onConfirm" :disabled="!isThereEnoughItems">Confirm choice </button>
+    </div>
   </div>
 </template>
 
@@ -20,15 +26,28 @@ export default {
   },
   data () {
     return {
-      selectedItems: new Set()
+      selectedItems: new Set(),
+      pos1: 0,
+      pos2: 0,
+      pos3: 0,
+      pos4: 0
     }
   },
   methods: {
     triggerItem (item) {
-      if (this.selectedItems.has(item)) {
-        this.selectedItems.delete(item)
+      if (this.maxItems === 1) {
+        if (this.selectedItems.has(item)) {
+          this.selectedItems.delete(item)
+        } else {
+          this.selectedItems = new Set()
+          this.selectedItems.add(item)
+        }
       } else {
-        this.selectedItems.add(item)
+        if (this.selectedItems.has(item)) {
+          this.selectedItems.delete(item)
+        } else {
+          this.selectedItems.add(item)
+        }
       }
     },
     onConfirm () {
@@ -47,6 +66,27 @@ export default {
     },
     listOfCards (i) {
       return this.areCards ? this.items[i].display.split('|') : []
+    },
+    dragMouseDown (e) {
+      e.preventDefault()
+      this.pos3 = e.clientX
+      this.pos4 = e.clientY
+      document.onmouseup = this.closeDragElement
+      document.onmousemove = this.elementDrag
+    },
+    elementDrag (e) {
+      e.preventDefault()
+      this.pos1 = this.pos3 - e.clientX
+      this.pos2 = this.pos4 - e.clientY
+      this.pos3 = e.clientX
+      this.pos4 = e.clientY
+      const elmnt = document.getElementById('selector')
+      elmnt.style.top = (elmnt.offsetTop - this.pos2) + 'px'
+      elmnt.style.left = (elmnt.offsetLeft - this.pos1) + 'px'
+    },
+    closeDragElement () {
+      document.onmouseup = null
+      document.onmousemove = null
     }
   },
   computed: {
@@ -65,8 +105,27 @@ h3, button {
   font-family: Helvetica, Arial, sans-serif;
 }
 
-.itemChoice {
-  width: 410px;
+.item-head {
+  width: calc(100% - 6px);
+  cursor: grabbing;
+  text-align: center;
+  border-radius: 3px;
+  margin: 2px 2px 10px 2px;
+  border: 1px solid black;
+  background-color: rgb(150, 150, 95);
+}
+
+.item-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  overflow-y: scroll;
+  max-height: 800px;
+}
+
+.item-footer {
+  margin-top: 20px;
 }
 
 button {
@@ -85,14 +144,17 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
   width: 420px;
-  padding-bottom: 50px;
+  padding-bottom: 10px;
   border-radius: 10px;
   background-color: rgb(200, 200, 135);
   opacity: 0.35;
-  max-height: 600px;
-  overflow-y: scroll;
+  resize: both;
+  overflow: scroll;
+  max-height: 70vh;
+  position: absolute;
+  z-index: 999;
 }
 
 .selector:hover {

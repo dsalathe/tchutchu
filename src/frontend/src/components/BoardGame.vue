@@ -13,7 +13,7 @@
     :maxItems="1" class="selector" >Select how you want to seize the route</ItemSelector>
     <ItemSelector v-if="tunnelAdditonalCards.length" :items="tunnelAddtionalCardsDisplayed"
     :confirmChoice="OnCardsForSeizingTunnel" :minItems="0" :areCards="true"
-    :maxItems="1" class="selector" >Only select an option if you want to pursue</ItemSelector>
+    :maxItems="1" class="selector" >Select an option if you want to pursue (Or None to renounce)</ItemSelector>
     <img src="/img/game/map.png" alt="Board Game"/>
   </div>
 </template>
