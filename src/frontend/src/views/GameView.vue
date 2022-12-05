@@ -10,7 +10,8 @@
       <div v-if="inGame" id="board">
         <Board :displayedTickets="displayedTickets" :onTicketsSelected="onTicketsChosen" :dataMap="dataMap"
         :isDisabled="isDisabled" :cards="ownCardsColor" :seizeRoute="seizeRoute" :isDrawing="isFirstCardDrawn"
-        :takenRoutesP1="routesP1" :takenRoutesP2="routesP2" :tunnelAdditonalCards="additionalCardsOptions" :seizeTunnel="seizeTunnel" />
+        :takenRoutesP1="routesP1" :takenRoutesP2="routesP2" :tunnelAdditonalCards="additionalCardsOptions" :seizeTunnel="seizeTunnel"
+        :wagons="ownWagons" />
       </div>
       <div v-else id="game-setup">
         <GameSetup :sendSetupGame="sendSetupGame" :state="setupState" :chosenGameName="setupGameName" />
@@ -64,7 +65,7 @@ export default {
         name: this.player1Name,
         tickets: this.ticketsCountP1,
         cards: this.cardsCountP1,
-        wagons: 40 - this.player1Wagons,
+        wagons: this.player1Wagons,
         points: this.player1Points
       }
     },
@@ -73,15 +74,18 @@ export default {
         name: this.player2Name,
         tickets: this.ticketsCountP2,
         cards: this.cardsCountP2,
-        wagons: 40 - this.player2Wagons,
+        wagons: this.player2Wagons,
         points: this.player2Points
       }
     },
     player1Wagons () {
-      return this.routesP1.map(index => this.dataMap.routes[index].length).reduce((a, b) => a + b, 0)
+      return 40 - this.routesP1.map(index => this.dataMap.routes[index].length).reduce((a, b) => a + b, 0)
     },
     player2Wagons () {
-      return this.routesP2.map(index => this.dataMap.routes[index].length).reduce((a, b) => a + b, 0)
+      return 40 - this.routesP2.map(index => this.dataMap.routes[index].length).reduce((a, b) => a + b, 0)
+    },
+    ownWagons () {
+      return this.ownId === 0 ? this.player1Wagons : this.player2Wagons
     },
     player1Points () {
       return this.routesP1.map(index => this.routePoint(this.dataMap.routes[index].length)).reduce((a, b) => a + b, 0)

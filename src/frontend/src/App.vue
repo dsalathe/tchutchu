@@ -1,7 +1,7 @@
 <template>
   <nav>
     <router-link to="/">Game</router-link> |
-    <router-link to="/about">About</router-link> <!--TODO might use it for a "rule" or something panel. And might hide it for phone view-->
+    <router-link to="/rules">How to play</router-link>
   </nav>
   <router-view
     :sendRequest="sendRequest"
@@ -228,6 +228,7 @@ export default {
 
 nav {
   padding: 30px;
+  text-align: center;
 }
 
 nav a {
@@ -236,7 +237,7 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #DA291C;
 }
 
 @media (max-width: 1200px) {

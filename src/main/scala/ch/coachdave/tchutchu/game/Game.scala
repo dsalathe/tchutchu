@@ -84,7 +84,8 @@ object Game:
         gs
 
     broadcastNewStates(players, updatedGameState)
-    if updatedGameState.lastPlayer.exists(_.next == updatedGameState.currentPlayerId) then broadcastInfo(players, gs.currentPlayer.getInfo.lastTurnBegins(gs.currentPlayerState.carCount))
+    if updatedGameState.lastPlayer.exists(_.next == updatedGameState.currentPlayerId) then broadcastInfo(players,
+      gs.currentPlayer.getInfo.lastTurnBegins(updatedGameState.playerState(gs.currentPlayerId).get.carCount))
     updatedGameState
 
   def endPhase(gs: GameState): GameState =
@@ -96,7 +97,7 @@ object Game:
     val points: List[Int] = PlayerId.ALL.map(pId => gs.playerState(pId).get.finalPoints + (if playersWithBonus.contains(pId) then
     {broadcastInfo(players, players(pId).getInfo.getsLongestTrailBonus(trails(pId)));Constants.LONGEST_TRAIL_BONUS_POINTS} else 0)).toList
     broadcastNewStates(players, gs)
-    //2 players only. Need to readjust infos for more players
+    // 2 players only. Need to readjust infos for more players
     if points.head > points.tail.head then
       broadcastInfo(players, players(PlayerId.PLAYER_1).getInfo.won(points.head, points.tail.head))
       players.values.foreach(_.congratulate(Some(PlayerId.PLAYER_1)))

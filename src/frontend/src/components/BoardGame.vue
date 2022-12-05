@@ -28,7 +28,7 @@ export default {
     ItemSelector
   },
   props: ['displayedTickets', 'onTicketsSelected', 'dataMap', 'isDisabled', 'cards',
-    'seizeRoute', 'isDrawing', 'takenRoutesP1', 'takenRoutesP2', 'tunnelAdditonalCards', 'seizeTunnel'],
+    'seizeRoute', 'isDrawing', 'takenRoutesP1', 'takenRoutesP2', 'tunnelAdditonalCards', 'seizeTunnel', 'wagons'],
   data () {
     return {
       routesSize: Array.from({ length: 100 }, _ => false),
@@ -95,9 +95,9 @@ export default {
     canClaim (route) {
       const nLoco = route.level === 'OVERGROUND' ? 0 : this.cards.filter(c => c === 'LOCOMOTIVE').length
       if (route.color !== 'NEUTRAL') {
-        return this.cards.filter(c => c === route.color).length + nLoco >= route.length
+        return this.cards.filter(c => c === route.color).length + nLoco >= route.length && route.length <= this.wagons
       }
-      return this.colorNames.some(color => this.cards.filter(card => card === color).length >= (route.length - nLoco))
+      return this.colorNames.some(color => this.cards.filter(card => card === color).length >= (route.length - nLoco)) && route.length <= this.wagons
     },
     seize (route, index) {
       if (this.canClaim(route) && !this.isDisabled && !this.isDrawing && !(this.takenRoutes.includes(index))) {

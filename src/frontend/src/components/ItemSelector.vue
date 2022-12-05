@@ -118,7 +118,6 @@ h3, button {
 .item-body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 10px;
   overflow-y: scroll;
   max-height: 800px;
@@ -149,7 +148,7 @@ button:hover {
   padding-bottom: 10px;
   border-radius: 10px;
   background-color: rgb(200, 200, 135);
-  opacity: 0.35;
+  opacity: 0.75;
   resize: both;
   overflow: scroll;
   max-height: 70vh;

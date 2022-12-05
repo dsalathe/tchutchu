@@ -4,7 +4,7 @@ import ch.coachdave.tchutchu.SortedBag
 import ch.coachdave.tchutchu.game.{Card, Player, PlayerId, PlayerState, PublicGameState, Ticket}
 import ch.coachdave.tchutchu.gui.Info
 import ch.coachdave.tchutchu.model.ClientNotification
-import ch.coachdave.tchutchu.net.Serdes.{bagOfCard, bagOfTicket, listOfBagOfCard, listOfString, playerId, playerIdNoNull, playerState, publicGameState, string}
+import ch.coachdave.tchutchu.net.Serdes.{bagOfCard, bagOfTicket, listOfBagOfCard, listOfString, playerId, playerIdNoNull, playerState, publicGameState, string, integer}
 import org.springframework.messaging.simp.SimpMessagingTemplate
 
 object RemotePlayerProxyWS:
@@ -24,7 +24,8 @@ case class RemotePlayerProxyWS(messagingTemplate : SimpMessagingTemplate, userna
   override def updateState(newState: PublicGameState, ownState: PlayerState): Unit = sendMessage(MessageId.UPDATE_STATE, publicGameState.serialize(newState),
     playerState.serialize(ownState))
 
-  override def setInitialTicketChoice(tickets: SortedBag[Ticket]): Unit = sendMessage(MessageId.SET_INITIAL_TICKETS, bagOfTicket.serialize(tickets))
+  override def setInitialTicketChoice(tickets: SortedBag[Ticket]): Unit = sendMessage(MessageId.SET_INITIAL_TICKETS,
+    correctDoubledTickets(bagOfTicket.serialize(tickets)))
 
   override def chooseInitialTickets: Unit = //TODO challenge: still useful?
     sendMessage(MessageId.CHOOSE_INITIAL_TICKETS)
@@ -33,7 +34,7 @@ case class RemotePlayerProxyWS(messagingTemplate : SimpMessagingTemplate, userna
     sendMessage(MessageId.NEXT_TURN)
 
   override def chooseTickets(options: SortedBag[Ticket]): Unit =
-    sendMessage(MessageId.CHOOSE_TICKETS, bagOfTicket.serialize(options))
+    sendMessage(MessageId.CHOOSE_TICKETS, correctDoubledTickets(bagOfTicket.serialize(options)))
 
   override def drawSlot: Unit =
     sendMessage(MessageId.DRAW_SLOT)
@@ -52,5 +53,11 @@ case class RemotePlayerProxyWS(messagingTemplate : SimpMessagingTemplate, userna
   override def sendChatMessage(msg: String): Unit = sendMessage(MessageId.CHAT,  msg)
 
   override def congratulate(winner: Option[PlayerId]): Unit = sendMessage(MessageId.CONGRATULATE, playerId.serialize(winner))
+
+  private def correctDoubledTickets(tickets: String): String =
+    val indices: List[Int] = tickets.split(",").toList.map(integer.deserialize)
+    (indices.groupBy(i => i).values.flatMap(l => l.zipWithIndex map { case (e, i) => e + i })).mkString(",")
+
+
 
 

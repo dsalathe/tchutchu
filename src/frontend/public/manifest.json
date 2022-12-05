@@ -1,7 +1,7 @@
 {
   "name":"TchuTchu",
   "short_name":"TchuTchu",
-  "theme_color":"#4DBA87",
+  "theme_color":"#DA291C",
   "icons":[
     {
       "src":"./img/icons/android-chrome-192x192.png",
