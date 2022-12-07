@@ -165,5 +165,12 @@ img {
   display: flex;
 }
 
+@media (max-width: 1200px) {
+  .selector {
+    right: 100%;
+    justify-self: flex-end;
+  }
+}
+
 @import '@/assets/styles/routes.css'
 </style>

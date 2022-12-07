@@ -302,6 +302,12 @@ span.chatMsg {
     font-size: 10px;
   }
 
+  .tab + label {
+    font-size: 12px;
+    padding: 5px;
+    height: 30px;
+  }
+
   .smallCard {
     height: 17px;
     width: 10px;

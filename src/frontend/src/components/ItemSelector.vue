@@ -199,4 +199,34 @@ button:hover {
   margin: -10px 20px -10px 20px;
 
 }
+
+@media (max-width: 1200px) {
+  .selector {
+    opacity: 0.9;
+    font-size: 7px;
+    width: 120px;
+    padding-bottom: 5px;
+  }
+
+  .item-body {
+    gap: 2px;
+  }
+  .confirmer {
+    font-size: 7px;
+    height: 20px;
+    font-weight: bold;
+    width: 110px;
+  }
+
+  .itemChoice {
+    font-size: 10px;
+  }
+
+  .smallCard {
+  height: 17px;
+  width: 10px;
+  rotate: 90deg;
+  margin: -5px 5px -6px 5px;
+}
+}
 </style>

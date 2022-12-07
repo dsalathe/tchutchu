@@ -177,7 +177,7 @@ export default {
 
 .top-left {
   flex: 3 0 150px;
-  max-width: 30%;
+  max-width: 24%;
   display: flex;
   flex-direction: column;
 }
@@ -213,6 +213,28 @@ export default {
 
 #player-state {
   width: 100%;
+}
+
+@media screen and (orientation:portrait) {
+  .top-left {
+    max-width: 70%;
+  }
+  #board, #game-setup {
+    opacity: 0.3;
+  }
+
+  .top-left::after {
+    position: absolute;
+    top: 15%;
+    font-weight: bold;
+    font-style: italic;
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 5px;
+    text-align: center;
+    color: #DA291C;
+    content: "Please Turn your phone when in 'Game' Mode!";
+  }
 }
 
 </style>

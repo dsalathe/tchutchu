@@ -67,7 +67,7 @@ export default {
       // GAME STATE DATA
       inGame: false,
       ownId: -1,
-      player1Name: 'Player 1',
+      player1Name: 'Player 1', // TODO (3) example: sessionStorage.getItem('player1Name') ?? 'Player 1',
       player2Name: 'Player 2',
       ticketsCount: 0,
       currentPlayerId: -2,
@@ -176,6 +176,9 @@ export default {
             }
           }
         })
+        // TODO (3) here we should send a request "hello" and server should answers back clientID. THen up here we define what happens when we
+        // receive clientID back: we might for example replace it or create it in the front but if there is an ancient value
+        // we call back server with ancient clientID... Or in "Hello" we optionnaly pass a value for "old" clientID and receive new clientID!
       })
     },
     disconnect () {
@@ -210,12 +213,17 @@ export default {
     console.log('Mounted!')
     this.connect()
     console.log('Subscribing to websockets topics and queues...')
+    // TODO (3) example: sessionStorage.setItem('player1Name', 'AWESOME')
+    // TODO (3) if needed: sessionStorage.clear() to clear all sessions data
   }
 }
 
 </script>
 
 <style>
+body {
+  overscroll-behavior: contain;
+}
 #app {
   margin: 0 auto 20px;
   background-color: #fff;
@@ -241,7 +249,12 @@ nav a.router-link-exact-active {
 }
 
 @media (max-width: 1200px) {
-  nav {
+  #app {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  #main-content {
     display: none;
   }
 }
