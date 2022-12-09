@@ -50,9 +50,13 @@ case class RemotePlayerProxyWS(messagingTemplate : SimpMessagingTemplate, userna
 
   override def getInfo: Info = info
 
+  override def getUserName: String = username
+
   override def sendChatMessage(msg: String): Unit = sendMessage(MessageId.CHAT,  msg)
 
   override def congratulate(winner: Option[PlayerId]): Unit = sendMessage(MessageId.CONGRATULATE, playerId.serialize(winner))
+
+  override def withNewChannel(channelId: String): Player = RemotePlayerProxyWS(messagingTemplate, channelId, info)
 
   private def correctDoubledTickets(tickets: String): String =
     val indices: List[Int] = tickets.split(",").toList.map(integer.deserialize)

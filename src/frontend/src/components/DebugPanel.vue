@@ -1,6 +1,6 @@
 <template>
   <div id="main-content" class="container">
-    <h2>DEBUG PANEL</h2>
+    <h2>DEBUG PANEL</h2> <button @click="clear"> Clear & reload</button>
     <div class="row">
         <div class="col-md-6">
             <form class="form-inline">
@@ -80,6 +80,10 @@ export default {
   methods: {
     sendForm () {
       this.sendRequest(this.metaAction, this.playAction, this.dataMsg)
+    },
+    clear () {
+      sessionStorage.clear()
+      location.reload()
     }
   }
 }

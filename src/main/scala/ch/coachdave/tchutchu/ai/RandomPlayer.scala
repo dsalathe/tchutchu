@@ -120,9 +120,13 @@ class RandomPlayer extends Player:
 
   override def getInfo: Info = new Info("Robot")
 
+  override def getUserName: String = "Robot"
+
   override def sendChatMessage(msg: String): Unit = ???
 
   override def congratulate(winner: Option[PlayerId]): Unit = ???
+
+  override def withNewChannel(channelId: String): Player = ???
 
   override def chooseAdditionalCards(options: List[SortedBag[Card]]): Unit =
     registerCall(PlayerMethod.CHOOSE_ADDITIONAL_CARDS)

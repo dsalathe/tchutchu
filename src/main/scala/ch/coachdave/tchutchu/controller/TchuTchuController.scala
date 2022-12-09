@@ -29,7 +29,7 @@ import scala.collection.mutable
 @Controller
 class TchuTchuController {
 
-  def getCache[K, V](neutralE: V): Cache[K, V] = CacheBuilder.newBuilder().expireAfterAccess(20, TimeUnit.MINUTES).asInstanceOf[CacheBuilder[K, V]]
+  def getCache[K, V](neutralE: V): Cache[K, V] = CacheBuilder.newBuilder().expireAfterAccess(24, TimeUnit.HOURS).asInstanceOf[CacheBuilder[K, V]]
     .build(new CacheLoader[K, V] {
       override def load(key: K): V =
         println(s"Invalid call with key $key")
@@ -50,7 +50,7 @@ class TchuTchuController {
 
   @MessageMapping(Array("/tchu"))
   def handleClientCommand(message: TchuMessage, principal: Principal): Unit =
-    val userId = principal.getName
+    val userId: String = if message.userId.isEmpty then principal.getName else message.userId
     println(userId)
     println(message)
     message.metaAction match
@@ -78,16 +78,31 @@ class TchuTchuController {
           val gameId = queue.remove()
           joinGame(principal, userId, gameId, string.deserialize(message.data), PlayerId.PLAYER_2)
 
+      case RECONNECT =>
+        val gameId = userIdToGameId.asMap.get(userId)
+        if gameId == null then
+          messagingTemplate.convertAndSendToUser(principal.getName, "/queue/tchu-events",
+            ClientNotification(MessageId.RECONNECT.toString, userId))
+        else
+          val gs = gameIdToGameState.asMap.get(gameId)
+          val playerId = userIdToPlayerId.asMap.get(userId)
+          gameIdToGameState.asMap.put(gameId, Game.updatePlayer(gs, principal.getName, playerId))
 
       case PLAY =>//TODO add FORFEIT action here?
         val gameId = userIdToGameId.asMap.get(userId)
-        val newGameState = Game.updateGame(gameIdToGameState.asMap.get(gameId), userIdToPlayerId.asMap.get(userId), message.playAction, message.data)
+        if gameId == null then
+          messagingTemplate.convertAndSendToUser(principal.getName, "/queue/tchu-events",
+            ClientNotification(MessageId.RECONNECT.toString, userId))
+        else
+          val gs = gameIdToGameState.asMap.get(gameId)
+          val playerId = userIdToPlayerId.asMap.get(userId)
+          val newGameState = Game.updateGame(gs, playerId, message.playAction, message.data)
 
-        if newGameState.isOver then {
-          Game.endPhase(newGameState)
-        } else {
-          gameIdToGameState.asMap.put(gameId, newGameState)
-        }
+          if newGameState.isOver then {
+            Game.endPhase(newGameState)
+          } else {
+            gameIdToGameState.asMap.put(gameId, newGameState)
+          }
 
 
       case CHAT =>
@@ -115,6 +130,8 @@ class TchuTchuController {
     gameIdToGameState.asMap.put(gameId, completedInitialGameState)
     userIdToGameId.asMap().put(userId, gameId)
     userIdToPlayerId.asMap().put(userId, playerId)
+    messagingTemplate.convertAndSendToUser(principal.getName, "/queue/tchu-events",
+      ClientNotification(MessageId.USER_ID.toString, userId))
   }
 
   private def initGame(playerName: String, principal: Principal, userId: String) = {
@@ -125,6 +142,8 @@ class TchuTchuController {
     gameIdToGameState.asMap.put(gameId, initialGs)
     userIdToGameId.asMap().put(userId, gameId)
     userIdToPlayerId.asMap().put(userId, playerId)
+    messagingTemplate.convertAndSendToUser(principal.getName, "/queue/tchu-events",
+      ClientNotification(MessageId.USER_ID.toString, userId))
     gameId
   }
 

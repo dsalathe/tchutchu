@@ -119,6 +119,10 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
     val nextAction = if isGameFullIfOneAdded then DISTRIBUTING_INITIAL_TICKETS else JOINING_GAME
     new GameState(tickets, cardState, currentPlayerId, players + (playerId -> player), playerStates, lastPlayer, nextAction)
 
+  def withUpdatedPlayer(playerId: PlayerId, channelId: String): GameState =
+    new GameState(tickets, cardState, currentPlayerId, players.updated(playerId, players(playerId).withNewChannel(channelId)),
+      playerStates, lastPlayer, nextExpectedAction, claimedRoute, initialClaimCards, suggestedTickets)
+
   def forNextTurn: GameState =
     if nextExpectedAction == PLAY_TURN || nextExpectedAction == ADDITIONAL_CARDS_CHOSEN then
       new GameState(tickets, cardState, currentPlayerId.next, players, playerStates, if lastTurnBegins then Some(currentPlayerId) else lastPlayer, nextExpectedAction)

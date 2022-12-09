@@ -30,9 +30,13 @@ trait Player:
   
   def getInfo: Info
   
+  def getUserName: String
+  
   def sendChatMessage(msg: String): Unit
 
   def congratulate(winner: Option[PlayerId]): Unit
+  
+  def withNewChannel(channelId: String): Player
 
 
 

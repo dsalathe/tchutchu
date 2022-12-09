@@ -18,6 +18,12 @@ object Game:
     val updatedGs : GameState = gs.withNewPlayer(playerId, player)
     if updatedGs.isGameFull then startGame(updatedGs) else updatedGs
 
+  def updatePlayer(gs: GameState, channelId: String, playerId: PlayerId): GameState =
+    val updatedGs = gs.withUpdatedPlayer(playerId, channelId)
+    updatedGs.playerMap(playerId).updateState(updatedGs, updatedGs.playerState(playerId).get)
+    updatedGs
+
+
   private def startGame(gs: GameState): GameState =
     val players = gs.playerMap
     players.foreach{ case (pId, p) => p.initPlayers(pId, players map{ case (pId, p) => pId -> p.getInfo.getPlayerName}) }

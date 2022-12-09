@@ -40,7 +40,7 @@
       </div>
     </div>
     <form class="form-inline">
-      <input class="text-message" v-model="sendingMsg" type="text" placeholder="message...">
+      <input class="text-message" v-model="sendingMsg" type="text" placeholder="message... Try typing ':RED' !">
       <button class="send-button" @click.prevent="send">Send</button>
     </form>
   </div>

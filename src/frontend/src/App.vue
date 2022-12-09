@@ -59,46 +59,56 @@ export default {
   data () {
     return {
       stompClient: undefined,
-      messages: [],
+      messages: this.retrieve('messages', [{ messageId: 'CHAT', data: 'V0VMQ09NRQ== V2VsY29tZSB0byBUY2h1VGNodSEgSWYgeW91IGV4cGVyaWVuY2UgYW55IGNvbm5lY3Rpb24gaXNzdWVzLCB0cnkgdG8gcmVsb2FkIHRoZSBwYWdlLg==' }]),
       metaAction: '',
       playAction: 'NOTHING',
-      dataMsg: '',
+      dataMsg: '', // TODO check if store that or not actually
       connected: true,
+      userId: this.retrieve('userId', ''),
       // GAME STATE DATA
-      inGame: false,
-      ownId: -1,
-      player1Name: 'Player 1', // TODO (3) example: sessionStorage.getItem('player1Name') ?? 'Player 1',
-      player2Name: 'Player 2',
-      ticketsCount: 0,
-      currentPlayerId: -2,
-      lastPlayerId: undefined,
-      faceUpCards: [],
-      deckSize: 0,
-      discardSize: 0,
-      ticketsCountP1: 0,
-      cardsCountP1: 0,
-      routesP1: [],
-      ticketsCountP2: 0,
-      cardsCountP2: 0,
-      routesP2: [],
-      ownTickets: [],
-      ownCards: [],
-      ownRoutes: [],
+      inGame: this.retrieve('inGame', false),
+      ownId: this.retrieve('ownId', -1),
+      player1Name: this.retrieve('player1Name', 'Player 1'),
+      player2Name: this.retrieve('player2Name', 'Player 2'),
+      ticketsCount: this.retrieve('ticketsCount', 0),
+      currentPlayerId: this.retrieve('currentPlayerId', -2),
+      lastPlayerId: this.retrieve('lastPlayerId', undefined),
+      faceUpCards: this.retrieve('faceUpCards', []),
+      deckSize: this.retrieve('deckSize', 0),
+      discardSize: this.retrieve('discardSize', 0),
+      ticketsCountP1: this.retrieve('ticketsCountP1', 0),
+      cardsCountP1: this.retrieve('cardsCountP1', 0),
+      routesP1: this.retrieve('routesP1', []),
+      ticketsCountP2: this.retrieve('ticketsCountP2', 0),
+      cardsCountP2: this.retrieve('cardsCountP2', 0),
+      routesP2: this.retrieve('routesP2', []),
+      ownTickets: this.retrieve('ownTickets', []),
+      ownCards: this.retrieve('ownCards', []),
+      ownRoutes: this.retrieve('ownRoutes', []),
       // SETUP GAME DATA
-      setupState: '',
-      setupGameName: '',
+      setupState: this.retrieve('setupState', ''),
+      setupGameName: this.retrieve('setupGameName', ''),
       // Choosing initial or in-game tickets
-      possibleTickets: [],
+      possibleTickets: this.retrieve('possibleTickets', []),
       // TUNNEL CLAIMING CARDS
-      additionalCardsOptions: [],
+      additionalCardsOptions: this.retrieve('additionalCardsOptions', []),
       // turn tracking
-      updatedState: 0,
-      isGameOver: false
+      updatedState: this.retrieve('updatedState', 0),
+      isGameOver: this.retrieve('isGameOver', false)
     }
   },
   methods: {
+    retrieve (key, defaultValue) {
+      return JSON.parse(sessionStorage.getItem(key)) ?? defaultValue
+    },
+    persist (key, value) {
+      sessionStorage.setItem(key, JSON.stringify(value))
+      return value
+    },
     addMessage (msg) {
       this.messages.push(msg)
+      this.persist('messages', this.messages.slice(-50))
+      // sessionStorage.setItem('messages', JSON.stringify(this.messages))
     },
     connect () {
       const socket = new SockJS(this.isDev() ? 'http://localhost:8080/game-ws' : '/game-ws')
@@ -114,57 +124,59 @@ export default {
           this.addMessage(msg)
           if (msg.messageId === 'INIT_PLAYERS') {
             this.unsubscribeGeneral()
-            this.inGame = true
+            this.inGame = this.persist('inGame', true)
             const [ownIdStr, encodedNames] = msg.data.split(' ')
-            this.ownId = parseInt(ownIdStr)
+            this.ownId = this.persist('ownId', parseInt(ownIdStr))
             const [player1Name64, player2Name64] = encodedNames.split(',')
-            this.player1Name = decodeURIComponent(escape(atob(player1Name64)))
-            this.player2Name = decodeURIComponent(escape(atob(player2Name64)))
+            this.player1Name = this.persist('player1Name', decodeURIComponent(escape(atob(player1Name64))))
+            this.player2Name = this.persist('player2Name', decodeURIComponent(escape(atob(player2Name64))))
           } else if (msg.messageId === 'UPDATE_STATE') {
-            this.updatedState++
+            this.updatedState = this.persist('updatedState', this.updatedState + 1)
             const [publicGS, ownState] = msg.data.split(' ')
             const [ticketsCountStr, publicCardState, currentPlayerIdStr, publicPS1, publicPS2, lastPlayerStr] = publicGS.split(':')
-            this.ticketsCount = parseInt(ticketsCountStr)
-            this.currentPlayerId = parseInt(currentPlayerIdStr)
+            this.ticketsCount = this.persist('ticketsCount', parseInt(ticketsCountStr))
+            this.currentPlayerId = this.persist('currentPlayerId', parseInt(currentPlayerIdStr))
             if (lastPlayerStr !== '') {
-              this.lastPlayerId = parseInt(lastPlayerStr)
+              this.lastPlayerId = this.persist('lastPlayerId', parseInt(lastPlayerStr))
             }
             const [faceUpCards, deckSizeStr, discardSizeStr] = publicCardState.split(';')
             const faceUpCardsSplitted = faceUpCards.split(',')
             if (faceUpCards !== '' && faceUpCardsSplitted.length > 0) {
-              this.faceUpCards = faceUpCardsSplitted.map(e => parseInt(e))
+              this.faceUpCards = this.persist('faceUpCards', faceUpCardsSplitted.map(e => parseInt(e)))
             }
-            this.deckSize = parseInt(deckSizeStr)
-            this.discardSize = parseInt(discardSizeStr)
+            this.deckSize = this.persist('deckSize', parseInt(deckSizeStr))
+            this.discardSize = this.persist('discardSize', parseInt(discardSizeStr))
             const [ticketsCountP1Str, cardsCountP1Str, routesP1] = publicPS1.split(';')
-            this.ticketsCountP1 = parseInt(ticketsCountP1Str)
-            this.cardsCountP1 = parseInt(cardsCountP1Str)
-            const routesP1Splitted = routesP1.split(',')
+            this.ticketsCountP1 = this.persist('ticketsCountP1', parseInt(ticketsCountP1Str))
+            this.cardsCountP1 = this.persist('cardsCountP1', parseInt(cardsCountP1Str))
+            const routesP1Splitted = this.persist('routesP1Splitted', routesP1.split(','))
             if (routesP1 !== '' && routesP1Splitted.length > 0) {
-              this.routesP1 = routesP1Splitted.map(e => parseInt(e))
+              this.routesP1 = this.persist('routesP1', routesP1Splitted.map(e => parseInt(e)))
             }
             const [ticketsCountP2Str, cardsCountP2Str, routesP2] = publicPS2.split(';')
-            this.ticketsCountP2 = parseInt(ticketsCountP2Str)
-            this.cardsCountP2 = parseInt(cardsCountP2Str)
+            this.ticketsCountP2 = this.persist('ticketsCountP2', parseInt(ticketsCountP2Str))
+            this.cardsCountP2 = this.persist('cardsCountP2', parseInt(cardsCountP2Str))
             const routesP2Splitted = routesP2.split(',')
             if (routesP2 !== '' && routesP2Splitted.length > 0) {
-              this.routesP2 = routesP2Splitted.map(e => parseInt(e))
+              this.routesP2 = this.persist('routesP2', routesP2Splitted.map(e => parseInt(e)))
             }
             const [ownTickets, ownCards, ownRoutes] = ownState.split(';')
-            this.ownTickets = ownTickets === '' ? this.ownTickets : ownTickets.split(',').map(e => parseInt(e))
-            this.ownCards = ownCards === '' ? this.ownCards : ownCards.split(',').map(e => parseInt(e))
-            this.ownRoutes = ownRoutes === '' ? this.ownRoutes : ownRoutes.split(',').map(e => parseInt(e))
+            this.ownTickets = ownTickets === '' ? this.ownTickets : this.persist('ownTickets', ownTickets.split(',').map(e => parseInt(e)))
+            this.ownCards = ownCards === '' ? this.ownCards : this.persist('ownCards', ownCards.split(',').map(e => parseInt(e)))
+            this.ownRoutes = ownRoutes === '' ? this.ownRoutes : this.persist('ownRoutes', ownRoutes.split(',').map(e => parseInt(e)))
+          } else if (msg.messageId === 'USER_ID') {
+            this.userId = this.persist('userId', msg.data)
           } else if (msg.messageId === 'GAME_ID') {
             const [state, gameName] = msg.data.split(' ')
-            this.setupState = state
-            this.setupGameName = gameName
+            this.setupState = this.persist('setupState', state)
+            this.setupGameName = this.persist('setupGameName', gameName)
           } else if (msg.messageId === 'SET_INITIAL_TICKETS' || msg.messageId === 'CHOOSE_TICKETS') {
-            this.possibleTickets = msg.data.split(',').map(e => parseInt(e))
+            this.possibleTickets = this.persist('possibleTickets', msg.data.split(',').map(e => parseInt(e)))
           } else if (msg.messageId === 'CHOOSE_ADDITIONAL_CARDS') {
-            const additionalCardsOptions = msg.data.split(';').map(l => l.split(',').map(e => parseInt(e)))
-            this.additionalCardsOptions = additionalCardsOptions
+            this.additionalCardsOptions = this.persist('additionalCardsOptions', msg.data.split(';').map(l => l.split(',').map(e => parseInt(e))))
           } else if (msg.messageId === 'CONGRATULATE') {
             this.isGameOver = true
+            sessionStorage.clear()
             if (parseInt(msg.data) === this.ownId) {
               const confetti = new JSConfetti()
               confetti.addConfetti()
@@ -174,11 +186,14 @@ export default {
               setInterval(() => confetti.addConfetti(), 2000)
               setInterval(() => confetti.addConfetti(), 3000)
             }
+          } else if (msg.messageId === 'RECONNECT') {
+            sessionStorage.clear()
+            location.reload()
           }
         })
-        // TODO (3) here we should send a request "hello" and server should answers back clientID. THen up here we define what happens when we
-        // receive clientID back: we might for example replace it or create it in the front but if there is an ancient value
-        // we call back server with ancient clientID... Or in "Hello" we optionnaly pass a value for "old" clientID and receive new clientID!
+        if (this.userId !== '') {
+          this.sendRequest('RECONNECT', 'NOTHING', '')
+        }
       })
     },
     disconnect () {
@@ -189,8 +204,9 @@ export default {
       console.log('Disconnected')
     },
     sendRequest (metaAction, playAction, data) {
+      const userId = this.userId
       this.stompClient.send('/app/tchu',
-        JSON.stringify({ metaAction, playAction, data }), {})
+        JSON.stringify({ metaAction, playAction, data, userId }), {})
     },
     unsubscribeGeneral () {
       this.stompClient.unsubscribe('topic')
@@ -201,11 +217,11 @@ export default {
     },
     onTicketsChosen (tickets) {
       const playAction = this.possibleTickets.length === 5 ? 'INITIAL_TICKETS_CHOSEN' : 'ADDITIONAL_TICKETS_CHOSEN'
-      this.possibleTickets = []
+      this.possibleTickets = this.persist('possibleTickets', [])
       this.sendRequest('PLAY', playAction, tickets + '')
     },
     onCardsForTunnelChosen (cards) {
-      this.additionalCardsOptions = []
+      this.additionalCardsOptions = this.persist('additionalCardsOptions', [])
       this.sendRequest('PLAY', 'ADDITIONAL_CARDS_CHOSEN', cards)
     }
   },
