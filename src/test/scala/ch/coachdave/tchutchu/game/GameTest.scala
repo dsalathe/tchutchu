@@ -88,20 +88,23 @@ class GameTest extends UnitSpec:
 
     val afterInitialTicketsDrawn = testTicketsChosenAndReturnGameState(true, p1, p2)
 
+    val firstPlayer = afterInitialTicketsDrawn.currentPlayerId
+    val secondPlayer = firstPlayer.next
+
     // First turn P1:
-    val firstTurnFirstDraw  = Game.updateGame(afterInitialTicketsDrawn, PlayerId.PLAYER_1, UserAction.PLAY_TURN, "FIRST_CARD 1")
-    val firstTurnSecondDraw = Game.updateGame(firstTurnFirstDraw, PlayerId.PLAYER_1, UserAction.DRAW_SECOND, "-1")
+    val firstTurnFirstDraw  = Game.updateGame(afterInitialTicketsDrawn, firstPlayer, UserAction.PLAY_TURN, "FIRST_CARD 1")
+    val firstTurnSecondDraw = Game.updateGame(firstTurnFirstDraw, firstPlayer, UserAction.DRAW_SECOND, "-1")
 
     // Second turn P2:
-    val secondTurnFirstDraw = Game.updateGame(firstTurnSecondDraw, PlayerId.PLAYER_2, UserAction.PLAY_TURN, "FIRST_CARD -1")
-    val secondTurnSecondDraw = Game.updateGame(secondTurnFirstDraw, PlayerId.PLAYER_2, UserAction.DRAW_SECOND, "2")
+    val secondTurnFirstDraw = Game.updateGame(firstTurnSecondDraw, secondPlayer, UserAction.PLAY_TURN, "FIRST_CARD -1")
+    val secondTurnSecondDraw = Game.updateGame(secondTurnFirstDraw, secondPlayer, UserAction.DRAW_SECOND, "2")
 
     // Third turn P1:
-    val thirdTurnFirstDraw  = Game.updateGame(secondTurnSecondDraw, PlayerId.PLAYER_1, UserAction.PLAY_TURN, "FIRST_CARD -1")
-    val thirdTurnSecondDraw = Game.updateGame(thirdTurnFirstDraw, PlayerId.PLAYER_1, UserAction.DRAW_SECOND, "3")
+    val thirdTurnFirstDraw  = Game.updateGame(secondTurnSecondDraw, firstPlayer, UserAction.PLAY_TURN, "FIRST_CARD -1")
+    val thirdTurnSecondDraw = Game.updateGame(thirdTurnFirstDraw, firstPlayer, UserAction.DRAW_SECOND, "3")
 
-    thirdTurnSecondDraw.playerState(PlayerId.PLAYER_1).get.cards should have size 4+2+2
-    thirdTurnSecondDraw.playerState(PlayerId.PLAYER_2).get.cards should have size 4+2
+    thirdTurnSecondDraw.playerState(firstPlayer).get.cards should have size 4+2+2
+    thirdTurnSecondDraw.playerState(secondPlayer).get.cards should have size 4+2
 
     verify(p2).initPlayers(ArgumentMatchers.eq(PlayerId.PLAYER_2), any())
   }
