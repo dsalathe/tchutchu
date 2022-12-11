@@ -6,14 +6,19 @@
       class="chunk">{{ getContent(i) }}
       </div>
     </div>
+    <div v-for="s in dataMap.stations" :key="'station'+s.id" :style="{ backgroundColor: getBCStation(s), border: getBorderStation(s)}"
+    class="station" :id="'s'+s.id"><div :class="{destination: isDestination(s), destinationSelected: isPossibleDestination(s)}"></div></div>
     <ItemSelector v-if="displayedTickets.length" :items="displayedTickets" :confirmChoice="onTicketsSelected" :minItems="minItems"
-    maxItems="5" :areCards="false" class="selector" >Please select at least {{ minItems }} ticket{{minItems > 1 ? 's' : ''}}</ItemSelector>
+    maxItems="5" :areCards="false" :addPossibleDestination="addPossibleDestination" :removePossibleDestination="removePossibleDestination"
+    :clearPossibleDestinations="clearPossibleDestinations" class="selector" >Please select at least {{ minItems }} ticket{{minItems > 1 ? 's' : ''}}</ItemSelector>
     <ItemSelector v-if="possibleCardsForSeizingDisplayed.length" :items="possibleCardsForSeizingDisplayed"
-    :confirmChoice="OnCardsForSeizing" :minItems="1" :areCards="true"
-    :maxItems="1" class="selector" >Select how you want to seize the route</ItemSelector>
+    :confirmChoice="OnCardsForSeizing" :minItems="1" :areCards="true" :addPossibleDestination="addPossibleDestination"
+    :maxItems="1" :removePossibleDestination="removePossibleDestination"
+    :clearPossibleDestinations="clearPossibleDestinations" class="selector" >Select how you want to seize the route</ItemSelector>
     <ItemSelector v-if="tunnelAdditonalCards.length" :items="tunnelAddtionalCardsDisplayed"
-    :confirmChoice="OnCardsForSeizingTunnel" :minItems="0" :areCards="true"
-    :maxItems="1" class="selector" >Select an option if you want to pursue (Or None to renounce)</ItemSelector>
+    :confirmChoice="OnCardsForSeizingTunnel" :minItems="0" :areCards="true" :addPossibleDestination="addPossibleDestination"
+    :maxItems="1" :removePossibleDestination="removePossibleDestination"
+    :clearPossibleDestinations="clearPossibleDestinations" class="selector" >Select an option if you want to pursue (Or None to renounce)</ItemSelector>
     <img src="/img/game/map.png" alt="Board Game"/>
   </div>
 </template>
@@ -21,6 +26,7 @@
 <script>
 
 import ItemSelector from '@/components/ItemSelector.vue'
+import '@/assets/styles/stations.css'
 
 export default {
   name: 'BoardGame',
@@ -28,13 +34,15 @@ export default {
     ItemSelector
   },
   props: ['displayedTickets', 'onTicketsSelected', 'dataMap', 'isDisabled', 'cards',
-    'seizeRoute', 'isDrawing', 'takenRoutesP1', 'takenRoutesP2', 'tunnelAdditonalCards', 'seizeTunnel', 'wagons'],
+    'seizeRoute', 'isDrawing', 'takenRoutesP1', 'takenRoutesP2', 'tunnelAdditonalCards',
+    'seizeTunnel', 'wagons', 'tickets'],
   data () {
     return {
       routesSize: Array.from({ length: 100 }, _ => false),
       colorNames: ['BLACK', 'VIOLET', 'BLUE', 'GREEN', 'YELLOW', 'ORANGE', 'RED', 'WHITE'],
       routeToBeTaken: -1,
-      possibleCardsForSeizing: []
+      possibleCardsForSeizing: [],
+      currentSelectedTickets: []
     }
   },
   computed: {
@@ -49,9 +57,44 @@ export default {
     },
     takenRoutes () {
       return this.takenRoutesP1.concat(this.takenRoutesP2)
+    },
+    destinations () {
+      return new Set(this.dataMap.tickets.filter(t => this.tickets.includes(t.id))
+        .flatMap(t => t.from.map(f => f.id).concat(t.to.map(f => f.id))))
+    },
+    possibleDestinations () {
+      return new Set(this.dataMap.tickets.filter(t => this.currentSelectedTickets.includes(t.id))
+        .flatMap(t => t.from.map(f => f.id).concat(t.to.map(f => f.id))))
     }
   },
   methods: {
+    isDestination ({ id }) {
+      return this.destinations.has(id)
+    },
+    isPossibleDestination ({ id }) {
+      return this.possibleDestinations.has(id)
+    },
+    getBCStation ({ id }) {
+      if (this.isPossibleDestination({ id })) {
+        return 'mediumaquamarine'
+      }
+      return this.isDestination({ id }) ? 'white' : 'transparent'
+    },
+    getBorderStation ({ id }) {
+      if (this.isPossibleDestination({ id })) {
+        return '1px dashed gray'
+      }
+      return this.isDestination({ id }) ? '1px solid gray' : '0px solid gray'
+    },
+    addPossibleDestination (id) {
+      this.currentSelectedTickets.push(id)
+    },
+    removePossibleDestination (id) {
+      this.currentSelectedTickets = this.currentSelectedTickets.filter(i => i !== id)
+    },
+    clearPossibleDestinations () {
+      this.currentSelectedTickets = []
+    },
     countsToFlattenCards (counts) {
       const [count1, color1, count2, color2] = counts
       return Array(count1).fill(this.colorNames[color1]).concat(Array(count2).fill(color2 === 8 ? 'LOCOMOTIVE' : this.colorNames[color2]))

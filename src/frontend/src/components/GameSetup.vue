@@ -53,8 +53,16 @@
         <div class="coach" id="c1"><button @click="joinAny" class="coach-button">Join Any Game</button></div>
         <div class="coach" id="c2"><button @click="joinCustom" class="coach-button">Join Custom Game</button></div>
         <div class="coach" id="c3"><button @click="createCustom" class="coach-button">Create Custom Game</button></div>
-        <div class="steam" id="s1"></div>
-        <div class="steam" id="s2"></div>
+        <div class="steam" id="steam1"></div>
+        <div class="steam" id="steam2"></div>
+        <div class="steam" id="steam3"></div>
+        <div class="steam" id="steam4"></div>
+        <div class="steam" id="steam5"></div>
+        <div class="steam" id="steam6"></div>
+        <div class="steam" id="steam7"></div>
+        <div class="steam" id="steam8"></div>
+        <div class="steam" id="steam9"></div>
+        <div class="steam" id="steam10"></div>
       </div>
     </div>
   </div>
@@ -261,7 +269,7 @@ form input[type="submit"]:hover {
   width: 50px;
   height: 30px;
   border: 5px solid #333;
-  background-color: maroon;
+  background-color: #DA291C;
   border-radius: 0 10px 0 0;
   bottom: 52.5px;
   left: calc(50% + 225px);
@@ -500,18 +508,55 @@ form input[type="submit"]:hover {
   100% {transform: translateY(-110px) translateX(-80px) scale(1.5); opacity: 0.2;}
 }
 
+@keyframes upshift {
+  0% {transform: translateY(0) translateX(0) scale(0); opacity: 1;}
+  100% {transform: translateY(-110px) translateX(-65px) scale(1.5); opacity: 0.2;}
+}
+
 @keyframes scale {
   0% {transform: scaleY(1);}
   50% {transform: scaleY(0.98);}
   100% {transform: scaleY(1);}
 }
 
-#s1 {
+#steam1 {
   animation: up 2.5s ease-out infinite;
 }
 
-#s2 {
+#steam2 {
   animation: up 1.7s ease-out infinite 1s;
+}
+
+#steam3 {
+  animation: up 3s ease-out infinite 0.3s;
+}
+
+#steam4 {
+  animation: up 2.1s ease-out infinite 1.5s;
+}
+
+#steam5 {
+  animation: up 2.3s ease-out infinite;
+}
+
+#steam6 {
+  animation: upshift 2.5s ease-out infinite 1.25s;
+}
+
+#steam7 {
+  animation: upshift 1.7s ease-out infinite 0.15s;
+}
+
+#steam8 {
+  animation: upshift 3s ease-out infinite 1.8s;
+}
+
+#steam9 {
+  animation: upshift 2.1s ease-out infinite 0.45s;
+}
+
+#steam10 {
+  animation: upshift 2.3s ease-out infinite 1.15s;
 }
 
 #s2:before {

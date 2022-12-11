@@ -1,4 +1,211 @@
 {
+    "stations" : [
+        {
+            "id": 0,
+            "name": "Baden"
+        },
+        {
+            "id": 1,
+            "name": "Bâle"
+        },
+        {
+            "id": 2,
+            "name": "Bellinzone"
+        },
+        {
+            "id": 3,
+            "name": "Berne"
+        },
+        {
+            "id": 4,
+            "name": "Brigue"
+        },
+        {
+            "id": 5,
+            "name": "Brusio"
+        },
+        {
+            "id": 6,
+            "name": "Coire"
+        },
+        {
+            "id": 7,
+            "name": "Davos"
+        },
+        {
+            "id": 8,
+            "name": "Delémont"
+        },
+        {
+            "id": 9,
+            "name": "Fribourg"
+        },
+        {
+            "id": 10,
+            "name": "Genève"
+        },
+        {
+            "id": 11,
+            "name": "Interlaken"
+        },
+        {
+            "id": 12,
+            "name": "Kreuzlingen"
+        },
+        {
+            "id": 13,
+            "name": "Lausanne"
+        },
+        {
+            "id": 14,
+            "name": "La Chaux-de-Fonds"
+        },
+        {
+            "id": 15,
+            "name": "Locarno"
+        },
+        {
+            "id": 16,
+            "name": "Lucerne"
+        },
+        {
+            "id": 17,
+            "name": "Lugano"
+        },
+        {
+            "id": 18,
+            "name": "Martigny"
+        },
+        {
+            "id": 19,
+            "name": "Neuchâtel"
+        },
+        {
+            "id": 20,
+            "name": "Olten"
+        },
+        {
+            "id": 21,
+            "name": "Pfäffikon"
+        },
+        {
+            "id": 22,
+            "name": "Sargans"
+        },
+        {
+            "id": 23,
+            "name": "Schaffhouse"
+        },
+        {
+            "id": 24,
+            "name": "Schwyz"
+        },
+        {
+            "id": 25,
+            "name": "Sion"
+        },
+        {
+            "id": 26,
+            "name": "Soleure"
+        },
+        {
+            "id": 27,
+            "name": "Saint-Gall"
+        },
+        {
+            "id": 28,
+            "name": "Vaduz"
+        },
+        {
+            "id": 29,
+            "name": "Wassen"
+        },
+        {
+            "id": 30,
+            "name": "Winterthour"
+        },
+        {
+            "id": 31,
+            "name": "Yverdon"
+        },
+        {
+            "id": 32,
+            "name": "Zoug"
+        },
+        {
+            "id": 33,
+            "name": "Zürich"
+        },
+        {
+            "id": 34,
+            "name": "Allemagne"
+        },
+        {
+            "id": 35,
+            "name": "Allemagne"
+        },
+        {
+            "id": 36,
+            "name": "Allemagne"
+        },
+        {
+            "id": 37,
+            "name": "Allemagne"
+        },
+        {
+            "id": 38,
+            "name": "Allemagne"
+        },
+        {
+            "id": 39,
+            "name": "Autriche"
+        },
+        {
+            "id": 40,
+            "name": "Autriche"
+        },
+        {
+            "id": 41,
+            "name": "Autriche"
+        },
+        {
+            "id": 42,
+            "name": "Italie"
+        },
+        {
+            "id": 43,
+            "name": "Italie"
+        },
+        {
+            "id": 44,
+            "name": "Italie"
+        },
+        {
+            "id": 45,
+            "name": "Italie"
+        },
+        {
+            "id": 46,
+            "name": "Italie"
+        },
+        {
+            "id": 47,
+            "name": "France"
+        },
+        {
+            "id": 48,
+            "name": "France"
+        },
+        {
+            "id": 49,
+            "name": "France"
+        },
+        {
+            "id": 50,
+            "name": "France"
+        }
+        
+    ],
     "routes" : [
         {
             "id": "AT1_STG_1",
@@ -204,11 +411,6 @@
             "level": "UNDERGROUND",
             "color": "BLACK"
         },
-
-
-
-
-
         {
             "id": "DE2_SCE_1",
             "length": 1,
@@ -554,7 +756,7 @@
                 "name": "Bâle"
             }],
             "to": [{
-                "id": 3,
+                "id": 4,
                 "name": "Brigue"
             }],
             "points": [10]
@@ -566,7 +768,7 @@
                 "name": "Bâle"
             }],
             "to": [{
-                "id": 3,
+                "id": 27,
                 "name": "Saint-Gall"
             }],
             "points": [8]
@@ -574,11 +776,11 @@
         {
             "id": 3,
             "from": [{
-                "id": 1,
+                "id": 3,
                 "name": "Berne"
             }],
             "to": [{
-                "id": 3,
+                "id": 6,
                 "name": "Coire"
             }],
             "points": [10]
@@ -586,11 +788,11 @@
         {
             "id": 4,
             "from": [{
-                "id": 1,
+                "id": 3,
                 "name": "Berne"
             }],
             "to": [{
-                "id": 3,
+                "id": 17,
                 "name": "Lugano"
             }],
             "points": [12]
@@ -598,11 +800,11 @@
         {
             "id": 5,
             "from": [{
-                "id": 1,
+                "id": 3,
                 "name": "Berne"
             }],
             "to": [{
-                "id": 3,
+                "id": 24,
                 "name": "Schwyz"
             }],
             "points": [5]
@@ -610,11 +812,11 @@
         {
             "id": 6,
             "from": [{
-                "id": 1,
+                "id": 3,
                 "name": "Berne"
             }],
             "to": [{
-                "id": 3,
+                "id": 33,
                 "name": "Zürich"
             }],
             "points": [6]
@@ -622,11 +824,11 @@
         {
             "id": 7,
             "from": [{
-                "id": 1,
+                "id": 9,
                 "name": "Fribourg"
             }],
             "to": [{
-                "id": 3,
+                "id": 16,
                 "name": "Lucerne"
             }],
             "points": [5]
@@ -634,11 +836,11 @@
         {
             "id": 8,
             "from": [{
-                "id": 1,
+                "id": 10,
                 "name": "Genève"
             }],
             "to":[ {
-                "id": 3,
+                "id": 1,
                 "name": "Bâle"
             }],
             "points": [13]
@@ -646,7 +848,7 @@
         {
             "id": 9,
             "from": [{
-                "id": 1,
+                "id": 10,
                 "name": "Genève"
             }],
             "to": [{
@@ -658,11 +860,11 @@
         {
             "id": 10,
             "from": [{
-                "id": 1,
+                "id": 10,
                 "name": "Genève"
             }],
             "to": [{
-                "id": 3,
+                "id": 25,
                 "name": "Sion"
             }],
             "points": [10]
@@ -670,11 +872,11 @@
         {
             "id": 11,
             "from": [{
-                "id": 1,
+                "id": 10,
                 "name": "Genève"
             }],
             "to": [{
-                "id": 3,
+                "id": 33,
                 "name": "Zürich"
             }],
             "points": [14]
@@ -682,11 +884,11 @@
         {
             "id": 12,
             "from": [{
-                "id": 1,
+                "id": 11,
                 "name": "Interlaken"
             }],
             "to": [{
-                "id": 3,
+                "id": 30,
                 "name": "Winterthour"
             }],
             "points": [7]
@@ -694,11 +896,11 @@
         {
             "id": 13,
             "from": [{
-                "id": 1,
+                "id": 12,
                 "name": "Kreuzlingen"
             }],
             "to": [{
-                "id": 3,
+                "id": 33,
                 "name": "Zürich"
             }],
             "points": [3]
@@ -706,11 +908,11 @@
         {
             "id": 14,
             "from": [{
-                "id": 1,
+                "id": 13,
                 "name": "Lausanne"
             }],
             "to": [{
-                "id": 3,
+                "id": 11,
                 "name": "Interlaken"
             }],
             "points": [7]
@@ -718,11 +920,11 @@
         {
             "id": 15,
             "from": [{
-                "id": 1,
+                "id": 13,
                 "name": "Lausanne"
             }],
             "to": [{
-                "id": 3,
+                "id": 16,
                 "name": "Lucerne"
             }],
             "points": [8]
@@ -730,11 +932,11 @@
         {
             "id": 16,
             "from": [{
-                "id": 1,
+                "id": 13,
                 "name": "Lausanne"
             }],
             "to": [{
-                "id": 3,
+                "id": 27,
                 "name": "Saint-Gall"
             }],
             "points": [13]
@@ -742,7 +944,7 @@
         {
             "id": 17,
             "from": [{
-                "id": 1,
+                "id": 14,
                 "name": "La Chaux-de-Fonds"
             }],
             "to": [{
@@ -754,11 +956,11 @@
         {
             "id": 18,
             "from": [{
-                "id": 1,
+                "id": 14,
                 "name": "La Chaux-de-Fonds"
             }],
             "to": [{
-                "id": 3,
+                "id": 16,
                 "name": "Lucerne"
             }],
             "points": [7]
@@ -766,11 +968,11 @@
         {
             "id": 19,
             "from": [{
-                "id": 1,
+                "id": 14,
                 "name": "La Chaux-de-Fonds"
             }],
             "to": [{
-                "id": 3,
+                "id": 33,
                 "name": "Zürich"
             }],
             "points": [8]
@@ -778,11 +980,11 @@
         {
             "id": 20,
             "from": [{
-                "id": 1,
+                "id": 16,
                 "name": "Lucerne"
             }],
             "to": [{
-                "id": 3,
+                "id": 28,
                 "name": "Vaduz"
             }],
             "points": [6]
@@ -790,11 +992,11 @@
         {
             "id": 21,
             "from": [{
-                "id": 1,
+                "id": 16,
                 "name": "Lucerne"
             }],
             "to": [{
-                "id": 3,
+                "id": 33,
                 "name": "Zürich"
             }],
             "points": [2]
@@ -802,11 +1004,11 @@
         {
             "id": 22,
             "from": [{
-                "id": 1,
+                "id": 17,
                 "name": "Lugano"
             }],
             "to": [{
-                "id": 3,
+                "id": 6,
                 "name": "Coire"
             }],
             "points": [10]
@@ -814,11 +1016,11 @@
         {
             "id": 23,
             "from": [{
-                "id": 1,
+                "id": 19,
                 "name": "Neuchâtel"
             }],
             "to": [{
-                "id": 3,
+                "id": 30,
                 "name": "Winterthour"
             }],
             "points": [9]
@@ -826,11 +1028,11 @@
         {
             "id": 24,
             "from": [{
-                "id": 1,
+                "id": 20,
                 "name": "Olten"
             }],
             "to": [{
-                "id": 3,
+                "id": 23,
                 "name": "Schaffhouse"
             }],
             "points": [5]
@@ -838,11 +1040,11 @@
         {
             "id": 25,
             "from": [{
-                "id": 1,
+                "id": 23,
                 "name": "Schaffhouse"
             }],
             "to": [{
-                "id": 3,
+                "id": 18,
                 "name": "Martigny"
             }],
             "points": [15]
@@ -850,11 +1052,11 @@
         {
             "id": 26,
             "from": [{
-                "id": 1,
+                "id": 23,
                 "name": "Schaffhouse"
             }],
             "to": [{
-                "id": 3,
+                "id": 27,
                 "name": "Saint-Gall"
             }],
             "points": [4]
@@ -862,11 +1064,11 @@
         {
             "id": 27,
             "from": [{
-                "id": 1,
+                "id": 23,
                 "name": "Schaffhouse"
             }],
             "to": [{
-                "id": 3,
+                "id": 32,
                 "name": "Zoug"
             }],
             "points": [3]
@@ -874,11 +1076,11 @@
         {
             "id": 28,
             "from": [{
-                "id": 1,
+                "id": 27,
                 "name": "Saint-Gall"
             }],
             "to": [{
-                "id": 3,
+                "id": 5,
                 "name": "Brusio"
             }],
             "points": [9]
@@ -886,11 +1088,11 @@
         {
             "id": 29,
             "from": [{
-                "id": 1,
+                "id": 30,
                 "name": "Winterthour"
             }],
             "to": [{
-                "id": 3,
+                "id": 24,
                 "name": "Schwyz"
             }],
             "points": [3]
@@ -898,11 +1100,11 @@
         {
             "id": 30,
             "from": [{
-                "id": 1,
+                "id": 33,
                 "name": "Zürich"
             }],
             "to": [{
-                "id": 3,
+                "id": 1,
                 "name": "Bâle"
             }],
             "points": [4]
@@ -910,11 +1112,11 @@
         {
             "id": 31,
             "from": [{
-                "id": 1,
+                "id": 33,
                 "name": "Zürich"
             }],
             "to": [{
-                "id": 3,
+                "id": 5,
                 "name": "Brusio"
             }],
             "points": [11]
@@ -922,11 +1124,11 @@
         {
             "id": 32,
             "from": [{
-                "id": 1,
+                "id": 33,
                 "name": "Zürich"
             }],
             "to": [{
-                "id": 3,
+                "id": 17,
                 "name": "Lugano"
             }],
             "points": [9]
@@ -934,11 +1136,11 @@
         {
             "id": 33,
             "from": [{
-                "id": 1,
+                "id": 33,
                 "name": "Zürich"
             }],
             "to": [{
-                "id": 3,
+                "id": 28,
                 "name": "Vaduz"
             }],
             "points": [6]
@@ -946,7 +1148,7 @@
         {
             "id": 34,
             "from": [{
-                "id": 1,
+                "id": 3,
                 "name": "Berne"
             }],
             "to": [
@@ -972,7 +1174,7 @@
         {
             "id": 35,
             "from": [{
-                "id": 1,
+                "id": 6,
                 "name": "Coire"
             }],
             "to": [
@@ -998,7 +1200,7 @@
         {
             "id": 36,
             "from": [{
-                "id": 1,
+                "id": 17,
                 "name": "Lugano"
             }],
             "to": [
@@ -1024,7 +1226,7 @@
         {
             "id": 37,
             "from": [{
-                "id": 1,
+                "id": 33,
                 "name": "Zürich"
             }],
             "to": [

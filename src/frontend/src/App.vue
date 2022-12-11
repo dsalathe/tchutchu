@@ -62,7 +62,7 @@ export default {
       messages: this.retrieve('messages', [{ messageId: 'CHAT', data: 'V0VMQ09NRQ== V2VsY29tZSB0byBUY2h1VGNodSEgSWYgeW91IGV4cGVyaWVuY2UgYW55IGNvbm5lY3Rpb24gaXNzdWVzLCB0cnkgdG8gcmVsb2FkIHRoZSBwYWdlLg==' }]),
       metaAction: '',
       playAction: 'NOTHING',
-      dataMsg: '', // TODO check if store that or not actually
+      dataMsg: '',
       connected: true,
       userId: this.retrieve('userId', ''),
       // GAME STATE DATA

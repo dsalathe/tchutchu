@@ -1,0 +1,375 @@
+.station {
+    align-self: baseline;
+    justify-self: baseline;
+    position: absolute;
+    width: 1.3%;
+    height: 1.99%;
+    border-radius: 50%;
+    display: flex;
+  }
+
+.destination {
+    align-self: center;
+    justify-self: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    animation: scaleIn 2s 4 ease-in-out;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: .7;
+        box-shadow: 0px 0px 0px 2px #DA291C;
+    }
+    to {
+        transform: scale(2.5, 2.5);
+        box-shadow: 0px 0px 0px 2px #DA291C;
+        opacity: 0;
+    }
+}
+
+.destinationSelected {
+  align-self: center;
+  justify-self: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  animation: scaleInSelected 2s 4 ease-in-out;
+}
+
+@keyframes scaleInSelected {
+  from {
+      opacity: .9;
+      box-shadow: 0px 0px 0px 2px mediumaquamarine;
+  }
+  to {
+      transform: scale(3.5, 3.5);
+      box-shadow: 0px 0px 0px 2px mediumaquamarine;
+      opacity: 0;
+  }
+}
+
+
+  #s0 {
+    top: 18.7%;
+    left: 48.2%;
+  }
+
+  #s1 {
+    top: 15.4%;
+    left: 34.7%;
+  }
+
+  #s2 {
+    top: 80.5%;
+    left: 66.6%;
+  }
+
+  #s3 {
+    top: 45%;
+    left: 31.5%;
+  }
+
+  #s4 {
+    top: 73.5%;
+    left: 43%;
+  }
+
+  #s5 {
+    top: 76.5%;
+    left: 88.3%;
+  }
+
+  #s6 {
+    top: 50%;
+    left: 75.5%;
+  }
+
+  #s7 {
+    top: 50.3%;
+    left: 85.5%;
+  }
+
+  #s8 {
+    top: 25%;
+    left: 27.1%;
+  }
+
+  #s9 {
+    top: 52.3%;
+    left: 26.7%;
+  }
+
+  #s10 {
+    top: 80.4%;
+    left: 3.3%;
+  }
+
+  #s11 {
+    top: 58.8%;
+    left: 40.8%;
+  }
+
+  #s12 {
+    top: 10.5%;
+    left: 68.7%;
+  }
+
+  #s13 {
+    top: 63.7%;
+    left: 15.5%;
+  }
+
+  #s14 {
+    top: 36%;
+    left: 15.7%;
+  }
+
+  #s15 {
+    top: 82.8%;
+    left: 60%;
+  }
+
+  #s16 {
+    top: 40%;
+    left: 49.5%;
+  }
+
+  #s17 {
+    top: 89.5%;
+    left: 65%;
+  }
+
+  #s18 {
+    top: 86%;
+    left: 22.2%;
+  }
+
+  #s19 {
+    top: 42.6%;
+    left: 20.5%;
+  }
+
+  #s20 { /* Olten */
+    top: 27.4%;
+    left: 40.5%;
+  }
+
+  #s21 {
+    top: 33.7%;
+    left: 61%;
+  }
+
+  #s22 {
+    top: 41.7%;
+    left: 72.9%;
+  }
+
+  #s23 {
+    top: 6.1%;
+    left: 55.4%;
+  }
+
+  #s24 {
+    top: 42.5%;
+    left: 56.7%;
+  }
+
+  #s25 { /* Sion */
+    top: 77.3%;
+    left: 30%;
+  }
+
+  #s26 {
+    top: 29.3%;
+    left: 33.3%; 
+  }
+
+  #s27 {
+    top: 19.8%;
+    left: 72%;
+  }
+
+  #s28 {
+    top: 34%;
+    left: 76.5%;
+  }
+
+  #s29 {
+    top: 57.5%;
+    left: 56.8%;
+  }
+
+  #s30 {
+    top: 15.4%;
+    left: 58.1%;
+  }
+
+  #s31 {
+    top: 52.7%;
+    left: 14.4%;
+  }
+
+  #s32 {
+    top: 33.5%;
+    left: 54.3%;
+  }
+
+  #s33 {
+    top: 23.6%;
+    left: 54%;
+  }
+
+  #s34 {
+    display: none; /* Add or Remove "display: none" if you want to highlight every countries or none of them */
+    top: 4.75%;
+    left: 35.35%;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+  }
+
+  #s35 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 0.5%;
+    left: 60.3%;
+  }
+
+  #s36 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 0.7%;
+    left: 64.95%;
+  }
+
+  #s37 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 2.6%;
+    left: 72.92%;
+  }
+
+  #s38 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 10.3%;
+    left: 79.85%;
+  }
+
+  #s39 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 30.05%;
+    left: 88.1%;
+  }
+
+  #s40 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 31.6%;
+    left: 82.7%;
+  }
+
+  #s41 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 40.5%;
+    left: 97.4%;
+  }
+
+  #s42 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 56.8%;
+    left: 97.25%;
+  }
+
+  #s43 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 89.5%;
+    left: 92.7%;
+  }
+
+  #s44 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 93.15%;
+    left: 70.85%;
+  }
+
+  #s45 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 95.15%;
+    left: 55.5%;
+  }
+
+  #s46 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 90.88%;
+    left: 50.6%;
+  }
+
+  #s47 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 95.95%;
+    left: 14.2%;
+  }
+
+  #s48 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 89.5%;
+    left: 1.7%;
+  }
+
+  #s49 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 28.23%;
+    left: 5.95%;
+  }
+
+  #s50 {
+    display: none;
+    opacity: 0.5;
+    height: 3.29%;
+    width: 2.14%;
+    top: 8.8%;
+    left: 27.95%;
+  }

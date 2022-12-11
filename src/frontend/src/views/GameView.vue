@@ -11,7 +11,7 @@
         <Board :displayedTickets="displayedTickets" :onTicketsSelected="onTicketsChosen" :dataMap="dataMap"
         :isDisabled="isDisabled" :cards="ownCardsColor" :seizeRoute="seizeRoute" :isDrawing="isFirstCardDrawn"
         :takenRoutesP1="routesP1" :takenRoutesP2="routesP2" :tunnelAdditonalCards="additionalCardsOptions" :seizeTunnel="seizeTunnel"
-        :wagons="ownWagons" />
+        :wagons="ownWagons" :tickets="ownTickets" />
       </div>
       <div v-else id="game-setup">
         <GameSetup :sendSetupGame="sendSetupGame" :state="setupState" :chosenGameName="setupGameName" />
@@ -140,7 +140,7 @@ export default {
     displayTicket (ticket) {
       const ticketData = this.dataMap.tickets[ticket]
       if (ticketData.to.length > 1) {
-        return ticketData.from[0].name + ' - {' + ticketData.to.map((to, i) => to.name + ' (' + ticketData.points[i] + ')').join(', ') + '}'
+        return ticketData.from[0].name + ' - {' + ticketData.to.slice(0, ticketData.points.length).map((to, i) => to.name + ' (' + ticketData.points[i] + ')').join(', ') + '}'
       }
       return ticketData.from[0].name + ' - ' + ticketData.to[0].name + ' (' + ticketData.points[0] + ')'
     },

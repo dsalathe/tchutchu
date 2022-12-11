@@ -20,7 +20,7 @@
 import GameCard from '@/components/GameCard.vue'
 
 export default {
-  props: ['items', 'confirmChoice', 'minItems', 'maxItems', 'areCards'],
+  props: ['items', 'confirmChoice', 'minItems', 'maxItems', 'areCards', 'addPossibleDestination', 'removePossibleDestination', 'clearPossibleDestinations'],
   components: {
     GameCard
   },
@@ -37,21 +37,34 @@ export default {
     triggerItem (item) {
       if (this.maxItems === 1) {
         if (this.selectedItems.has(item)) {
+          if (!this.areCards) {
+            this.removePossibleDestination(item)
+          }
           this.selectedItems.delete(item)
         } else {
+          if (!this.areCards) {
+            this.addPossibleDestination(item)
+          }
           this.selectedItems = new Set()
           this.selectedItems.add(item)
         }
       } else {
         if (this.selectedItems.has(item)) {
+          if (!this.areCards) {
+            this.removePossibleDestination(item)
+          }
           this.selectedItems.delete(item)
         } else {
+          if (!this.areCards) {
+            this.addPossibleDestination(item)
+          }
           this.selectedItems.add(item)
         }
       }
     },
     onConfirm () {
       if (this.isThereEnoughItems) {
+        this.clearPossibleDestinations()
         this.confirmChoice([...this.selectedItems])
       }
     },
@@ -148,7 +161,7 @@ button:hover {
   padding-bottom: 10px;
   border-radius: 10px;
   background-color: rgb(200, 200, 135);
-  opacity: 0.75;
+  opacity: 0.95;
   resize: both;
   overflow: scroll;
   max-height: 70vh;
