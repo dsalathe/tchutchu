@@ -1,7 +1,8 @@
 <template>
   <nav>
     <router-link to="/">Game</router-link> |
-    <router-link to="/rules">How to play</router-link>
+    <router-link to="/rules">How to play</router-link> |
+    <router-link to="/technical">Ticket to Tech</router-link>
   </nav>
   <router-view
     :sendRequest="sendRequest"
@@ -33,6 +34,11 @@
     :onCardsForTunnelChosen="onCardsForTunnelChosen"
     :updatedStateCount="updatedState"
     :isGameOver="isGameOver" />
+  <footer>This game is a re-creation of the game <strong>Ticket to ride: Switzerland</strong> from <strong>Day of Wonders.</strong>
+  This project is for educational purposes only and is not intended for commercial use. This is a non-profit project and is not affiliated with the original game or its designers.
+  All game assets, including names, trademarks, and copyrighted materials, belong to their respective owners.
+  Source code available on <a href="https://github.com/dsalathe/tchutchu">github</a>. See official website of the publisher <a href="https://www.daysofwonder.com/en/">here</a>.
+  </footer>
   <Debug
   v-if="isDev()"
   :connected="connected"
@@ -193,6 +199,7 @@ export default {
         })
         if (this.userId !== '') {
           this.sendRequest('RECONNECT', 'NOTHING', '')
+          this.unsubscribeGeneral()
         }
       })
     },
@@ -229,8 +236,6 @@ export default {
     console.log('Mounted!')
     this.connect()
     console.log('Subscribing to websockets topics and queues...')
-    // TODO (3) example: sessionStorage.setItem('player1Name', 'AWESOME')
-    // TODO (3) if needed: sessionStorage.clear() to clear all sessions data
   }
 }
 
@@ -264,6 +269,18 @@ nav a.router-link-exact-active {
   color: #DA291C;
 }
 
+footer {
+  margin-top: 50px;
+  font-style: italic;
+  font-size: smaller;
+  text-align: center;
+  color: #666;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+}
+
 @media (max-width: 1200px) {
   #app {
     display: flex;
@@ -271,6 +288,9 @@ nav a.router-link-exact-active {
   }
 
   #main-content {
+    display: none;
+  }
+  footer {
     display: none;
   }
 }

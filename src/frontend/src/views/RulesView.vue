@@ -2,8 +2,8 @@
   <div class="rules">
     <h1>Rules of TchuTchu</h1>
     <p>
-      Welcome to TchuTchu! This game is very similar to the game <i>Ticket to ride</i> from <i>Day of wonders</i>. If you are already familiar with this game,
-      you might be interested to jump in directly to the chapter <strong><a href="#diff">Main difference with classical <i>Ticket to ride</i></a></strong>.
+      Welcome to TchuTchu! This game is a recreation of the game <i>Ticket to ride: Switzerland</i> from <i>Day of wonders</i>. If you are already familiar with the european version of this game,
+      you might be interested to jump in directly to the chapter <strong><a href="#diff">Main difference with <i>Ticket to ride: Europe</i></a></strong>.
     </p>
     <h3>Goal</h3>
     <p>
@@ -118,11 +118,11 @@
       When a player only has 0, 1 or 2 wagons, every other player can only play a last time.
     </p>
 
-    <h3 id="diff">Main difference with classical <i>Ticket to ride</i></h3>
+    <h3 id="diff">Main difference with <i>Ticket to ride: Europe</i></h3>
     <ul>
       <li>It is possible to draw face-up <Card color="LOCOMOTIVE" class="smallCard"/> twice.</li>
       <li><Card color="LOCOMOTIVE" class="smallCard"/> can however only be used when seizing a tunnel</li>
-      <li>More than 2 <Card color="LOCOMOTIVE" class="smallCard"/> can stay among the 5 face-up cards</li>
+      <li>More than 2 <Card color="LOCOMOTIVE" class="smallCard"/> can stay among the 5 face-up cards. This is also a difference with Tickets to Ride: Switzerland</li>
       <li>It is allowed to use both routes of double-routes in 2-player mode.</li>
       <li>It is also allowed for a player to seize both of the double-route.</li>
     </ul>

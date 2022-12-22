@@ -1,5 +1,5 @@
 <template>
-  <div class="game">
+  <div :class="{game: true, otherturn: isOtherTurn, ownturn: !isOtherTurn}">
     <div class="top">
       <div class="top-left">
         <div id="stats">
@@ -102,6 +102,9 @@ export default {
     isDisabled () {
       return this.possibleTickets.length || this.ownId !== this.currentPlayerId || this.updatedStateCount < 3 || this.isGameOver
     },
+    isOtherTurn () {
+      return this.ownId !== this.currentPlayerId
+    },
     ownDisplayedTickets () {
       return this.ownTickets.map(t => ({ id: t, display: this.displayTicket(t) }))
     },
@@ -166,8 +169,30 @@ export default {
 .game {
   display: flex;
   flex-direction: column;
-  border: 2px dotted black;
   width: 100%;
+}
+
+.ownturn {
+  border: 4px solid #DA291C;
+  animation: blink 1s ease-in-out;
+  animation-iteration-count: 3;
+}
+
+@keyframes rotation {
+  50% {
+    transform: rotate(180deg) scale(0.25);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes blink { 50% { border-color:#fff; }  }
+
+.otherturn {
+  border: 2px dotted black;
+  opacity: 0.9;
+  background-color: #f7f7f7;
 }
 
 .top {
