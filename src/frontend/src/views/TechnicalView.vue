@@ -3,7 +3,7 @@
     <h1>Tech Talk: A Deep Dive into the Game's Structure</h1>
     <p>
       Welcome to the technical overview of TchuTchu!
-      This section is intended for <strong>developers</strong> and <strong>recruiters</strong> who are interested in learning about the technical details of this game.
+      This section is intended for <strong>developers</strong> who are interested in learning about the technical details of this game.
       Here, we will delve into the architectural structure of the game and highlight the key components of the code.
       Whether you are a developer looking to learn more about this game's inner workings or a recruiter evaluating the author's technical skills,
       hopes are that you will find this overview informative and insightful. So sit back, relax, and enjoy a journey through the technical aspects of this game!
