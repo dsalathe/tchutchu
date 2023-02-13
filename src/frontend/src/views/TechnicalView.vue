@@ -124,6 +124,58 @@
           </p>
         </section>
       </section>
+      <section id="architecture">
+        <h1>Architecture</h1>
+        <p>
+          When designing a new application, the first and most important decisions to make are about the system architecture.
+        It is important to consider the following meta-constraints in order to make informed decisions:
+        </p>
+        <ol>
+        <li><strong>The skills and size of the team:</strong>
+        Knowing the skills and size of the team is crucial in making design decisions.
+        The team's skills will impact the choice of technology stack and programming language.
+        The size of the team and its social structure, as described by Conway's law, will also impact the overall architecture
+        and help determine whether to use a monolithic, event-driven, or microservice architecture.
+        </li>
+        <li><strong>Characteristics trade-offs:</strong> When designing a system, the first consideration is often how to maximize performance.
+        However, sometimes it's necessary to trade-off performance for other factors, such as shorter time-to-market, improved maintainability,
+        reduced complexity, or improved testability.
+        There are several architecture patterns that are more performant than a monolithic approach, but they often come with a cost of complexity and longer
+        time-to-market periods. This trade-off must be considered carefully, taking into account the specific needs of the project. For example, an educational project's
+        main goal is often to demonstrate clear concepts with a limited amount of code, allowing curious individuals to experiment with the project in a reasonable amount of time. In this case,
+        it might not be wise to spend too much time on designing the most performant system. The author personally spent around 180 hours designing, writing, and testing the project.
+        </li>
+        <li><strong>Longevity of the app:</strong> Some businesses rewrite their entire app each year, while others need to maintain their app for 20 years or longer.
+        If you plan to keep and maintain your app through multiple generations of developers, you may want to consider architecture patterns that have proven to be easier to test and refactor.
+        </li>
+        </ol>
+        <section id="architecture--bigpicture">
+          <h3>The Big Picture</h3>
+          <p>
+            Based on the meta-constraints mentioned earlier, a decision was made to use a <strong>monolithic but event-driven approach</strong> for the project.
+            The team is composed of one person, and the primary purpose of the project is demonstration. Performance is not the most important consideration.
+            The concrete design of the system is as follows:
+          </p>
+          <p class="quote">Users will connect to the server through WebSockets.
+            Each request is handled by a controller, which dispatches requests to smaller units to handle different possible actions from the user
+            (such as playing their turn, writing a message, reconnecting to a game session, etc.).
+            By using caches, the game state of a user is retrieved, and combined with the user's action, the game engine is used to compute the next game state.
+            Finally, the server broadcasts the new state to each player and saves it in its cache.
+          </p>
+        </section>
+        <section id="architecture--techstack">
+          <h3>TchuTchu's tech stack</h3>
+        </section>
+        <section id="architecture--devops">
+          <h3>Devops & Cloud</h3>
+        </section>
+        <section id="architecture--communication">
+          <h3>Communication</h3>
+        </section>
+        <section id="architecture--gameengine">
+          <h3>Game Engine</h3>
+        </section>
+      </section>
       <p class="tbc">To Be Continued...</p>
     </div>
 
@@ -137,6 +189,16 @@
             <li><a href="#introduction--game">Game Description</a></li>
             <li><a href="#introduction--challenges">Main Challenges</a></li>
             <li><a href="#introduction--optionalchallenges">Optional Features</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#architecture">Architecture</a>
+          <ul>
+            <li><a href="#architecture--bigpicture">The big picture</a></li>
+            <li><a href="#architecture--techstack">The tech stack</a></li>
+            <li><a href="#architecture--devops">Devops & Cloud</a></li>
+            <li><a href="#architecture--communication">Communication</a></li>
+            <li><a href="#architecture--gameengine">Game Engine</a></li>
           </ul>
         </li>
       </ol>
@@ -247,6 +309,13 @@ h4 {
 p {
   text-align: justify;
   margin: 10px 40px;
+}
+
+.quote {
+  margin: 10px 80px;
+  text-align: center;
+  font-size: larger;
+  font-style: italic;
 }
 
 .tbc {
