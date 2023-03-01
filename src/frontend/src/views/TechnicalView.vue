@@ -120,6 +120,10 @@
                 <strong>Leveraging the power of PWA:</strong> Progressive Web Apps (PWAs) allow users to natively install the web app on their phone or even on Windows.
                 This could be especially useful with a one-player offline mode.
               </li>
+              <li>
+                <strong>Designing an AI</strong>: Enable one-player mode by designing a powerful bot! Reinforcement learning-based ai, heuristically-based on
+                spanning trees for connecting cities and max-flow min-cut theorem for blocking efficiently the opponent... Your pick!
+              </li>
             </ul>
           </p>
         </section>
@@ -162,19 +166,210 @@
             By using caches, the game state of a user is retrieved, and combined with the user's action, the game engine is used to compute the next game state.
             Finally, the server broadcasts the new state to each player and saves it in its cache.
           </p>
+          <p>
+            <img src="img/technical-overview/tchutchu-modelling.drawio.png" />
+          </p>
+          <p><i>
+            This diagram provides a simplified view of Tchutchu's architecture.
+            The system is composed of modules, which can be represented as classes or groups of classes.
+            Containers are deployable units that run on separate physical machines,
+            while caches are utilized to retrieve necessary contexts based on a player's action.
+            Additionally, a concurrent queue is employed for the matchmaking process.
+          </i></p>
         </section>
         <section id="architecture--techstack">
           <h3>TchuTchu's tech stack</h3>
+          <p>
+            Tchutchu's game engine is written in <strong>Scala 3.</strong>
+            Scala is a very powerful language that brings the best of the oriented object and functional programming worlds together.
+            If you're already familiar with scala but not its third version, you should have no problem to understand the source code.
+            The main difference is mainly that scala 3 no longer requires bracket syntax like java but can be written in indentation syntax like python.
+          </p>
+          <p>
+            To web-appify TchuTchu, we also need modern frameworks. Three of them were considered:
+          </p>
+          <ul>
+            <li><em>Play:</em> An advanced scala framework to build full stack apps easily. No current support for scala 3 in 2022.</li>
+            <li><em>Akka HTTP:</em> A more low-level scala framework for web-based applications. More work to do, but more customizable.</li>
+            <li><em>Spring Boot:</em> A multiple purpose state-of-the-art java framework supporting tons of options.</li>
+          </ul>
+          <p>
+            Because Play was not supported with scala 3 (at least yet) and because Akka HTTP seemed too low-level for this demonstration,
+            we chose to go with <strong>Spring Boot.</strong>
+          </p>
+          <p>
+            A solid choice for the frontend is <strong>Vue 3</strong>, which was particularly well-suited for this project due to its progressive characteristics.
+            Other candidates for the frontend included React, Angular, and ScalaJS.
+            While the author was interested in Angular's structure, it was deemed too difficult to use for a total beginner.
+            ScalaJS was not considered solely because of its beloved Scala syntax, but also because it appeared less complex and well-suited for this project.
+            However, Vue 3 was ultimately chosen due to its popularity at the time and its potential to engage the project's target audience.
+          </p>
         </section>
         <section id="architecture--devops">
-          <h3>Devops & Cloud</h3>
+          <h3>DevOps and Cloud</h3>
+          <p>
+            If you want to share your new project with friends and family, it can be difficult to ask them to download the source code from a GitHub repository,
+            install a JVM, and compile the code just to play on the same local network. A simpler solution is to host your web app on the cloud. <br/>
+            In Tchutchu, we consider three main challenges in terms of DevOps:
+            <ul>
+              <li>
+                <em>Setting up Scala 3 with Spring Boot:</em> Setting up Scala 2 or older versions with Play or Spring Boot is relatively straightforward.
+                With Scala 3, it's a bit more complicated. Fortunately, <a class="link" href="https://github.com/jecklgamis/spring-boot-scala-example">jecklgamis</a>
+                has created a GitHub template to help you get started with a project using Spring Boot and Scala 3 together.
+              </li>
+              <li>
+                <em>Setting up a Vue 3 frontend environment:</em> Using Vue's CLI or <a class="link" href="https://vitejs.dev/">Vite</a>, you can set up a frontend environment.
+                Then, you need to adapt your POM to install a plugin that compiles Vue's production code into its JAR. Finally, you might want to set up a proxy to run your JAR backend and create a fast feedback loop to improve your frontend development experience. A tutorial with concrete examples will be provided soon.
+              </li>
+              <li>
+                <em>Deploying your app on the cloud:</em> We are one step away from showing our work to our loved ones. At this point, we can produce a compact and easily deployable JAR. We will containerize our app using Docker, upload the container to the <strong>Google Cloud Platform (GCP)</strong>, set up a VM via Cloud Run, and deploy the app. From the GCP console, we can easily monitor the app's traffic and server logs.
+              </li>
+            </ul>
+          </p>
+          <p>
+            Optionally, you can set up continuous deployment on GCP. You can also use GitHub Actions to automate multiple tasks.
+            For example, in our <a class="link" href="https://github.com/dsalathe/tchutchu/actions">repo</a>, we automated the running of unit tests.
+          </p>
         </section>
         <section id="architecture--communication">
           <h3>Communication</h3>
+          <p>
+            While Ticket to Ride is a turn-based game, it's still important to design an efficient communication system to support instant messaging.
+            We want to control the scope of chats and game notifications to only include the relevant players, and we also want to ensure that the system is horizontally scalable.
+          </p>
+          <p>
+            Specifically, we want players to be able to chat with other players before starting a game session, but once the game starts, the scope of the chat should be limited to the players in the same game.
+            Because we also want the server to be able to broadcast new game states to the relevant players in real-time, a simple REST-based HTTP protocol is not suitable. Instead, we'll use <strong>WebSockets</strong>, a bi-directional communication protocol that supports queues and topics, similar to popular broker systems like Kafka or ActiveMQ.
+          </p>
+          <p>
+            One of the main concrete challenges of setting up websockets is designing the format of the messages exchanged between the server and the clients.
+            It is important to define the types of messages that will be used, as well as their structure and content.
+            Additionally, implementing the controllers that will handle the messages on both the backend and frontend sides is a crucial step.
+            In the backend, a Scala controller using Spring Boot annotations can be used to handle websocket messages and broadcast new game states,
+            while in the frontend, a controller written in Vue can be used to manage the received messages and update the state of the game accordingly.
+          </p>
         </section>
         <section id="architecture--gameengine">
           <h3>Game Engine</h3>
+          <p>
+            It is worth noting that the author, despite being a fan of Scala, actually wrote a Java version of the game first.
+            The initial version of the project, called Tchu, was written in Java with a JavaFX frontend. Later, the game engine was re-written in Scala 3,
+            and finally, the frontend was re-written in Vue 3. But before doing an honest comparison of Java versus Scala, let's dive into the game engine's structure.
+            The source code of the game engine can be found <a class="link" href="https://github.com/dsalathe/tchutchu/tree/main/src/main/scala/ch/coachdave/tchutchu/game">here</a>.
+            To design a game engine, two well-known approaches exist: a top-down or a bottom-up strategy.
+            The top-down strategy involves having a clear idea of the final product and determining what is needed to execute any kind of actions.
+            In contrast, the bottom-up strategy involves having a clear vision of what elements constitute a game and building more sophisticated elements or operations
+            based on the basic elements.
+            The latter approach may yield unnecessary elements but might lead to a stronger and more consistent data model.
+          </p>
+          <p>
+            The original project from Mr. Schinz uses a bottom-up approach for his students: it allows them to build more concrete and understandable classes and
+            complexify the code at later stages. First, we design basic elements such as enums for card colors or routes,
+            followed by classes handling different states such as card, player, or game states. Finally, we build the actual game engine upon all these implementations.
+          </p>
+          <p>
+            When designing more complex interactions, it is important to base our thoughts on well-known design patterns to strive for an easily maintainable application.
+            A non-exhaustive list of used patterns includes Singleton, Builder, Strategy, and State.
+            Additionally, we should carefully use efficient algorithms to solve different problems.
+            For instance, in Ticket to Ride, players receive points at the end of the game for each ticket successfully connected.
+            This means they win points if there exists a set of routes connecting point A to point B.
+            Here is a question for you: how would you determine efficiently the validity of each players ticket,
+            given their list of tickets as well as their list of owned routes?
+            Details of the algorithm used in our project will be discussed in the algorithm section.
+          </p>
         </section>
+      </section>
+      <section id="implementation">
+        <h1>Implementation</h1>
+        <p class="tbc">Coming soon!</p>
+        <section id="implementation--scala">
+          <h3>Why Scala ?</h3>
+          <p class="tbc">Coming soon!</p>
+        </section>
+        <section id="implementation--gameengine">
+          <h3>Game Engine's implementation</h3>
+          <p class="tbc">Coming soon!</p>
+        </section>
+        <section id="implementation--algorithm">
+          <h3>Notable algorithms</h3>
+          <h4>Union-Find</h4>
+          <p>
+            If you know your way around design patterns, that's great.
+            But to truly master the art of programming, you should also have a strong understanding of algorithms.
+            Here's an exercise for you: given the current state of the game shown in the image below,
+            how can you efficiently determine whether Churchill has validated the first three tickets but not the last two?
+          </p>
+          <p>
+            <img src="img/technical-overview/roadStateTchutchu.png" />
+          </p>
+          <p>
+            That is, given that Churchill has the following 8 routes:
+            <br/>
+            <i>Bâle - Olten, Olten - Soleure, Soleure - Berne, Berne - Fribourg, Berne - Lucerne, Lucerne -Zoug, Zoug - Zürich, Schaffouse - Kreuzlingen</i>
+            <br/>
+            and given that Churchill has the following 5 tickets:
+            <br/>
+            <i>Bâle - Berne, Fribourg - Lucerne, Lucerne - Zürich, Olten - Schaffouse, Schaffouse - Saint-Gall</i>
+            <br/>
+          </p>
+          <p>
+            One possible approach is to take each ticket, start with the first city of the ticket,
+            and run a Breadth-First Search (BFS) given the set of roads the player has.
+            However, this approach tests the connectivity between two cities pairwise independently of the other runs of BFS, but it's not independent at all.
+            This approach would take O(T * (C + R)) time complexity, where O() denotes the "Big O" notation for asymptotic analysis,
+            T denotes the number of tickets, C denotes the number of cities, and R denotes the number of roads.
+          </p>
+          <p>
+            Fortunately, there is a more efficient approach: the Union-Find data structure.
+            The Union-Find data structure is able to group elements into clusters, with each cluster having a representative.
+            In this data structure, querying if two elements are in the same cluster is very fast, taking amortized constant time.
+            To implement this approach, you can check out the theory on
+            the <a class="link" href="https://en.wikipedia.org/wiki/Disjoint-set_data_structure">Wikipedia page</a> or review the
+            source code <a class="link" href="https://github.com/dsalathe/tchutchu/blob/main/src/main/scala/ch/coachdave/tchutchu/UnionFind.scala">here</a>.
+          </p>
+          <p>
+            Using the Union-Find data structure, the time complexity of building the data structure is O(C + R),
+            where C is the number of cities and R is the number of routes.
+            Querying if a ticket is validated, in other words, querying if two cities are connected, takes O(1).
+            Therefore, querying for each ticket takes O(T), where T is the number of tickets.
+            Since these two phases of the algorithm are one after the other, the total time complexity is O(T + (C+R)), which is linear,
+            whereas the previous approach would have been somewhat quadratic.
+          </p>
+          <h4>Longest trail</h4>
+          <p>
+            What about computing the longest trail? Well a naive approach would be to try every possible sequence of routes possessed by the player.
+            It would yield terrible time complexity but it would work. Given R routes, the number of possible sequence is O(R!):
+            it's the number of permutations of unique elements.
+          </p>
+          <p>
+            Can we do better? Well... No. Except if you prove that P = NP, this problem is considered as NP-hard, because
+            we can reduce the Hamiltonian path problem to this one, meaning that if we can find a polynomial solution to the longest trail problem,
+            we can use this solution to solve the Hamiltonian path problem.
+            The Hamiltonian path problem consists of checking if there exists a Hamiltonian path, which is a path that visits each vertex exactly once.
+          </p>
+          <p>
+              So why discuss a very inefficient algorithm?
+              Because it is important to understand where scalability issues may arise.
+              This means that if we want to scale our game to include many more cities, we may need to either add caches and use dynamic programming,
+              or accept using approximations. Additionally, implementing this brute-force solution is far from obvious.
+              You can find our attempt at the following
+              link: <a href="https://github.com/dsalathe/tchutchu/blob/main/src/main/scala/ch/coachdave/tchutchu/game/Trail.scala" class="link">Trail.scala</a>
+          </p>
+        </section>
+        <section id="implementation--matchmaking">
+          <h3>Matchmaking process</h3>
+          <p class="tbc">Coming soon!</p>
+        </section>
+        <section id="implementation--vue">
+          <h3>Why Vue ?</h3>
+          <p class="tbc">Coming soon!</p>
+        </section>
+
+      </section>
+      <section id="discussion">
+        <h1>Discussion</h1>
+        <p class="tbc">Coming soon! Expect to see discussions about signing states with asymetric encriptions, replay attacks and even blockchain...</p>
+        <!--p>Todo speak about cache's limitations -> either sign new state, but then speak about replay attacks, then speak about blockchain</p-->
       </section>
       <p class="tbc">To Be Continued...</p>
     </div>
@@ -200,6 +395,19 @@
             <li><a href="#architecture--communication">Communication</a></li>
             <li><a href="#architecture--gameengine">Game Engine</a></li>
           </ul>
+        </li>
+        <li>
+          <a href="#implementation">Implementation</a>
+          <ul>
+            <li><a href="#implementation--scala">Scala</a></li>
+            <li><a href="#implementation--gameengine">Game Engine</a></li>
+            <li><a href="#implementation--algorithm">Algorithms</a></li>
+            <li><a href="#implementation--matchmaking">Matchmaking</a></li>
+            <li><a href="#implementation--vue">Vue</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#discussion">Discussion</a>
         </li>
       </ol>
     </nav>
@@ -309,6 +517,13 @@ h4 {
 p {
   text-align: justify;
   margin: 10px 40px;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
 }
 
 .quote {
