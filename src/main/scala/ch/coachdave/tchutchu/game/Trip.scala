@@ -1,6 +1,6 @@
 package ch.coachdave.tchutchu.game
 
-import collection.JavaConverters._
+import scala.jdk.CollectionConverters.*
 import java.util.List as JList
 
 
@@ -17,5 +17,4 @@ object Trip:
       t <- to
     yield apply(f, t, points)
 
-  // TODO Find a way to make implicit conversions from java collections to scala collections?
   def all(from: JList[Station], to: JList[Station], points: Int): JList[Trip] = all(from.asScala.toList, to.asScala.toList, points).asJava

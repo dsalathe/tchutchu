@@ -60,7 +60,7 @@ case class RemotePlayerProxyWS(messagingTemplate : SimpMessagingTemplate, userna
 
   private def correctDoubledTickets(tickets: String): String =
     val indices: List[Int] = tickets.split(",").toList.map(integer.deserialize)
-    (indices.groupBy(i => i).values.flatMap(l => l.zipWithIndex map { case (e, i) => e + i })).mkString(",")
+    indices.groupBy(i => i).values.flatMap(l => l.zipWithIndex map { case (e, i) => e + i }).mkString(",")
 
 
 

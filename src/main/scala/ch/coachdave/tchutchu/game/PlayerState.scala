@@ -1,7 +1,7 @@
 package ch.coachdave.tchutchu.game
 
 import ch.coachdave.tchutchu.SortedBag
-import collection.JavaConverters._
+import scala.jdk.CollectionConverters.*
 import java.util.stream.Collectors
 
 class PlayerState(val tickets: SortedBag[Ticket], val cards: SortedBag[Card], routes: List[Route]) extends PublicPlayerState(tickets.size(), cards.size(), routes):
@@ -9,17 +9,17 @@ class PlayerState(val tickets: SortedBag[Ticket], val cards: SortedBag[Card], ro
   def withAddedTickets(newTickets: SortedBag[Ticket]): PlayerState = new PlayerState(tickets.union(newTickets), cards, routes)
   def withAddedCard(card: Card): PlayerState = withAddedCards(SortedBag.of(card))
   def withAddedCards(additionalCards: SortedBag[Card]) = new PlayerState(tickets, cards.union(additionalCards), routes)
-  def canClaimRoute(route: Route): Boolean = carCount >= route.length && route.possibleClaimCards.exists(cards.contains(_))
+  def canClaimRoute(route: Route): Boolean = carCount >= route.length && route.possibleClaimCards.exists(cards.contains)
   def possibleClaimCards(route: Route): List[SortedBag[Card]] =
     require(carCount >= route.length)
-    route.possibleClaimCards.filter(cards.contains(_))
+    route.possibleClaimCards.filter(cards.contains)
 
   def possibleAdditionalCards(additionalCardsCount: Int, initialCards: SortedBag[Card], drawnCard: SortedBag[Card]): List[SortedBag[Card]] =
     require(additionalCardsCount >= 1 && additionalCardsCount <= Constants.ADDITIONAL_TUNNEL_CARDS)
     require(!initialCards.isEmpty && initialCards.toSet.size() <= 2)
     require(drawnCard.size() == Constants.ADDITIONAL_TUNNEL_CARDS)
     val remainingCards: SortedBag[Card] = cards.difference(initialCards)
-    val possibleCards = SortedBag.of(remainingCards.stream().filter(card => initialCards.contains(card) || card == Card.LOCOMOTIVE).collect(Collectors.toList()))
+    val possibleCards = SortedBag.of(remainingCards.stream().filter(card => initialCards.contains(card) || card == Card.LOCOMOTIVE).collect(Collectors.toList))
     if possibleCards.size() < additionalCardsCount then Nil else
       val options: List[SortedBag[Card]] = possibleCards.subsetsOfSize(additionalCardsCount).asScala.toList
       options.sortBy(_.countOf(Card.LOCOMOTIVE))

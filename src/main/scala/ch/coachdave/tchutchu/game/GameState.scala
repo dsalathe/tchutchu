@@ -4,7 +4,7 @@ import ch.coachdave.tchutchu.game.GameState.MAX_PLAYERS
 import ch.coachdave.tchutchu.{SortedBag, game}
 import ch.coachdave.tchutchu.game.UserAction._
 
-import collection.JavaConverters.*
+import scala.jdk.CollectionConverters
 import scala.util.Random.{nextInt, shuffle}
 
 class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlayerId: PlayerId, players: Map[PlayerId, Player],
@@ -56,7 +56,7 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
 
   def withInitiallyChosenTickets(playerId: PlayerId, chosenTickets: SortedBag[Ticket]): GameState =
     require(playerStates(playerId).tickets.size == 0, s"size of $playerId is ${playerStates(playerId).tickets.size}")
-    require((suggestedTickets.get)(playerId).contains(chosenTickets), "I'm pretty sure I didn't give you those tickets!" )
+    require(suggestedTickets.get(playerId).contains(chosenTickets), "I'm pretty sure I didn't give you those tickets!" )
     require(nextExpectedAction == INITIAL_TICKETS_CHOSEN)
     require(chosenTickets.size() >= 3)
     def isLastToChooseInitialTickets(id: PlayerId) = playerStates forall {case (pId, pState) => pId == id || pState.tickets.size > 0}
@@ -65,7 +65,7 @@ class GameState private(tickets: Deck[Ticket], cardState: CardState, currentPlay
 
   def withChosenAdditionalTickets(chosenTickets: SortedBag[Ticket]): GameState =
     require(nextExpectedAction == ADDITIONAL_TICKETS_CHOSEN)
-    val drawnTickets: SortedBag[Ticket] = (suggestedTickets.get)(currentPlayerId)
+    val drawnTickets: SortedBag[Ticket] = suggestedTickets.get(currentPlayerId)
     require(drawnTickets.contains(chosenTickets), "I'm pretty sure I didn't give you those tickets!")
     new GameState(tickets.withoutTopCards(drawnTickets.size), cardState, 
       currentPlayerId, players, withAction(p => p.withAddedTickets(chosenTickets)), lastPlayer, PLAY_TURN).forNextTurn

@@ -6,7 +6,7 @@ enum PlayerId:
   case PLAYER_1, PLAYER_2
 
 
-  def next = ALL((this.ordinal+1)%COUNT)
+  def next: PlayerId = ALL((this.ordinal+1)%COUNT)
 
 object PlayerId:
   def ALL: Vector[PlayerId] = values.toVector

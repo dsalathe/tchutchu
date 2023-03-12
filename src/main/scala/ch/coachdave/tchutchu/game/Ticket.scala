@@ -1,11 +1,11 @@
 package ch.coachdave.tchutchu.game
 
-import collection.JavaConverters._
+import scala.jdk.CollectionConverters.*
 import scala.collection.immutable.TreeSet
 
 case class Ticket(trips: List[Trip]) extends Ordered[Ticket]:
-  require(!trips.isEmpty, "No trips given")
-  require(trips.map{case Trip(from, to, points) => from.name}.toSet.size == 1, s"Multiple starts: ${trips.map{case Trip(from, to, points) => from.name}.toSet}")
+  require(trips.nonEmpty, "No trips given")
+  require(trips.map{case Trip(from, _, _) => from.name}.toSet.size == 1, s"Multiple starts: ${trips.map{case Trip(from, _, _) => from.name}.toSet}")
   def this(trips: java.util.List[Trip]) = this(trips.asScala.toList)
 
   def this(from: Station, to: Station, points: Int) = this(List(Trip(from, to, points)))

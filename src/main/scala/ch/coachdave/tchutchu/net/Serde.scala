@@ -4,7 +4,7 @@ import ch.coachdave.tchutchu.SortedBag
 
 import java.util.regex.Pattern
 import scala.reflect.ClassTag
-import collection.JavaConverters._
+import scala.jdk.CollectionConverters.*
 
 trait Serde[C]:
 
@@ -23,7 +23,7 @@ object Serde:
 
   def oneOf[C](enums: Seq[C]): Serde[Option[C]] =
     new Serde[Option[C]] {
-      override def serialize(e: Option[C]): String = if e == None then "" else Integer.toString(enums.indexOf(e.get))
+      override def serialize(e: Option[C]): String = if e.isEmpty then "" else Integer.toString(enums.indexOf(e.get))
 
       override def deserialize(s: String): Option[C] = if s == "" then None else Some(enums(Integer.parseInt(s)))
     }
@@ -37,7 +37,7 @@ object Serde:
 
   def listOf[C:ClassTag](serde: Serde[C], sep: String): Serde[List[C]] =
     new Serde[List[C]] {
-      override def serialize(l: List[C]): String = if l.length == 0 then "" else l.map(e => serde.serialize(e)).mkString(sep)
+      override def serialize(l: List[C]): String = if l.isEmpty then "" else l.map(e => serde.serialize(e)).mkString(sep)
 
       override def deserialize(s: String): List[C] = if s == "" then Nil else s.split(Pattern.quote(sep)).map(serde.deserialize).toList
     }

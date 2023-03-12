@@ -6,7 +6,7 @@ final class UnionFind(maxSize: Int):
   private val uf = (0 until maxSize).toArray
   private val sz = Array.fill(maxSize)(1)
 
-  def build = for (i <- (0 until maxSize).toVector) yield find(i) // full flatten each element
+  def build: Vector[Int] = for (i <- (0 until maxSize).toVector) yield find(i) // full flatten each element
 
   override def toString: String = uf.toVector.toString
 

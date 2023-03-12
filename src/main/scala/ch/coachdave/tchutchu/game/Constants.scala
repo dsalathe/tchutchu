@@ -1,6 +1,6 @@
 package ch.coachdave.tchutchu.game
 
-import ch.coachdave.tchutchu.SortedBag;
+import ch.coachdave.tchutchu.SortedBag
 
 object Constants:
 
@@ -94,7 +94,7 @@ object Constants:
   /**
    * Longueur maximum d'une route.
    */
-  val MAX_ROUTE_LENGTH = ROUTE_CLAIM_POINTS.size - 1;
+  val MAX_ROUTE_LENGTH: Int = ROUTE_CLAIM_POINTS.size - 1
 
 
   /**

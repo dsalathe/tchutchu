@@ -10,4 +10,4 @@ object StationPartition:
     private val unionFind = UnionFind(stationCount)
     def build: StationPartition = new StationPartition(unionFind.build)
     def connect(station1: Station, station2: Station): Builder = {unionFind.union(station1.id, station2.id);this}
-    override def toString: String = build.toString()
+    override def toString: String = build.toString

@@ -7,7 +7,7 @@ import Player.TurnKind.*
 import Route.Level.*
 import ch.coachdave.tchutchu.net.Serdes._
 
-import collection.JavaConverters.*
+import scala.jdk.CollectionConverters.*
 import scala.annotation.tailrec
 
 object Game:

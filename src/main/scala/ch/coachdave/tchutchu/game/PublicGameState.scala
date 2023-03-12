@@ -7,5 +7,5 @@ case class PublicGameState(ticketsCount: Int, cardState: PublicCardState, curren
   def canDrawTickets: Boolean = ticketsCount > 0
   def canDrawCards: Boolean = cardState.deckSize + cardState.discardsSize >= 5
   def playerState(playerId: PlayerId): Option[PublicPlayerState] = playerState.get(playerId)
-  def currentPlayerState: PublicPlayerState = playerState.get(currentPlayerId).get
+  def currentPlayerState: PublicPlayerState = playerState(currentPlayerId)
   def claimedRoutes: List[Route] = playerState.values.map(_.routes).reduce(_ ++ _)

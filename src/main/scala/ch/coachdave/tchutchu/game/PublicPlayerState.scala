@@ -4,5 +4,5 @@ case class PublicPlayerState(ticketCount: Int, cardCount: Int, routes: List[Rout
   require(ticketCount >= 0)
   require(cardCount >= 0)
 
-  val carCount = Constants.INITIAL_CAR_COUNT - routes.map(_.length).sum
-  val claimPoints = routes.map(_.claimPoints).sum
+  val carCount: Int = Constants.INITIAL_CAR_COUNT - routes.map(_.length).sum
+  val claimPoints: Int = routes.map(_.claimPoints).sum

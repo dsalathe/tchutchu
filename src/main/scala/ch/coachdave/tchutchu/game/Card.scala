@@ -1,6 +1,7 @@
 package ch.coachdave.tchutchu.game
 
-import collection.JavaConverters._
+import java.util
+import scala.jdk.CollectionConverters.*
 
 enum Card(oColor: Option[Color]) extends Enum[Card]:
   case BLACK extends Card(Some(Color.BLACK))
@@ -13,13 +14,13 @@ enum Card(oColor: Option[Color]) extends Enum[Card]:
   case WHITE extends Card(Some(Color.WHITE))
   case LOCOMOTIVE extends Card(None)
 
-  def color = oColor
+  def color: Option[Color] = oColor
 
 
 object Card:
   val ALL: Vector[Card] = Card.values.toVector
   val COUNT: Int = ALL.length
   val CARS: Vector[Card] = ALL dropRight 1
-  def CARS_JAVA = CARS.asJava
+  def CARS_JAVA: util.List[Card] = CARS.asJava
 
   def of(color: Color): Card = CARS(color.ordinal)

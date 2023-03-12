@@ -12,6 +12,6 @@ case class PublicCardState(faceUpCards: List[Card], deckSize: Int, discardsSize:
 
   def faceUpCard(slot: Int): Option[Card] = Try(faceUpCards(Objects.checkIndex(slot, FACE_UP_CARDS_COUNT))) match
     case Success(value) => Some(value)
-    case Failure(exception) => None
+    case Failure(_) => None
 
   def isDeckEmpty: Boolean = deckSize == 0

@@ -1,11 +1,11 @@
 package ch.coachdave.tchutchu.game
 
-import collection.JavaConverters._
+import scala.jdk.CollectionConverters.*
 
 import Constants._
 import ch.coachdave.tchutchu.SortedBag
 import Route.Level
-import java.util.{List as JList}
+import java.util.List as JList
 
 case class Route(id: String, station1: Station, station2: Station, length: Int, level: Level, color: Option[Color]):
   require(station1 != station2, "stations must be different")
@@ -27,7 +27,7 @@ case class Route(id: String, station1: Station, station2: Station, length: Int, 
     yield SortedBag.of(length - nLocomotive, Card.of(c), nLocomotive, Card.LOCOMOTIVE)).distinct // ugly quick fix...
 
 
-  def additionalClaimCardsCount(claimCards: SortedBag[Card], drawnCards: SortedBag[Card]) =
+  def additionalClaimCardsCount(claimCards: SortedBag[Card], drawnCards: SortedBag[Card]): Int =
     require(level == Level.UNDERGROUND)
     require(drawnCards.size() == 3)
     val card: Card = claimCards.toSet.asScala.foldLeft(Card.LOCOMOTIVE)((acc, c) => if c == Card.LOCOMOTIVE then acc else c)
