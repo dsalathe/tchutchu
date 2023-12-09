@@ -15,6 +15,6 @@ Otherwise clone the repo and:
 
 The project is also publicly available on a self-hosted Raspberry pi [here](https://tchutchu.mooo.com).
 
-The project is also deployed on an [azure](https://tchutchu.azurewbsites.net) free tier using an azure web service. There is a very long cold start.
+The project is also deployed on an [azure](https://tchutchu.azurewebsites.net) free tier using an azure web service. There is a very long cold start.
 
 The project is also deployed on Google Cloud Platform (GCP) [here](https://tinyurl.com/tchutchu) using google cloud run.
