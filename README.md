@@ -13,4 +13,8 @@ Otherwise clone the repo and:
 + Go to [localhost:8080](http://localhost:8080)
 + `sbt test` to launch tests
 
+The project is also publicly available on a self-hosted Raspberry pi [here](https://tchutchu.mooo.com).
 
+The project is also deployed on an [azure](https://tchutchu.azurewbsites.net) free tier using an azure web service. There is a very long cold start.
+
+The project is also deployed on Google Cloud Platform (GCP) [here](https://tinyurl.com/tchutchu) using google cloud run.
