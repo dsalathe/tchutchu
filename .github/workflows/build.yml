@@ -57,10 +57,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Authenticate to Google Cloud
+        id: auth
         if: github.event_name != 'pull_request'
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
+          token_format: access_token
 
       - name: Log in to Google Artifact Registry
         if: github.event_name != 'pull_request'
