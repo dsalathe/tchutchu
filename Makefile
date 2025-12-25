@@ -1,4 +1,4 @@
-IMAGE_NAME:=coachdave/tchutchu
+IMAGE_NAME:=ghcr.io/dsalathe/tchutchu
 IMAGE_TAG:=latest
 
 default:
@@ -7,8 +7,10 @@ dist: keystore build-info
 	./mvnw -Dmaven.artifact.threads=8 -T 1C clean verify
 image:
 	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
+push: image
+	docker push $(IMAGE_NAME):$(IMAGE_TAG)
 run:
-	docker run -p 8080:8080  -p 8443:8443 $(IMAGE_NAME):$(IMAGE_TAG)
+	docker run -p 8080:8080 -p 8443:8443 $(IMAGE_NAME):$(IMAGE_TAG)
 run-bash:
 	docker run -i -t $(IMAGE_NAME):$(IMAGE_TAG) /bin/bash
 build-info:
