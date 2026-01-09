@@ -1,8 +1,25 @@
 <template>
   <nav>
-    <router-link to="/">Game</router-link> |
-    <router-link to="/rules">How to play</router-link> |
-    <router-link to="/technical">Ticket to Tech</router-link>
+    <div class="nav-links">
+      <router-link to="/">Game</router-link> |
+      <router-link to="/rules">How to play</router-link> |
+      <router-link to="/technical">Ticket to Tech</router-link>
+    </div>
+    <div class="nav-auth">
+      <dsalathe-badge-long
+        v-if="isAuthenticated && user"
+        :user-id="user.id"
+        :user-name="user.name || ''"
+        :user-email="user.email || ''"
+        :user-picture="user.picture || ''"
+        :user-tier="userTier"
+        current-app="tchutchu"
+        :environment="isDev ? 'dev' : 'prod'"
+      ></dsalathe-badge-long>
+      <button v-else @click="login" class="login-btn">
+        Sign In
+      </button>
+    </div>
   </nav>
   <router-view
     :sendRequest="sendRequest"
@@ -11,6 +28,8 @@
     :ownId="ownId"
     :player1Name="player1Name"
     :player2Name="player2Name"
+    :player1Picture="player1Picture"
+    :player2Picture="player2Picture"
     :ticketsCount="ticketsCount"
     :currentPlayerId="currentPlayerId"
     :lastPlayerId="lastPlayerId"
@@ -40,7 +59,7 @@
   Source code available on <a href="https://github.com/dsalathe/tchutchu">github</a>. See official website of the publisher <a href="https://www.daysofwonder.com/en/">here</a>.
   </footer>
   <Debug
-  v-if="isDev()"
+  v-if="isDev"
   :connected="connected"
   :connect="connect"
   :disconnect="disconnect"
@@ -54,6 +73,8 @@
 import SockJS from 'sockjs-client'
 import Stomp from 'webstomp-client'
 import JSConfetti from 'js-confetti'
+import { mapGetters, mapActions } from 'vuex'
+import { logout } from '@/services/keycloak'
 
 import Debug from '@/components/DebugPanel.vue'
 
@@ -61,6 +82,15 @@ export default {
   name: 'App',
   components: {
     Debug
+  },
+  computed: {
+    ...mapGetters('auth', ['isAuthenticated', 'user', 'userName', 'userPicture', 'userTier', 'isPremium']),
+    authInitialized () {
+      return this.$store.getters['auth/isInitialized']
+    },
+    isDev () {
+      return process.env.NODE_ENV === 'development'
+    }
   },
   data () {
     return {
@@ -76,6 +106,8 @@ export default {
       ownId: this.retrieve('ownId', -1),
       player1Name: this.retrieve('player1Name', 'Player 1'),
       player2Name: this.retrieve('player2Name', 'Player 2'),
+      player1Picture: this.retrieve('player1Picture', ''),
+      player2Picture: this.retrieve('player2Picture', ''),
       ticketsCount: this.retrieve('ticketsCount', 0),
       currentPlayerId: this.retrieve('currentPlayerId', -2),
       lastPlayerId: this.retrieve('lastPlayerId', undefined),
@@ -117,7 +149,7 @@ export default {
       // sessionStorage.setItem('messages', JSON.stringify(this.messages))
     },
     connect () {
-      const socket = new SockJS(this.isDev() ? 'http://localhost:8080/game-ws' : '/game-ws')
+      const socket = new SockJS(this.isDev ? 'http://localhost:8081/game-ws' : '/game-ws')
       this.stompClient = Stomp.over(socket)
       this.stompClient.connect({}, frame => {
         this.connected = true
@@ -131,11 +163,18 @@ export default {
           if (msg.messageId === 'INIT_PLAYERS') {
             this.unsubscribeGeneral()
             this.inGame = this.persist('inGame', true)
-            const [ownIdStr, encodedNames] = msg.data.split(' ')
+            const [ownIdStr, encodedInfos] = msg.data.split(' ')
             this.ownId = this.persist('ownId', parseInt(ownIdStr))
-            const [player1Name64, player2Name64] = encodedNames.split(',')
-            this.player1Name = this.persist('player1Name', decodeURIComponent(escape(atob(player1Name64))))
-            this.player2Name = this.persist('player2Name', decodeURIComponent(escape(atob(player2Name64))))
+            const [player1Info64, player2Info64] = encodedInfos.split(',')
+            // Parse "name|picture" format from each player info
+            const player1Info = decodeURIComponent(escape(atob(player1Info64)))
+            const player2Info = decodeURIComponent(escape(atob(player2Info64)))
+            const [player1Name, player1Picture = ''] = player1Info.split('|')
+            const [player2Name, player2Picture = ''] = player2Info.split('|')
+            this.player1Name = this.persist('player1Name', player1Name)
+            this.player2Name = this.persist('player2Name', player2Name)
+            this.player1Picture = this.persist('player1Picture', player1Picture)
+            this.player2Picture = this.persist('player2Picture', player2Picture)
           } else if (msg.messageId === 'UPDATE_STATE') {
             this.updatedState = this.persist('updatedState', this.updatedState + 1)
             const [publicGS, ownState] = msg.data.split(' ')
@@ -219,9 +258,6 @@ export default {
       this.stompClient.unsubscribe('topic')
       console.log('Topic was unsubscribed')
     },
-    isDev () {
-      return process.env.NODE_ENV === 'development'
-    },
     onTicketsChosen (tickets) {
       const playAction = this.possibleTickets.length === 5 ? 'INITIAL_TICKETS_CHOSEN' : 'ADDITIONAL_TICKETS_CHOSEN'
       this.possibleTickets = this.persist('possibleTickets', [])
@@ -230,12 +266,38 @@ export default {
     onCardsForTunnelChosen (cards) {
       this.additionalCardsOptions = this.persist('additionalCardsOptions', [])
       this.sendRequest('PLAY', 'ADDITIONAL_CARDS_CHOSEN', cards)
+    },
+    ...mapActions('auth', ['initAuth']),
+    login () {
+      this.$store.dispatch('auth/login')
+    },
+    handleLogout () {
+      logout()
+    },
+    loadBadgeScript () {
+      if (!document.querySelector('script[src*="static.dsalathe.dev"]')) {
+        const script = document.createElement('script')
+        script.src = 'https://static.dsalathe.dev/banner/components.js'
+        script.defer = true
+        document.head.appendChild(script)
+      }
     }
   },
   mounted () {
     console.log('Mounted!')
     this.connect()
     console.log('Subscribing to websockets topics and queues...')
+
+    // Initialize Keycloak auth silently (check-sso)
+    this.initAuth()
+
+    // Load shared badge component script
+    this.loadBadgeScript()
+
+    // Listen for logout events from shared component
+    document.addEventListener('logout', () => {
+      this.handleLogout()
+    })
   }
 }
 
@@ -256,8 +318,35 @@ body {
 }
 
 nav {
-  padding: 30px;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
   text-align: center;
+  flex: 1;
+}
+
+.nav-auth {
+  display: flex;
+  align-items: center;
+}
+
+.login-btn {
+  background-color: #DA291C;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #b8231a;
 }
 
 nav a {

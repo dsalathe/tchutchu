@@ -1,5 +1,7 @@
-/home/coach/hobby/scala/tchutchu/src/main/java/ch/coachdave/tchutchu/gui/StringsFr.java
-/home/coach/hobby/scala/tchutchu/src/main/java/ch/coachdave/tchutchu/game/JavaConstants.java
-/home/coach/hobby/scala/tchutchu/src/main/java/ch/coachdave/tchutchu/gui/StringsEn.java
-/home/coach/hobby/scala/tchutchu/src/main/java/ch/coachdave/tchutchu/gui/Info.java
-/home/coach/hobby/scala/tchutchu/src/main/java/ch/coachdave/tchutchu/SortedBag.java
+/home/dave/projects/tchutchu/src/main/java/ch/coachdave/tchutchu/gui/StringsEn.java
+/home/dave/projects/tchutchu/src/main/java/ch/coachdave/tchutchu/gui/Info.java
+/home/dave/projects/tchutchu/src/main/java/ch/coachdave/tchutchu/config/SecurityConfig.java
+/home/dave/projects/tchutchu/src/main/java/ch/coachdave/tchutchu/game/JavaConstants.java
+/home/dave/projects/tchutchu/src/main/java/ch/coachdave/tchutchu/SortedBag.java
+/home/dave/projects/tchutchu/src/main/java/ch/coachdave/tchutchu/config/AudienceValidator.java
+/home/dave/projects/tchutchu/src/main/java/ch/coachdave/tchutchu/gui/StringsFr.java

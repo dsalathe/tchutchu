@@ -14,13 +14,23 @@ import java.util.stream.Collectors;
 
 public final class Info {
     private final String playerName;
+    private final String playerPicture;
 
     public Info(String playerName) {
+        this(playerName, "");
+    }
+
+    public Info(String playerName, String playerPicture) {
         this.playerName = playerName;
+        this.playerPicture = playerPicture != null ? playerPicture : "";
     }
     
     public String getPlayerName() {
         return playerName;
+    }
+
+    public String getPlayerPicture() {
+        return playerPicture;
     }
 
     private static String getRouteName(Route route) {

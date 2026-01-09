@@ -56,8 +56,9 @@ class TchuTchuController {
     message.metaAction match
       case INIT_GAME =>
         require(!(userIdToGameId.asMap() containsKey userId)) //TODO IllegalArgument controller advice?
-        val playerName::shortName::_ : List[String] = message.data.split(" ").toList
-        val gameId: String = initGame(string.deserialize(playerName), principal, userId)
+        val playerData::shortName::_ : List[String] = message.data.split(" ").toList
+        val (playerName, playerPicture) = parsePlayerData(string.deserialize(playerData))
+        val gameId: String = initGame(playerName, playerPicture, principal, userId)
         val confirmedShortName = determineShortName(shortName)
         shortNameGameToGameId.asMap().put(confirmedShortName, gameId)
         val okPrefix = if confirmedShortName == shortName then "ok" else "nok"
@@ -65,18 +66,20 @@ class TchuTchuController {
 
       case JOIN_SPECIFIC_GAME =>
         require(!(userIdToGameId.asMap() containsKey userId))
-        val playerName::shortName::Nil : List[String] = message.data.split(" ").toList
+        val playerData::shortName::Nil : List[String] = message.data.split(" ").toList
+        val (playerName, playerPicture) = parsePlayerData(string.deserialize(playerData))
         val playerId: PlayerId = PlayerId.PLAYER_2
-        joinGame(principal, userId, shortNameGameToGameId.asMap().get(shortName), string.deserialize(playerName), playerId)
+        joinGame(principal, userId, shortNameGameToGameId.asMap().get(shortName), playerName, playerPicture, playerId)
         shortNameGameToGameId.asMap().remove(shortName)
         //TODO messaging tells player blabla joined the game?
 
       case JOIN_ANY_GAME =>
+        val (playerName, playerPicture) = parsePlayerData(string.deserialize(message.data))
         if queue.isEmpty then
-          queue.add(initGame(string.deserialize(message.data), principal, userId))
+          queue.add(initGame(playerName, playerPicture, principal, userId))
         else
           val gameId = queue.remove()
-          joinGame(principal, userId, gameId, string.deserialize(message.data), PlayerId.PLAYER_2)
+          joinGame(principal, userId, gameId, playerName, playerPicture, PlayerId.PLAYER_2)
 
       case RECONNECT =>
         val gameId = userIdToGameId.asMap.get(userId)
@@ -124,9 +127,9 @@ class TchuTchuController {
         ???
 
 
-  private def joinGame(principal: Principal, userId: String, gameId: String, playerName: String, playerId: PlayerId): Unit = {
+  private def joinGame(principal: Principal, userId: String, gameId: String, playerName: String, playerPicture: String, playerId: PlayerId): Unit = {
     val completedInitialGameState: GameState = Game.joiningGame(gameIdToGameState.asMap.get(gameId),
-      RemotePlayerProxyWS(messagingTemplate, principal.getName, new Info(playerName)), playerId)
+      RemotePlayerProxyWS(messagingTemplate, principal.getName, new Info(playerName, playerPicture)), playerId)
     gameIdToGameState.asMap.put(gameId, completedInitialGameState)
     userIdToGameId.asMap().put(userId, gameId)
     userIdToPlayerId.asMap().put(userId, playerId)
@@ -134,10 +137,10 @@ class TchuTchuController {
       ClientNotification(MessageId.USER_ID.toString, userId))
   }
 
-  private def initGame(playerName: String, principal: Principal, userId: String) = {
+  private def initGame(playerName: String, playerPicture: String, principal: Principal, userId: String) = {
     val tickets: SortedBag[Ticket] = SortedBag.of(ChMap.tickets.asJava)
     val playerId: PlayerId = PlayerId.PLAYER_1
-    val initialGs: GameState = Game.initGame(RemotePlayerProxyWS(messagingTemplate, username = principal.getName, info = new Info(playerName)), playerId, tickets)
+    val initialGs: GameState = Game.initGame(RemotePlayerProxyWS(messagingTemplate, username = principal.getName, info = new Info(playerName, playerPicture)), playerId, tickets)
     val gameId = generateGameId()
     gameIdToGameState.asMap.put(gameId, initialGs)
     userIdToGameId.asMap().put(userId, gameId)
@@ -145,6 +148,12 @@ class TchuTchuController {
     messagingTemplate.convertAndSendToUser(principal.getName, "/queue/tchu-events",
       ClientNotification(MessageId.USER_ID.toString, userId))
     gameId
+  }
+
+  /** Parse player data in format "name" or "name|pictureUrl" */
+  private def parsePlayerData(data: String): (String, String) = {
+    val parts = data.split("\\|", 2)
+    if (parts.length == 2) (parts(0), parts(1)) else (parts(0), "")
   }
 
   @tailrec

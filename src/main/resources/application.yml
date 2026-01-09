@@ -1,6 +1,19 @@
+spring:
+  profiles:
+    active: local
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/dsalathe-apps
+
 application:
   name: "tchutchu"
   description: "An implementation of the game Tickets to ride in scala 3, with WebSockets"
+
+app:
+  keycloak:
+    client-id: tchutchu
 
 server:
   port: 8080

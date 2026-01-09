@@ -1,3 +1,3 @@
 #!/bin/bash
-exec java -jar "bin/tchutchu.jar"
+exec java -jar "bin/tchutchu.jar" --spring.profiles.active=default
 

@@ -3,7 +3,7 @@
     <div class="top">
       <div class="top-left">
         <div id="stats">
-          <StateInfo :player1="player1" :player2="player2" />
+          <StateInfo :player1="player1" :player2="player2" :ownId="ownId" />
         </div>
         <div id="chat"><Chat :displayedMessages="displayedMessages" :sendChatMessage="sendChatMessage" :isInGame="inGame" /></div>
       </div>
@@ -63,6 +63,7 @@ export default {
     player1 () {
       return {
         name: this.player1Name,
+        picture: this.player1Picture,
         tickets: this.ticketsCountP1,
         cards: this.cardsCountP1,
         wagons: this.player1Wagons,
@@ -72,6 +73,7 @@ export default {
     player2 () {
       return {
         name: this.player2Name,
+        picture: this.player2Picture,
         tickets: this.ticketsCountP2,
         cards: this.cardsCountP2,
         wagons: this.player2Wagons,
@@ -113,12 +115,21 @@ export default {
     }
   },
   methods: {
+    // Helper to strip picture URL from "name|pictureUrl" format
+    stripPictureFromName (name) {
+      const pipeIndex = name.indexOf('|')
+      return pipeIndex >= 0 ? name.substring(0, pipeIndex) : name
+    },
     buildChatMessage ({ data }) {
       const [author, content] = data.split(' ')
-      return { style: 'chatMsg', author: decodeURIComponent(escape(atob(author))), content: decodeURIComponent(escape(atob(content))) }
+      const decodedAuthor = decodeURIComponent(escape(atob(author)))
+      return { style: 'chatMsg', author: this.stripPictureFromName(decodedAuthor), content: decodeURIComponent(escape(atob(content))) }
     },
     buildInfoMessage ({ data }) {
-      return { style: 'infoMsg', author: '[GAME]', content: decodeURIComponent(escape(atob(data))) }
+      const decodedContent = decodeURIComponent(escape(atob(data)))
+      // Strip any picture URLs from player names in game info messages
+      const cleanContent = decodedContent.replace(/\|https?:\/\/[^\s]+/g, '')
+      return { style: 'infoMsg', author: '[GAME]', content: cleanContent }
     },
     sendChatMessage (msg) {
       this.sendRequest('CHAT', 'NOTHING', btoa(unescape(encodeURIComponent(msg))))
@@ -157,7 +168,7 @@ export default {
       return [0, 1, 2, 4, 7, 10, 15][length]
     }
   },
-  props: ['sendRequest', 'inGame', 'messages', 'ownId', 'player1Name', 'player2Name', 'ticketsCount', 'currentPlayerId', 'lastPlayerId', 'faceUpCards',
+  props: ['sendRequest', 'inGame', 'messages', 'ownId', 'player1Name', 'player2Name', 'player1Picture', 'player2Picture', 'ticketsCount', 'currentPlayerId', 'lastPlayerId', 'faceUpCards',
     'deckSize', 'discardSize', 'ticketsCountP1', 'cardsCountP1', 'routesP1', 'ticketsCountP2', 'cardsCountP2', 'routesP2', 'ownTickets', 'ownCards',
     'ownRoutes', 'setupState', 'setupGameName', 'possibleTickets', 'onTicketsChosen', 'additionalCardsOptions', 'onCardsForTunnelChosen', 'updatedStateCount',
     'isGameOver']

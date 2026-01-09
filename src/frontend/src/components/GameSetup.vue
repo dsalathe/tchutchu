@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
   props: ['sendSetupGame', 'state', 'chosenGameName'],
@@ -82,6 +83,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('auth', ['userName', 'userPicture', 'isAuthenticated']),
     hasChosenMode () {
       return this.chosenMode !== ''
     },
@@ -104,6 +106,20 @@ export default {
       return this.state === 'nok'
     }
   },
+  watch: {
+    // Pre-fill name from auth when mode is chosen
+    hasChosenMode (newVal) {
+      if (newVal && this.isAuthenticated && this.userName && this.name === '') {
+        this.name = this.userName
+      }
+    }
+  },
+  mounted () {
+    // Pre-fill name from auth if already authenticated
+    if (this.isAuthenticated && this.userName) {
+      this.name = this.userName
+    }
+  },
   methods: {
     createCustom () {
       this.chosenMode = 'INIT_GAME'
@@ -119,7 +135,9 @@ export default {
     },
     sendForm () {
       if (!this.chosenMode !== '' && this.name !== '' && (this.chosenMode === 'JOIN_ANY_GAME' || this.gameName !== '')) {
-        this.sendSetupGame(this.chosenMode, (btoa(unescape(encodeURIComponent(this.name))) + ' ' + this.gameName).trim())
+        // Send player data as "name|pictureUrl" if picture is available
+        const playerData = this.userPicture ? `${this.name}|${this.userPicture}` : this.name
+        this.sendSetupGame(this.chosenMode, (btoa(unescape(encodeURIComponent(playerData))) + ' ' + this.gameName).trim())
         this.dataSent = true
       }
     }

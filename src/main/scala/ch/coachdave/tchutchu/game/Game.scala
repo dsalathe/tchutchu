@@ -26,7 +26,12 @@ object Game:
 
   private def startGame(gs: GameState): GameState =
     val players = gs.playerMap
-    players.foreach{ case (pId, p) => p.initPlayers(pId, players map{ case (pId, p) => pId -> p.getInfo.getPlayerName}) }
+    // Send player info as "name|picture" pairs
+    val playerInfoMap = players.map { case (pId, p) => 
+      val info = p.getInfo
+      pId -> s"${info.getPlayerName}|${info.getPlayerPicture}"
+    }
+    players.foreach{ case (pId, p) => p.initPlayers(pId, playerInfoMap) }
     broadcastInfo(players, players(gs.currentPlayerId).getInfo.willPlayFirst())
     val (distributed, initialTicketsDistributedState): (List[SortedBag[Ticket]], GameState) = gs.distributeTickets(players.size, Constants.INITIAL_TICKETS_COUNT)
     players.values.zip(distributed).foreach{ case (p, t) => p.setInitialTicketChoice(t)}

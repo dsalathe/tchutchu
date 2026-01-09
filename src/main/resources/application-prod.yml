@@ -3,3 +3,14 @@ server:
   ssl:
     key-store: classpath:keystore.pfx
     key-store-password: idontknowyet
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://auth.dsalathe.dev/realms/dsalathe-apps
+
+app:
+  keycloak:
+    client-id: tchutchu

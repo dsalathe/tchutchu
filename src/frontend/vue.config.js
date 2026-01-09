@@ -1,15 +1,27 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
-  transpileDependencies: true,
+  transpileDependencies: ['keycloak-js'],
+  chainWebpack: config => {
+    config.module
+      .rule('vue')
+      .use('vue-loader')
+      .tap(options => ({
+        ...options,
+        compilerOptions: {
+          isCustomElement: tag => tag.startsWith('dsalathe-')
+        }
+      }))
+  },
   devServer: {
+    port: 8082,
     proxy: {
-      '^/': {
-        target: 'http://localhost:8080',
+      '^/game-ws': {
+        target: 'http://localhost:8081',
         ws: true,
         changeOrigin: true
       },
-      '^ws': {
-        target: 'localhost:8080',
+      '^/app': {
+        target: 'http://localhost:8081',
         ws: true,
         changeOrigin: true
       }
