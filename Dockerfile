@@ -17,7 +17,6 @@ RUN chown -R app:app ${APP_HOME}
 RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 8080
-EXPOSE 8443
 
 WORKDIR ${APP_HOME}
 CMD ["/docker-entrypoint.sh"]
