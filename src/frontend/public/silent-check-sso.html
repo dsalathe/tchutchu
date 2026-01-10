@@ -5,6 +5,9 @@
 </head>
 <body>
     <script>
+        // This page is loaded in an iframe by Keycloak to silently check SSO status.
+        // It must pass the response URL back to the parent window.
+        // The parent (keycloak-js) will parse the URL for tokens/session info.
         parent.postMessage(location.href, location.origin);
     </script>
 </body>

@@ -51,9 +51,27 @@ export async function initKeycloakSilent () {
 
   const initOptions = {
     onLoad: isCallback ? undefined : 'check-sso',
-    checkLoginIframe: false,
+    checkLoginIframe: true,
+    checkLoginIframeInterval: 5,
     pkceMethod: 'S256',
-    silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'
+    silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+    enableLogging: process.env.NODE_ENV === 'development'
+  }
+
+  // Set up event handlers for SSO session changes
+  keycloak.onAuthLogout = () => {
+    // User logged out from another app in the realm (SLO)
+    console.log('Session ended (logged out from another app)')
+    stopTokenRefresh()
+    // Dispatch a custom event so the app can react
+    window.dispatchEvent(new CustomEvent('keycloak-logout'))
+  }
+
+  keycloak.onTokenExpired = () => {
+    console.log('Token expired, attempting refresh...')
+    keycloak.updateToken(MIN_VALIDITY_SECONDS).catch(() => {
+      console.log('Failed to refresh expired token')
+    })
   }
 
   try {
@@ -162,13 +180,20 @@ export async function getAccessToken () {
 
 /**
  * Logout the user.
+ * Uses Keycloak's end session endpoint with id_token_hint for proper Single Logout (SLO).
  */
 export function logout () {
   stopTokenRefresh()
   const keycloak = getKeycloak()
 
+  // Clear local session state
+  keycloakInitialized = false
+
+  // Use Keycloak logout which calls the end_session_endpoint
+  // This will properly logout from Keycloak and all apps in the realm (SLO)
   keycloak.logout({
-    redirectUri: window.location.origin + '/'
+    redirectUri: window.location.origin + '/',
+    // id_token_hint is automatically included by keycloak-js when available
   })
 }
 

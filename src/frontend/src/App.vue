@@ -298,6 +298,15 @@ export default {
     document.addEventListener('logout', () => {
       this.handleLogout()
     })
+
+    // Listen for Single Logout (SLO) events from Keycloak
+    // This fires when user logs out from another app in the realm
+    window.addEventListener('keycloak-logout', () => {
+      console.log('SLO detected: user logged out from another app')
+      this.$store.commit('auth/SET_USER', null)
+      // Optionally reload to reflect the logged-out state
+      // location.reload()
+    })
   }
 }
 
