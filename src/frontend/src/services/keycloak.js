@@ -191,9 +191,9 @@ export function logout () {
 
   // Use Keycloak logout which calls the end_session_endpoint
   // This will properly logout from Keycloak and all apps in the realm (SLO)
+  // id_token_hint is automatically included by keycloak-js when available
   keycloak.logout({
-    redirectUri: window.location.origin + '/',
-    // id_token_hint is automatically included by keycloak-js when available
+    redirectUri: window.location.origin + '/'
   })
 }
 
