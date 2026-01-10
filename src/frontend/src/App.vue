@@ -70,7 +70,6 @@
 
 <script>
 
-import SockJS from 'sockjs-client'
 import Stomp from 'webstomp-client'
 import JSConfetti from 'js-confetti'
 import { mapGetters, mapActions } from 'vuex'
@@ -149,8 +148,13 @@ export default {
       // sessionStorage.setItem('messages', JSON.stringify(this.messages))
     },
     connect () {
-      const socket = new SockJS(this.isDev ? 'http://localhost:8081/game-ws' : '/game-ws')
-      this.stompClient = Stomp.over(socket)
+      // Use native WebSocket instead of SockJS to avoid deprecated unload event warnings
+      const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+      const wsUrl = this.isDev
+        ? 'ws://localhost:8081/game-ws'
+        : `${wsProtocol}//${window.location.host}/game-ws`
+      const socket = new WebSocket(wsUrl)
+      this.stompClient = Stomp.over(socket, { protocols: ['v12.stomp'] })
       this.stompClient.connect({}, frame => {
         this.connected = true
         console.log('Connected: ' + frame)
