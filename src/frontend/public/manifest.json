@@ -1,32 +1,56 @@
 {
-  "name":"TchuTchu",
-  "short_name":"TchuTchu",
-  "theme_color":"#DA291C",
-  "icons":[
+  "name": "TchuTchu",
+  "short_name": "TchuTchu",
+  "description": "A multiplayer train board game inspired by Ticket to Ride. Build routes across Switzerland and compete with friends!",
+  "id": "/",
+  "theme_color": "#DA291C",
+  "background_color": "#000000",
+  "display": "standalone",
+  "orientation": "landscape",
+  "start_url": ".",
+  "scope": "/",
+  "icons": [
     {
-      "src":"./img/icons/android-chrome-192x192.png",
-      "sizes":"192x192",
-      "type":"image/png"
+      "src": "./img/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
     },
     {
-      "src":"./img/icons/android-chrome-512x512.png",
-      "sizes":"512x512",
-      "type":"image/png"
+      "src": "./img/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     },
     {
-      "src":"./img/icons/android-chrome-maskable-192x192.png",
-      "sizes":"192x192",
-      "type":"image/png",
-      "purpose":"maskable"
+      "src": "./img/icons/android-chrome-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
-      "src":"./img/icons/android-chrome-maskable-512x512.png",
-      "sizes":"512x512",
-      "type":"image/png",
-      "purpose":"maskable"
+      "src": "./img/icons/android-chrome-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "start_url":".",
-  "display":"standalone",
-  "orientation":"landscape",
-  "background_color":"#000000"}
+  "screenshots": [
+    {
+      "src": "./img/screenshots/screenshot-wide.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "TchuTchu game board on desktop"
+    },
+    {
+      "src": "./img/screenshots/screenshot-mobile.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "TchuTchu game board on mobile (landscape recommended)"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false
+}
