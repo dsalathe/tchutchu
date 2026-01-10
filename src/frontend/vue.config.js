@@ -61,17 +61,16 @@ module.exports = defineConfig({
       screenshots: [
         {
           src: './img/screenshots/screenshot-wide.png',
-          sizes: '1920x1080',
+          sizes: '2923x1488',
           type: 'image/png',
           form_factor: 'wide',
           label: 'TchuTchu game board on desktop'
         },
         {
           src: './img/screenshots/screenshot-mobile.png',
-          sizes: '1080x1920',
+          sizes: '1982x881',
           type: 'image/png',
-          form_factor: 'narrow',
-          label: 'TchuTchu game board on mobile (landscape recommended)'
+          label: 'TchuTchu game board on mobile (landscape)'
         }
       ]
     },
