@@ -1,3 +1,4 @@
 #!/bin/bash
-exec java -jar "bin/tchutchu.jar" --spring.profiles.active=prod
+export SPRING_PROFILES_ACTIVE=prod
+exec java -jar "bin/tchutchu.jar"
 
